@@ -206,6 +206,26 @@ def crop_polygon_mask(img: Image.Image, points: List[Tuple[float, float]]) -> Im
     return trim_and_pad(out, pad=2)
 
 
+def black_bg_to_glow_alpha(img: Image.Image, dark_cutoff: int = 18, boost: float = 1.15) -> Image.Image:
+    """
+    Converts a black/dark-background VFX image into a clean transparent glow texture:
+    brightness (max RGB) becomes alpha, while preserving vivid glowing colors.
+    """
+    rgba = img.convert("RGBA")
+    arr = np.asarray(rgba, dtype=np.float32)
+    rgb = arr[:, :, :3]
+    lum_max = np.max(rgb, axis=2)
+    cutoff = float(max(0, min(200, dark_cutoff)))
+    alpha = np.clip((lum_max - cutoff) / max(1.0, 255.0 - cutoff) * 255.0 * boost, 0.0, 255.0)
+    # Un-premultiply slightly so bright cores stay saturated & clean
+    safe_a = np.maximum(alpha / 255.0, 0.08)[:, :, None]
+    out_rgb = np.clip(rgb / np.sqrt(safe_a), 0.0, 255.0)
+    out = np.zeros_like(arr, dtype=np.uint8)
+    out[:, :, :3] = out_rgb.astype(np.uint8)
+    out[:, :, 3] = alpha.astype(np.uint8)
+    return Image.fromarray(out, "RGBA")
+
+
 def estimate_head_socket_x(pil_img: Image.Image) -> float:
     """Computes ExpandedParts.HeadSocket X ratio (0..1) near the bottom edge of a head sprite."""
     arr = np.asarray(pil_img.convert("RGBA"))

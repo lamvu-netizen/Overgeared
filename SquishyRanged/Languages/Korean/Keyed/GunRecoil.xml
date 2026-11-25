@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- translate only the text between the tags.
+       Keep the key names, keep the {0} {1} ... placeholders (the mod fills them in) and keep \n where a line break is wanted. -->
+
+  <!-- General -->
+  <GR_OpenHint>별도의 큰 창으로 열립니다. 창은 끌어서 옮기고 모서리를 끌어 크기를 바꿀 수 있습니다.</GR_OpenHint>
+  <GR_OpenWindow>설정 창 열기</GR_OpenWindow>
+  <GR_WindowModeHint>기본 설정 창 유형</GR_WindowModeHint>
+  <GR_TitleDrag>SQUISHY</GR_TitleDrag>
+  <GR_Auto>자동</GR_Auto>
+  <GR_SelectLeft>왼쪽 창에서 총기를 선택하세요.</GR_SelectLeft>
+  <GR_ModEnabled>이 모드 전체 사용</GR_ModEnabled>
+  <GR_RangedEnabled>원거리 반동 전체 사용</GR_RangedEnabled>
+  <GR_WalkAnimationEnabled>걷기 애니메이션 사용</GR_WalkAnimationEnabled>
+  <GR_MainButtonOption>메인 바에 바로가기 버튼 표시</GR_MainButtonOption>
+  <GR_ShootingSkillRecoilOption>사격 기술에 따라 반동 감소</GR_ShootingSkillRecoilOption>
+  <GR_ShootingSkillRecoilTip>11레벨부터 레벨당 총기·몸 반동이 4%씩 감소해 20레벨에 최대 40% 감소합니다. 폰이 성장하는 느낌을 받을 수 있습니다.</GR_ShootingSkillRecoilTip>
+  <GR_DefaultStyle>기본 몸 반동 스타일 (총마다 따로 고를 수 있음)</GR_DefaultStyle>
+  <GR_HeavyDefaultStyle>기본 몸 반동 스타일 (조종하는 폰의 반동)</GR_HeavyDefaultStyle>
+  <GR_WeaponCategoryRanged>원거리</GR_WeaponCategoryRanged>
+  <GR_WeaponCategoryMelee>근거리</GR_WeaponCategoryMelee>
+  <GR_WeaponCategoryHeavy>중화기</GR_WeaponCategoryHeavy>
+  <GR_PawnExclusions>반동 제외 종족: {0}개  ▼</GR_PawnExclusions>
+  <GR_AllMods>전체 모드</GR_AllMods>
+  <GR_SourceButton>무기 출처: {0}  ▼</GR_SourceButton>
+  <GR_SelectHint>왼쪽에서 총기를 선택하세요.\n초록색 = 직접 조정한 총, 흰색 = 자동값.</GR_SelectHint>
+  <GR_Stats>발사 {0}발 / 발 간격 {1}틱 / 조준 {2}초 / 쿨다운 {3}틱</GR_Stats>
+  <GR_ClassSource>분류: {0}   출처: {1}</GR_ClassSource>
+  <GR_SwitchUnified>UI 전환 · 통합 화면</GR_SwitchUnified>
+  <GR_SwitchDocked>UI 전환 · 도킹 화면</GR_SwitchDocked>
+  <GR_SwitchTip>도킹 화면: 목록은 왼쪽, 상세는 오른쪽 가장자리에 붙고 가운데 맵이 비어 게임이 진행됩니다. 다시 누르면 하나의 큰 창으로 돌아갑니다.</GR_SwitchTip>
+  <GR_TabCasings>탄피 설정</GR_TabCasings>
+  <GR_CasingEffectsEnabled>{0} 탄피 배출 사용</GR_CasingEffectsEnabled>
+  <GR_CasingGlobalSettings>전체 설정</GR_CasingGlobalSettings>
+  <GR_CasingWeaponSettings>총기별 설정</GR_CasingWeaponSettings>
+  <GR_CasingLifetime>배출한 탄피 유지 시간: {0}초</GR_CasingLifetime>
+  <GR_CasingLimit>맵 전체 탄피 제한: {0}</GR_CasingLimit>
+  <GR_CasingSize>탄피 크기 (0=기본): {0}</GR_CasingSize>
+  <GR_CasingPreviewTitle>탄피 배출 위치 미리보기 - {0}</GR_CasingPreviewTitle>
+  <GR_CasingPreviewHint>탄피 위 휠: 탄피 회전 · 그 외 화면 휠: 무기 확대/축소</GR_CasingPreviewHint>
+  <GR_CasingZoomOut>미리보기 20% 축소</GR_CasingZoomOut>
+  <GR_CasingZoomIn>미리보기 20% 확대</GR_CasingZoomIn>
+  <GR_CasingTypeLabel>탄피 종류 선택</GR_CasingTypeLabel>
+  <GR_CasingTypeName>탄피 {0}</GR_CasingTypeName>
+  <GR_CasingOffsetHorizontal>탄피 좌우 위치: {0}</GR_CasingOffsetHorizontal>
+  <GR_CasingOffsetVertical>탄피 상하 위치: {0}</GR_CasingOffsetVertical>
+  <GR_CasingRotation>탄피 회전: {0}°</GR_CasingRotation>
+  <GR_CasingFlipHorizontal>탄피 텍스처 좌우 반전</GR_CasingFlipHorizontal>
+  <GR_ClassButton>무기 분류: {0} ({1})  ▼</GR_ClassButton>
+  <GR_BodyMotionSettings>몸체 모션 및 연사 처리</GR_BodyMotionSettings>
+  <GR_WeaponPositionSettings>총기 위치</GR_WeaponPositionSettings>
+  <GR_CustomClassManagement>커스텀 분류 관리</GR_CustomClassManagement>
+  <GR_HeavyCustomClassManagement>중화기 커스텀 분류 관리</GR_HeavyCustomClassManagement>
+  <GR_HeavyHandsTitle>SMYH 무기별 손 설정</GR_HeavyHandsTitle>
+  <GR_HeavyHandsToggle>해당 중화기에 손 사용하기</GR_HeavyHandsToggle>
+  <GR_HeavyAutoSelectTip>중화기를 클릭하시면 해당 중화기로 자동 선택됩니다.</GR_HeavyAutoSelectTip>
+  <GR_CustomClassName>분류 이름</GR_CustomClassName>
+  <GR_CustomClassTip>현재 무기의 반동 및 근접 모션 설정을 재사용 가능한 분류로 저장합니다.</GR_CustomClassTip>
+  <GR_CustomClassHint>저장한 분류는 위 무기 분류 메뉴에서 적용할 수 있습니다. 새 분류 저장과 현재 적용된 분류 관리를 나누었습니다.</GR_CustomClassHint>
+  <GR_CustomClassCreateHeading>현재 설정으로 새 분류 만들기</GR_CustomClassCreateHeading>
+  <GR_CustomClassCurrent>현재 적용된 분류: {0}</GR_CustomClassCurrent>
+  <GR_CustomClassSave>새 분류로 저장</GR_CustomClassSave>
+  <GR_CustomClassSaveShort>커스텀 저장</GR_CustomClassSaveShort>
+  <GR_CustomClassManageShort>관리</GR_CustomClassManageShort>
+  <GR_CustomClassManagerEmpty>저장된 커스텀 분류가 없습니다.</GR_CustomClassManagerEmpty>
+  <GR_CustomClassSelected>선택한 분류: {0}</GR_CustomClassSelected>
+  <GR_CustomClassErrorEmpty>분류 이름을 입력하세요.</GR_CustomClassErrorEmpty>
+  <GR_CustomClassOverwrite>덮어쓰기</GR_CustomClassOverwrite>
+  <GR_CustomClassOverwriteConfirm>현재 설정으로 커스텀 분류 '{0}'의 저장 내용을 덮어쓸까요?</GR_CustomClassOverwriteConfirm>
+  <GR_CustomClassRename>이름 수정</GR_CustomClassRename>
+  <GR_CustomClassRenameConfirm>이름 저장</GR_CustomClassRenameConfirm>
+  <GR_CustomClassCancel>취소</GR_CustomClassCancel>
+  <GR_CustomClassDelete>삭제</GR_CustomClassDelete>
+  <GR_CustomClassErrorExists>같은 이름의 분류가 이미 있습니다.</GR_CustomClassErrorExists>
+  <GR_CustomClassSaved>커스텀 분류를 저장했습니다.</GR_CustomClassSaved>
+  <GR_CustomClassRenamed>커스텀 분류 이름을 수정했습니다.</GR_CustomClassRenamed>
+  <GR_CustomClassDeleteConfirm>커스텀 분류 '{0}'을(를) 삭제할까요? 이 분류를 사용 중인 무기는 자동 분류로 돌아갑니다.</GR_CustomClassDeleteConfirm>
+  <GR_CustomClassDeleted>커스텀 분류를 삭제했습니다.</GR_CustomClassDeleted>
+  <GR_Manual>수동</GR_Manual>
+
+  <!-- Body motion styles and fire modes -->
+  <GR_Style0>표준</GR_Style0>
+  <GR_Style1>과장A</GR_Style1>
+  <GR_Style2>과장B</GR_Style2>
+  <GR_Style3>택티컬</GR_Style3>
+  <GR_StyleTip0></GR_StyleTip0>
+  <GR_StyleTip1> 과장A: 수축 기반 반동 </GR_StyleTip1>
+  <GR_StyleTip2> 과장B: 늘어남 기반 반동 </GR_StyleTip2>
+  <GR_StyleTip3> 택티컬: 절제된 반동 </GR_StyleTip3>
+  <GR_Fire1>발마다</GR_Fire1>
+  <GR_Fire2>떨림</GR_Fire2>
+  <GR_StyleManual>몸 반동 스타일  - 자동: {0} (기본 스타일)</GR_StyleManual>
+  <GR_FireManual>연사 모션  - 자동: 발 간격 6틱 미만이면 떨림, 아니면 발마다</GR_FireManual>
+
+  <!-- Recoil tab -->
+  <GR_TabRecoil>반동 설정</GR_TabRecoil>
+  <GR_RecoilGlobalSettings>전체 설정</GR_RecoilGlobalSettings>
+  <GR_RecoilPerWeaponSettings>무기별 설정</GR_RecoilPerWeaponSettings>
+  <GR_RecoilWeaponSettingsHeader>{0} 설정</GR_RecoilWeaponSettingsHeader>
+  <GR_TabMuzzleFlash>총구 화염</GR_TabMuzzleFlash>
+  <GR_TabHandsShort>손 (SMYH)</GR_TabHandsShort>
+  <GR_TabHands>손 (SMYH)</GR_TabHands>
+  <GR_TabPawnExclusions>종족별 설정</GR_TabPawnExclusions>
+  <GR_PawnExclusionSearch>종족 검색</GR_PawnExclusionSearch>
+  <GR_PawnExclusionHint>반동 적용 여부와 걷기 애니메이션 사용 여부는 각각 체크박스로 따로 설정할 수 있고, 총기·몸 반동 배율도 따로 조절할 수 있습니다.</GR_PawnExclusionHint>
+  <GR_PawnColRace>종족</GR_PawnColRace>
+  <GR_PawnColWeapon>총기 반동</GR_PawnColWeapon>
+  <GR_PawnColBody>몸 반동</GR_PawnColBody>
+  <GR_PawnColWalk>걷기</GR_PawnColWalk>
+  <GR_PawnColEnabled>사용</GR_PawnColEnabled>
+  <GR_PawnColUse>사용</GR_PawnColUse>
+  <GR_PawnColRecoil>반동 적용</GR_PawnColRecoil>
+  <GR_PawnRaceCategory_Humanoids>인간형</GR_PawnRaceCategory_Humanoids>
+  <GR_PawnRaceCategory_Mechanoids>메카노이드</GR_PawnRaceCategory_Mechanoids>
+  <GR_PawnRaceCategory_Animals>동물</GR_PawnRaceCategory_Animals>
+  <GR_PawnRaceCategory_Other>기타</GR_PawnRaceCategory_Other>
+  <GR_WeaponRecoilGroup>총기 반동 설정</GR_WeaponRecoilGroup>
+  <GR_WeaponRecoilTip>뒤로 밀림과 위로 들림의 강도를 조절합니다.\n킥 수치는 몸에 전달하는 힘의 강도를 결정합니다.</GR_WeaponRecoilTip>
+  <GR_HeavyWeaponRecoilGroup>중화기 반동 설정</GR_HeavyWeaponRecoilGroup>
+  <GR_HeavyWeaponRecoilTip>중화기의 반동과 조종하는 폰에게 전달되는 힘을 조절합니다.</GR_HeavyWeaponRecoilTip>
+  <GR_BodyRecoilGroup>몸 반동 설정</GR_BodyRecoilGroup>
+  <GR_BodyRecoilTip>몸의 움직임, 고개 반동과 잔여 움직임을 조절합니다.\n몸 반동 세기는 전달받는 힘의 배율을 조절합니다.</GR_BodyRecoilTip>
+  <GR_NoTemplate>이 분류({0})는 활 / 투척 동작이라 몸 반동 템플릿이 적용되지 않습니다. 아래 수동값은 반동 스프링에만 적용됩니다.</GR_NoTemplate>
+  <GR_PosXManual>총 X 위치 조정 - 자동: {0}</GR_PosXManual>
+  <GR_PosXLabel>총 X 위치 조정</GR_PosXLabel>
+  <GR_PosYManual>총 Y 위치 조정 - 자동: {0}</GR_PosYManual>
+  <GR_PosYNorthLabel>총 Y 위치 조정 (폰이 북쪽을 바라본 상태에서 조정)</GR_PosYNorthLabel>
+  <GR_PosYEastLabel>총 Y 위치 조정 (폰이 동쪽 바라본 상태에서 조정)</GR_PosYEastLabel>
+  <GR_PosYSouthLabel>총 Y 위치 조정 (폰이 남쪽 바라본 상태에서 조정)</GR_PosYSouthLabel>
+  <GR_PosYWestLabel>총 Y 위치 조정 (폰이 서쪽 바라본 상태에서 조정)</GR_PosYWestLabel>
+  <GR_PosYZero>0 초기화</GR_PosYZero>
+  <GR_RotationManual>총기 각도 조정  - 자동: 0°</GR_RotationManual>
+  <GR_RotationLabel>총기 회전 각도</GR_RotationLabel>
+  <GR_HumanBodyTypeOnly>체형별 설정</GR_HumanBodyTypeOnly>
+  <GR_HumanBodyTypeButton>체형별 설정</GR_HumanBodyTypeButton>
+  <GR_HumanBodyTypeMale>남성</GR_HumanBodyTypeMale>
+  <GR_HumanBodyTypeFemale>여성</GR_HumanBodyTypeFemale>
+  <GR_HumanBodyTypeThin>마름</GR_HumanBodyTypeThin>
+  <GR_HumanBodyTypeHulk>근육질</GR_HumanBodyTypeHulk>
+  <GR_HumanBodyTypeFat>비만</GR_HumanBodyTypeFat>
+  <GR_KickManual>뒤로 밀림(kick)  - 자동: {0}</GR_KickManual>
+  <GR_KickLabel>뒤로 밀림 (0 = 없음)</GR_KickLabel>
+  <GR_RiseManual>위로 들림(rise)  - 자동: {0}°</GR_RiseManual>
+  <GR_RiseLabel>위로 들림 (0 = 없음)</GR_RiseLabel>
+  <GR_BodyManual>몸 반동 세기 (킥에 비례)  - 자동: {0}</GR_BodyManual>
+  <GR_BodyLabel>몸 반동 세기 (0 = 없음)</GR_BodyLabel>
+  <GR_ResidualManual>잔여 반동 (저격총용)  - 자동: {0}</GR_ResidualManual>
+  <GR_ResidualLabel>잔여 반동 (0 = 없음)</GR_ResidualLabel>
+  <GR_ResidualHint></GR_ResidualHint>
+  <GR_HeadManual>고개 반동  - 자동: {0}</GR_HeadManual>
+  <GR_HeadLabel>고개 반동 (0 = 없음)</GR_HeadLabel>
+  <GR_HeadHint></GR_HeadHint>
+  <GR_ResetAuto>자동값으로 되돌리기</GR_ResetAuto>
+  <GR_DockedAutoSelectTip>폰을 클릭하시면 해당 주 무기로 총기가 자동 선택됩니다</GR_DockedAutoSelectTip>
+
+  <!-- Hand editor -->
+  <GR_Edit_NotLoaded>Show Me Your Hands가 로드되지 않았습니다.</GR_Edit_NotLoaded>
+  <GR_Edit_NoSettings>SMYH 설정 객체를 찾을 수 없습니다.</GR_Edit_NoSettings>
+  <GR_Edit_NoStructure>SMYH의 무기별 손 설정 저장 구조를 찾을 수 없습니다.</GR_Edit_NoStructure>
+  <GR_Edit_ConnectFailed>SMYH 설정 연결 실패: {0}</GR_Edit_ConnectFailed>
+  <GR_Edit_ConnectFailedShort>SMYH 연결 실패</GR_Edit_ConnectFailedShort>
+  <GR_Edit_Title>SMYH 무기별 손 설정 — {0}</GR_Edit_Title>
+  <GR_Edit_Main>주 손</GR_Edit_Main>
+  <GR_Edit_MainSize>주 손 크기</GR_Edit_MainSize>
+  <GR_Edit_Off>보조 손</GR_Edit_Off>
+  <GR_Edit_OffSize>보조 손 크기</GR_Edit_OffSize>
+  <GR_Edit_Save>손 위치 저장</GR_Edit_Save>
+  <GR_Edit_SaveSuccess>손 위치를 저장했습니다.</GR_Edit_SaveSuccess>
+  <GR_Edit_Reset>이 무기 설정 초기화</GR_Edit_Reset>
+  <GR_Edit_Dirty>변경 사항 있음 — 저장을 눌러 적용 (손 크기는 바로 적용됩니다)</GR_Edit_Dirty>
+  <GR_Edit_PreviewTitle>미리보기</GR_Edit_PreviewTitle>
+  <GR_Edit_PreviewHint>좌클릭 드래그로 손 이동 · 손 위에서 휠: 회전 (Shift: 5배)</GR_Edit_PreviewHint>
+  <GR_Edit_NoPreview>무기 미리보기를 표시할 수 없습니다.</GR_Edit_NoPreview>
+  <GR_Edit_Show>표시</GR_Edit_Show>
+  <GR_Edit_LeftRight>좌우</GR_Edit_LeftRight>
+  <GR_Edit_ForwardBack>상하</GR_Edit_ForwardBack>
+  <GR_Edit_Rotation>회전</GR_Edit_Rotation>
+  <GR_Edit_Behind>무기 뒤쪽에 표시</GR_Edit_Behind>
+  <GR_Edit_SizeManual>{0} 수동 (기본 1.00)</GR_Edit_SizeManual>
+  <GR_Edit_SizeValue>{0} 배율: {1}</GR_Edit_SizeValue>
+
+  <!-- Show Me Your Hands link and diagnostics -->
+  <GR_Smyh_MissingModClass>ShowMeYourHandsMod 클래스</GR_Smyh_MissingModClass>
+  <GR_Smyh_MissingSelectedDef>SelectedDef 속성</GR_Smyh_MissingSelectedDef>
+  <GR_Smyh_MissingDrawMethod>drawWeaponOptions 메서드</GR_Smyh_MissingDrawMethod>
+  <GR_Smyh_NotFound>찾지 못한 항목: {0}</GR_Smyh_NotFound>
+  <GR_Smyh_RelatedMethods>SMYH Mod 클래스의 관련 메서드: {0}</GR_Smyh_RelatedMethods>
+  <GR_Smyh_RuntimeError>실행 중 오류가 나서 중단했습니다 (로그 확인).\n오류 내용: {0}</GR_Smyh_RuntimeError>
+  <GR_Smyh_NotLoaded>Show Me Your Hands 모드가 로드되어 있지 않습니다.</GR_Smyh_NotLoaded>
+  <GR_Smyh_Summary>SMYH 패키지: {0} | Mod 클래스: {1} | HandDrawer: {2} | Main: {3}</GR_Smyh_Summary>
+  <GR_Yes>있음</GR_Yes>
+  <GR_No>없음</GR_No>
+  <GR_Smyh_DiscoverError>SMYH 탐색 오류: {0}</GR_Smyh_DiscoverError>
+  <GR_Hand_NotTried>손 크기 연동: 아직 시도하지 않음</GR_Hand_NotTried>
+  <GR_Hand_NoSmyh>손 크기 연동: SMYH 없음</GR_Hand_NoSmyh>
+  <GR_Hand_NoClasses>손 크기 연동 실패: SMYH의 HandDrawer/Main/Mod 클래스를 찾지 못했습니다.</GR_Hand_NoClasses>
+  <GR_Hand_NoMembers>손 크기 연동 실패: 필요한 멤버를 찾지 못했습니다 ({0})</GR_Hand_NoMembers>
+  <GR_Hand_BadArgs>손 크기 연동 실패: drawMainHand/drawOffHand 인자 구성이 예상과 다릅니다.</GR_Hand_BadArgs>
+  <GR_Hand_Active>손 크기 연동: 활성</GR_Hand_Active>
+  <GR_Hand_Error>손 크기 연동 오류: {0}</GR_Hand_Error>
+
+  <!-- 터렛, 거치형 무기, 대포, 박격포 -->
+  <GR_TurretEnabled>터렛·거치형 무기 반동 사용</GR_TurretEnabled>
+  <GR_TurretOperatorBody>조작하는 폰에게 반동 전달</GR_TurretOperatorBody>
+  <GR_TurretFlashFollow>터렛 총구 화염이 반동을 따라감 (Muzzle Flash 필요)</GR_TurretFlashFollow>
+  <GR_TurretTabNA>터렛에는 적용되지 않는 탭입니다.</GR_TurretTabNA>
+</LanguageData>

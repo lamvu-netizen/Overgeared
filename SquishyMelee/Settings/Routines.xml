@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Attack routines of SquishyMelee. Edit, add or remove routines here; the game only has to be restarted (no build).
+
+  A routine is one choreography of an attack, whatever the weapon is. The game deals its blow on one tick only: that tick is time 0 of the
+  routine, and the strike of the routine is on it. Everything before it (Pre) leads up to it, everything after it (Post) is what the pawn
+  does with the weapon and body once the blow is struck. The body reaction (the soft ring-out) is added on top of all this by the mod and
+  never stops, whatever comes next.
+
+  <Routine id weight combo mirror cold kinds>
+    id      the name of the routine (a translation key SM_Routine_<id> gives the name shown in the options)
+    weight  how likely the routine is chosen (1 = normal, 0 = never); the player can change it in the options
+    combo   (not used by the routines that come with the mod: there are no extra strikes; a swing before the blow is part of Pre)
+    mirror  true: the weapon swing of this routine alternates from one attack to the next
+    cold    false: the routine needs the lead-in of an attack before it (a leap, a deep crouch), it is never the first attack of a fight
+    kinds   all, or a list of Slash, Thrust, Smash, Bite: only for weapons whose swing kind is among them
+
+  <Hit>   what happens ON the blow (time 0): the pose the parts are brought to, and how hard the body is kicked
+  <Pre>   keys with a negative time (ticks before the blow, the last key at 0): the lead-in that the attack before plays
+  <Post>  keys with a positive time (ticks after the blow): what is held or moved to after the blow; the last key is where it stays
+          until the lead-in of the next routine takes over (the weapon may stay down, or up, ...)
+
+  Values of a key or of the hit (all optional, 0 when left out), at strength 1:
+    sw    weapon swing in degrees, positive = down (clockwise), negative = up/back;  up  weapon held higher, in cells
+    wx    weapon pushed forward, in cells;   push  the pawn forward, in cells;   lean  body lean, in degrees (positive = towards the target)
+    sy sx body squash (sy: height, sx: width; negative sy = lower);   hop  the pawn lifted (leap), in cells;   head  head turn, in degrees
+    shf shr  shield forward (cells) / turn (degrees)
+    pt    how much the weapon is turned to point at the target (0 = as it is held, 1 = pointing); for thrusts, so that a sword or an axe
+          held at a slant still looks like a stab. In <Hit> it is where the weapon IS at the strike; the angle it means is set per weapon.
+  A key may have stop="true": the motion comes to rest there (otherwise it flows through the key).
+  In <Hit>: sw, up are where the weapon IS at the strike; the others are kicks that ring out. landing: squash on landing after a leap.
+  <Strike gap amp arc push hold pull>: gap ticks after the previous strike; amp size; arc 1 same / -1 opposite swing; push size of the dash;
+          hold ticks of hit stop; pull how far it is drawn back right before it.
+-->
+<Routines>
+  <Tuning>
+    <maxStretch>1.35</maxStretch>   <!-- how much slower the lead-in and the post part may be played when the cooldown is long -->
+    <blendTicks>8</blendTicks>      <!-- how long the change from the pose held after the blow to the lead-in of the next routine takes -->
+  </Tuning>
+
+  <!-- the plain swing: weapon drawn back, then a broad cut; alternates from side to side -->
+  <Routine id="classic" weight="1.0" combo="false" mirror="true" cold="true" kinds="all">
+    <Hit sw="90" up="0" wx="0.20" push="0.34" lean="12" sy="0.07" sx="-0.05" hop="0.035" head="8" shf="-0.06" shr="-9">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-34" sw="-18" up="0.03" sy="-0.03" sx="0.02" lean="-3" push="-0.02"/>
+      <Key t="-14" sw="-52" up="0.06" sy="-0.055" sx="0.04" lean="-4" push="-0.035" stop="true"/>
+      <Key t="-9"  sw="-80" up="0.07" sy="-0.06" sx="0.045" lean="-5" push="-0.04" stop="true"/>
+      <Key t="-5"  sw="-72" up="0.05" sy="-0.05" sx="0.035" lean="-4" push="0.02"/>
+      <Key t="-2"  sw="-34" up="0.04" sy="-0.045" sx="0.033" lean="-3" push="0.10"/>
+      <Key t="0"   sw="-4" up="0.02" sy="-0.04" sx="0.03" lean="-2" push="0.16"/>
+    </Pre>
+    <Post>
+      <Key t="12" sw="30" up="0" stop="true"/>
+      <Key t="24" sw="12" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- the weapon is raised high while the pawn dashes in, and brought down on the blow; the weapon stays low after it -->
+  <Routine id="overhead" weight="1.0" combo="false" mirror="false" cold="true" kinds="all">
+    <Hit sw="100" up="0" wx="0.08" push="0.22" lean="14" sy="-0.08" sx="0.06" hop="0.02" head="9" shf="-0.07" shr="-10">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="4" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-40" sw="-10" up="0.04" sy="-0.03" sx="0.02" lean="-2"/>
+      <Key t="-26" sw="-60" up="0.20" sy="-0.08" sx="0.06" lean="-5" push="-0.04" stop="true"/>
+      <Key t="-12" sw="-80" up="0.28" sy="-0.10" sx="0.07" lean="-6" push="-0.05"/>
+      <Key t="-8"  sw="-102" up="0.34" sy="-0.09" sx="0.065" lean="-5" push="0.0" stop="true"/>
+      <Key t="-5"  sw="-92" up="0.32" sy="-0.06" sx="0.045" lean="-3" push="0.04"/>
+      <Key t="-2"  sw="-45" up="0.16" sy="-0.03" sx="0.02" lean="0" push="0.12"/>
+      <Key t="0"   sw="-5" up="0.05" sy="0.0" sx="0.0" lean="3" push="0.17"/>
+    </Pre>
+    <Post>
+      <Key t="14" sw="72" up="-0.02" sy="-0.02" stop="true"/>
+      <Key t="34" sw="62" up="-0.03"/>
+    </Post>
+  </Routine>
+
+  <!-- crouched low, then a dash and a low sweep -->
+  <Routine id="crouch_dash" weight="1.0" combo="false" mirror="false" cold="true" kinds="all">
+    <Hit sw="85" up="-0.02" wx="0.12" push="0.34" lean="14" sy="0.05" sx="-0.04" hop="0.02" head="8" shf="-0.06" shr="-8">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-32" sw="-22" up="0" sy="-0.04" lean="-3"/>
+      <Key t="-22" sw="-45" up="-0.06" sy="-0.13" sx="0.09" lean="-9" push="-0.07" stop="true"/>
+      <Key t="-8"  sw="-48" up="-0.06" sy="-0.14" sx="0.10" lean="-10" push="-0.07" stop="true"/>
+      <Key t="-5"  sw="-44" up="-0.06" sy="-0.10" sx="0.07" lean="-7" push="0.03"/>
+      <Key t="-2"  sw="-24" up="-0.04" sy="-0.05" sx="0.035" lean="-2" push="0.14"/>
+      <Key t="0"   sw="-4" up="-0.02" sy="-0.02" sx="0.02" lean="2" push="0.19"/>
+    </Pre>
+    <Post>
+      <Key t="16" sw="72" up="-0.08" sy="-0.03" stop="true"/>
+      <Key t="32" sw="66" up="-0.07"/>
+    </Post>
+  </Routine>
+
+  <!-- from a weapon held low: a dash, the weapon lifts, and the blow is struck upwards -->
+  <Routine id="rising_cut" weight="1.0" combo="false" mirror="false" cold="true" kinds="all">
+    <Hit sw="-85" up="0.20" wx="0.10" push="0.30" lean="10" sy="0.06" sx="-0.045" hop="0.03" head="7" shf="-0.06" shr="-8">
+      <Strike gap="0" amp="1" arc="1" push="1.1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-30" sw="50" up="-0.08" sy="-0.03" lean="-3"/>
+      <Key t="-20" sw="62" up="-0.12" sy="-0.09" sx="0.065" lean="-6" push="-0.06" stop="true"/>
+      <Key t="-7"  sw="56" up="-0.12" sy="-0.09" sx="0.065" lean="-6" push="-0.06" stop="true"/>
+      <Key t="-4"  sw="48" up="-0.10" sy="-0.07" sx="0.05" lean="-4" push="0.02"/>
+      <Key t="-2"  sw="25" up="-0.04" sy="-0.04" sx="0.03" lean="0" push="0.10"/>
+      <Key t="0"   sw="2" up="0.0" sy="-0.02" sx="0.015" lean="2" push="0.16"/>
+    </Pre>
+    <Post>
+      <Key t="10" sw="-58" up="0.17" sy="0.0" stop="true"/>
+      <Key t="26" sw="-52" up="0.15"/>
+    </Post>
+  </Routine>
+
+  <!-- a deep crouch, a leap, and the blow comes down from the top of it; lands with a squash -->
+  <Routine id="leap_slam" weight="0.8" combo="false" mirror="false" cold="false" kinds="all">
+    <Hit sw="100" up="0.04" wx="0.20" push="0.38" lean="14" sy="-0.04" sx="0.03" hop="0.02" head="9" landing="0.16" shf="-0.07" shr="-10">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="4" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-38" sw="-12" up="0.04" sy="-0.03" lean="-2"/>
+      <Key t="-27" sw="-50" up="0.10" sy="-0.14" sx="0.10" lean="-8" push="-0.06" stop="true"/>
+      <Key t="-14" sw="-54" up="0.12" sy="-0.15" sx="0.105" lean="-9" push="-0.06"/>
+      <Key t="-7"  sw="-90" up="0.30" sy="0.05" sx="-0.035" lean="-3" push="0.14" hop="0.18"/>
+      <Key t="-4"  sw="-82" up="0.28" sy="0.045" sx="-0.032" lean="-1" push="0.20" hop="0.27"/>
+      <Key t="-2"  sw="-40" up="0.14" sy="0.04" sx="-0.03" lean="1" push="0.26" hop="0.32"/>
+      <Key t="0"   sw="-6" up="0.06" sy="0.04" sx="-0.03" lean="2" push="0.30" hop="0.34"/>
+    </Pre>
+    <Post>
+      <Key t="16" sw="70" up="-0.02" sy="-0.02" stop="true"/>
+      <Key t="32" sw="60" up="-0.03"/>
+    </Post>
+  </Routine>
+
+  <Routine id="leap_slash" weight="0.8" combo="false" mirror="true" cold="false" kinds="all">
+    <Hit sw="88" up="0.08" wx="0.22" push="0.44" lean="12" sy="0.04" sx="-0.03" hop="0.03" head="8" landing="0.10" shf="-0.06" shr="-9">
+      <Strike gap="0" amp="1" arc="1" push="1.1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-36" sw="-14" up="0.04" sy="-0.03" lean="-2"/>
+      <Key t="-25" sw="-40" up="0.06" sy="-0.13" sx="0.09" lean="-8" push="-0.06" stop="true"/>
+      <Key t="-12" sw="-44" up="0.07" sy="-0.14" sx="0.095" lean="-8" push="-0.06"/>
+      <Key t="-6"  sw="-74" up="0.19" sy="0.04" sx="-0.03" lean="-2" push="0.10" hop="0.14"/>
+      <Key t="-2"  sw="-40" up="0.12" sy="0.04" sx="-0.03" lean="1" push="0.22" hop="0.21"/>
+      <Key t="0"   sw="-8" up="0.06" sy="0.04" sx="-0.03" lean="2" push="0.26" hop="0.22"/>
+    </Pre>
+    <Post>
+      <Key t="15" sw="26" up="0" sy="-0.02" stop="true"/>
+      <Key t="30" sw="10" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- steps back first, then lunges forward into a stab -->
+  <Routine id="back_thrust" weight="1.0" combo="false" mirror="false" cold="true" kinds="all">
+    <Hit sw="8" up="0" wx="0.36" push="0.55" lean="10" sy="0.06" sx="-0.045" hop="0.0" head="6" shf="-0.05" shr="-7" pt="1">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-36" push="-0.04" sy="-0.02" lean="-2" pt="0"/>
+      <Key t="-25" sw="-8" wx="-0.14" push="-0.24" sy="-0.06" sx="0.04" lean="-8" pt="0.6" stop="true"/>
+      <Key t="-8"  sw="-8" wx="-0.20" push="-0.25" sy="-0.07" sx="0.05" lean="-9" pt="0.95" stop="true"/>
+      <Key t="-4"  sw="-8" wx="-0.17" push="-0.18" sy="-0.06" sx="0.045" lean="-7" pt="1"/>
+      <Key t="-2"  sw="-8" wx="-0.04" push="-0.04" sy="-0.04" sx="0.03" lean="-3" pt="1"/>
+      <Key t="0"   sw="-8" wx="0.12" push="0.10" sy="-0.03" sx="0.02" lean="0" pt="1"/>
+    </Pre>
+    <Post>
+      <Key t="11" wx="0.16" push="0.03" lean="3" pt="0.6" stop="true"/>
+      <Key t="26" wx="0.05" push="0.0" lean="0" pt="0"/>
+    </Post>
+  </Routine>
+
+  <Routine id="quick_thrust" weight="1.0" combo="false" mirror="false" cold="true" kinds="all">
+    <Hit sw="8" up="0" wx="0.30" push="0.32" lean="8.5" sy="0.06" sx="-0.045" hop="0" head="6" shf="-0.05" shr="-7" pt="1">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-28" sw="-4" wx="-0.04" push="-0.03" sy="-0.02" pt="0"/>
+      <Key t="-12" sw="-6" wx="-0.12" push="-0.08" lean="-5" sy="-0.045" sx="0.03" pt="0.85" stop="true"/>
+      <Key t="-8"  sw="-8" wx="-0.16" push="-0.11" lean="-6.5" sy="-0.06" sx="0.04" pt="1" stop="true"/>
+      <Key t="-4"  sw="-8" wx="-0.14" push="-0.08" lean="-5" sy="-0.05" sx="0.035" pt="1"/>
+      <Key t="-2"  sw="-8" wx="-0.02" push="0.0" lean="-2" sy="-0.03" sx="0.02" pt="1"/>
+      <Key t="0"   sw="-8" wx="0.10" push="0.10" lean="0" sy="-0.02" sx="0.015" pt="1"/>
+    </Pre>
+    <Post>
+      <Key t="12" wx="0.10" lean="2" pt="0.5" stop="true"/>
+      <Key t="24" wx="0.02" lean="0" pt="0"/>
+    </Post>
+  </Routine>
+
+  <!-- a full body charge -->
+  <Routine id="head_butt" weight="0.8" combo="false" mirror="false" cold="true" kinds="all">
+    <Hit sw="0" up="0" wx="0" push="0.46" lean="18" sy="-0.05" sx="0.05" hop="0.02" head="14">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-26" lean="-5" push="-0.04" sy="-0.03"/>
+      <Key t="-12" lean="-12" push="-0.10" sy="-0.09" sx="0.065" head="-6" stop="true"/>
+      <Key t="-8"  lean="-15" push="-0.13" sy="-0.10" sx="0.07" head="-9" stop="true"/>
+      <Key t="-4"  lean="-13" push="-0.10" sy="-0.08" sx="0.055" head="-8"/>
+      <Key t="-2"  lean="-4" push="-0.02" sy="-0.05" sx="0.035" head="-3"/>
+      <Key t="0"   lean="2" push="0.10" sy="-0.02" sx="0.015" head="0"/>
+    </Pre>
+    <Post>
+      <Key t="12" lean="4" push="0.02" sy="-0.02" stop="true"/>
+      <Key t="26" lean="0" push="0"/>
+    </Post>
+  </Routine>
+
+  <!-- a crouch, a leap forward, and the body lands on the target -->
+  <Routine id="pounce" weight="0.7" combo="false" mirror="false" cold="false" kinds="all">
+    <Hit sw="0" up="0" wx="0" push="0.55" lean="12" sy="-0.05" sx="0.04" hop="0.02" head="10" landing="0.10">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-30" lean="-3" push="-0.02" sy="-0.03"/>
+      <Key t="-20" lean="-9" push="-0.05" sy="-0.12" sx="0.085" head="-5" stop="true"/>
+      <Key t="-9"  lean="-8" push="-0.05" sy="-0.13" sx="0.09" head="-5"/>
+      <Key t="-3"  lean="3" push="0.14" sy="0.04" sx="-0.03" hop="0.15"/>
+      <Key t="0"   lean="6" push="0.30" sy="0.04" sx="-0.03" hop="0.22"/>
+    </Pre>
+    <Post>
+      <Key t="14" lean="2" sy="-0.02" stop="true"/>
+      <Key t="28" lean="0" sy="0"/>
+    </Post>
+  </Routine>
+
+  <!-- a wide sweep from far back -->
+  <Routine id="sweep" weight="1.0" combo="false" mirror="true" cold="true" kinds="all">
+    <Hit sw="100" up="-0.02" wx="0.20" push="0.34" lean="15" sy="0.06" sx="-0.045" hop="0.03" head="8" shf="-0.06" shr="-9">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-32" sw="-25" up="0.02" sy="-0.03" lean="-3"/>
+      <Key t="-15" sw="-72" up="-0.03" sy="-0.06" sx="0.04" lean="-8" push="-0.05" stop="true"/>
+      <Key t="-10" sw="-96" up="0.05" sy="-0.07" sx="0.05" lean="-10" push="0.0" stop="true"/>
+      <Key t="-5"  sw="-88" up="0.04" sy="-0.06" sx="0.045" lean="-9" push="0.05"/>
+      <Key t="-2"  sw="-40" up="0.02" sy="-0.05" sx="0.035" lean="-7" push="0.12"/>
+      <Key t="0"   sw="-6" up="0.0" sy="-0.04" sx="0.03" lean="-6" push="0.15"/>
+    </Pre>
+    <Post>
+      <Key t="17" sw="66" up="-0.04" stop="true"/>
+      <Key t="32" sw="55" up="-0.03"/>
+    </Post>
+  </Routine>
+
+
+
+  <!-- ===== a swing in place, then (with no pause) a dash and the real blow the other way ===== -->
+  <!-- the weapon is swung across in place; it stays on that side, and from there the pawn dashes in and cuts back the other way -->
+  <Routine id="swing_dash" weight="1.0" combo="false" mirror="true" cold="true" kinds="all">
+    <Hit sw="-82" up="0.06" wx="0.12" push="0.30" lean="12" sy="0.06" sx="-0.045" hop="0.03" head="8" shf="-0.06" shr="-9">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-42" sw="-40" up="0.05" sy="-0.03" sx="0.02" lean="-3"/>
+      <Key t="-30" sw="-62" up="0.06" sy="-0.055" sx="0.04" lean="-5" push="-0.03" stop="true"/>
+      <Key t="-20" sw="70" up="0.0" sy="0.02" sx="-0.015" lean="6" push="0.02"/>
+      <Key t="-14" sw="78" up="-0.02" sy="0.0" sx="0.0" lean="8" push="0.0"/>
+      <Key t="-9"  sw="80" up="0.0" sy="-0.05" sx="0.035" lean="-2" push="0.06" stop="true"/>
+      <Key t="-5"  sw="72" up="0.02" sy="-0.045" sx="0.032" lean="-2" push="0.10"/>
+      <Key t="-2"  sw="36" up="0.03" sy="-0.035" sx="0.025" lean="-1" push="0.16"/>
+      <Key t="0"   sw="4" up="0.04" sy="-0.03" sx="0.02" lean="0" push="0.20"/>
+    </Pre>
+    <Post>
+      <Key t="14" sw="-55" up="0.04" stop="true"/>
+      <Key t="30" sw="-48" up="0.03"/>
+    </Post>
+  </Routine>
+
+  <!-- swung up in place first, then a dash and a chop straight down -->
+  <Routine id="rise_chop" weight="1.0" combo="false" mirror="false" cold="true" kinds="all">
+    <Hit sw="100" up="0" wx="0.10" push="0.30" lean="14" sy="-0.06" sx="0.05" hop="0.02" head="9" shf="-0.07" shr="-10">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="4" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-42" sw="40" up="-0.06" sy="-0.03" lean="-2"/>
+      <Key t="-30" sw="60" up="-0.10" sy="-0.08" sx="0.06" lean="-6" push="-0.04" stop="true"/>
+      <Key t="-20" sw="-72" up="0.22" sy="0.02" sx="-0.015" lean="4"/>
+      <Key t="-10" sw="-92" up="0.30" sy="-0.03" sx="0.02" lean="-1" push="0.02" stop="true"/>
+      <Key t="-5"  sw="-84" up="0.28" sy="-0.04" sx="0.03" lean="-2" push="0.08"/>
+      <Key t="-2"  sw="-40" up="0.12" sy="-0.03" sx="0.02" lean="0" push="0.14"/>
+      <Key t="0"   sw="-6" up="0.05" sy="-0.02" sx="0.015" lean="1" push="0.18"/>
+    </Pre>
+    <Post>
+      <Key t="14" sw="70" up="-0.02" stop="true"/>
+      <Key t="34" sw="62" up="-0.03"/>
+    </Post>
+  </Routine>
+
+  <!-- a stab in place, drawn back, and straight into a dash and a second, real stab -->
+  <Routine id="jab_lunge" weight="1.0" combo="false" mirror="false" cold="true" kinds="all">
+    <Hit sw="8" up="0" wx="0.36" push="0.46" lean="9" sy="0.06" sx="-0.045" hop="0" head="6" shf="-0.05" shr="-7" pt="1">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-38" sw="-4" wx="-0.04" push="-0.03" sy="-0.02" pt="0"/>
+      <Key t="-28" sw="-8" wx="-0.16" push="-0.08" lean="-5" sy="-0.05" sx="0.035" pt="0.6" stop="true"/>
+      <Key t="-19" sw="2" wx="0.28" push="0.04" lean="5" sy="0.03" sx="-0.02" pt="1"/>
+      <Key t="-12" sw="0" wx="0.08" push="0.0" lean="0" sy="0.0" sx="0.0" pt="0.85"/>
+      <Key t="-7"  sw="-8" wx="-0.16" push="-0.10" lean="-6" sy="-0.06" sx="0.04" pt="0.95" stop="true"/>
+      <Key t="-4"  sw="-8" wx="-0.14" push="-0.06" lean="-4" sy="-0.05" sx="0.035" pt="1"/>
+      <Key t="-2"  sw="-8" wx="0.0" push="0.04" lean="-1" sy="-0.03" sx="0.02" pt="1"/>
+      <Key t="0"   sw="-8" wx="0.12" push="0.14" lean="0" sy="-0.02" sx="0.015" pt="1"/>
+    </Pre>
+    <Post>
+      <Key t="12" wx="0.14" lean="2" pt="0.5" stop="true"/>
+      <Key t="26" wx="0.04" lean="0" pt="0"/>
+    </Post>
+  </Routine>
+
+  <!-- steps back while swinging in place, then dashes in with a cut the other way -->
+  <Routine id="retreat_swing" weight="1.0" combo="false" mirror="true" cold="true" kinds="all">
+    <Hit sw="-88" up="0.04" wx="0.12" push="0.36" lean="13" sy="0.06" sx="-0.045" hop="0.03" head="8" shf="-0.06" shr="-9">
+      <Strike gap="0" amp="1" arc="1" push="1.1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-40" sw="-30" up="0.03" push="-0.02" sy="-0.03" lean="-3"/>
+      <Key t="-28" sw="-56" up="0.05" push="-0.14" sy="-0.07" sx="0.05" lean="-7" stop="true"/>
+      <Key t="-17" sw="68" up="0.0" push="-0.22" sy="-0.03" sx="0.02" lean="-2"/>
+      <Key t="-11" sw="78" up="-0.02" push="-0.24" sy="-0.07" sx="0.05" lean="-6" stop="true"/>
+      <Key t="-5"  sw="70" up="0.02" push="-0.08" sy="-0.05" sx="0.035" lean="-4"/>
+      <Key t="-2"  sw="34" up="0.03" push="0.04" sy="-0.04" sx="0.028" lean="-1"/>
+      <Key t="0"   sw="4" up="0.04" push="0.14" sy="-0.03" sx="0.02" lean="1"/>
+    </Pre>
+    <Post>
+      <Key t="14" sw="-58" up="0.05" stop="true"/>
+      <Key t="30" sw="-50" up="0.04"/>
+    </Post>
+  </Routine>
+  <!-- a short, plain swing for cooldowns that are too short for the others (nothing is played faster than it looks well) -->
+  <Routine id="snap" weight="0.4" combo="false" mirror="true" cold="true" kinds="all">
+    <Hit sw="86" up="0" wx="0.18" push="0.32" lean="12" sy="0.07" sx="-0.05" hop="0.03" head="8" shf="-0.06" shr="-9">
+      <Strike gap="0" amp="1" arc="1" push="1" hold="3" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-14" sw="-20" up="0.03" sy="-0.03" sx="0.02" lean="-2" push="-0.02"/>
+      <Key t="-8"  sw="-70" up="0.06" sy="-0.05" sx="0.035" lean="-4" push="0.0" stop="true"/>
+      <Key t="-4"  sw="-62" up="0.05" sy="-0.045" sx="0.032" lean="-3" push="0.04"/>
+      <Key t="-2"  sw="-30" up="0.03" sy="-0.035" sx="0.025" lean="-2" push="0.10"/>
+      <Key t="0"   sw="-4" up="0.02" sy="-0.03" sx="0.02" lean="-1" push="0.14"/>
+    </Pre>
+    <Post>
+      <Key t="8" sw="30" up="0" stop="true"/>
+      <Key t="14" sw="12" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- ===== CUSTOM OVERGEARED MULTI-HIT COMBO MOVESETS ===== -->
+  <!-- 2-hit X-cross double slash: cleave down then crisp upward reverse cut -->
+  <Routine id="combo_cross_slash" weight="1.0" combo="true" mirror="true" cold="true" kinds="Slash, Smash">
+    <Hit sw="92" up="0.02" wx="0.22" push="0.34" lean="14" sy="0.07" sx="-0.05" hop="0.03" head="9" shf="-0.06" shr="-9">
+      <Strike gap="0" amp="0.88" arc="1" push="0.85" hold="2" pull="0"/>
+      <Strike gap="11" amp="1.18" arc="-1" push="1.15" hold="4" pull="0.35"/>
+    </Hit>
+    <Pre>
+      <Key t="-30" sw="-22" up="0.04" sy="-0.03" sx="0.02" lean="-3"/>
+      <Key t="-12" sw="-76" up="0.10" sy="-0.07" sx="0.05" lean="-6" push="-0.04" stop="true"/>
+      <Key t="-5"  sw="-68" up="0.07" sy="-0.05" sx="0.035" lean="-3" push="0.05"/>
+      <Key t="-2"  sw="-30" up="0.04" sy="-0.035" sx="0.025" lean="0" push="0.14"/>
+      <Key t="0"   sw="-4"  up="0.02" sy="-0.02" sx="0.015" lean="2" push="0.18"/>
+    </Pre>
+    <Post>
+      <Key t="24" sw="-32" up="0.06" stop="true"/>
+      <Key t="36" sw="0" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- 3-hit alternating whirl flurry: rapid left-right slashes into heavy dash finisher -->
+  <Routine id="combo_whirl_flurry" weight="0.9" combo="true" mirror="true" cold="true" kinds="all">
+    <Hit sw="95" up="0.03" wx="0.24" push="0.32" lean="15" sy="0.07" sx="-0.05" hop="0.04" head="10" shf="-0.06" shr="-10">
+      <Strike gap="0" amp="0.78" arc="1" push="0.75" hold="2" pull="0"/>
+      <Strike gap="9" amp="0.92" arc="-1" push="0.85" hold="2" pull="0.25"/>
+      <Strike gap="10" amp="1.30" arc="1" push="1.25" hold="5" pull="0.45"/>
+    </Hit>
+    <Pre>
+      <Key t="-28" sw="-24" up="0.04" sy="-0.03" lean="-3"/>
+      <Key t="-10" sw="-82" up="0.12" sy="-0.07" sx="0.05" lean="-7" push="-0.05" stop="true"/>
+      <Key t="-4"  sw="-64" up="0.08" sy="-0.05" lean="-3" push="0.06"/>
+      <Key t="0"   sw="-5"  up="0.03" sy="-0.02" lean="2" push="0.17"/>
+    </Pre>
+    <Post>
+      <Key t="36" sw="42" up="-0.02" stop="true"/>
+      <Key t="48" sw="8" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- 3-hit Rising Tempest: crouch sweep -> uppercut launcher -> leaping slam finisher -->
+  <Routine id="combo_rising_tempest" weight="0.85" combo="true" mirror="false" cold="false" kinds="all">
+    <Hit sw="104" up="0.06" wx="0.22" push="0.40" lean="16" sy="-0.06" sx="0.05" hop="0.16" head="10" landing="0.14" shf="-0.07" shr="-10">
+      <Strike gap="0" amp="0.82" arc="1" push="0.85" hold="2" pull="0"/>
+      <Strike gap="10" amp="1.05" arc="-1" push="0.95" hold="2" pull="0.30"/>
+      <Strike gap="14" amp="1.38" arc="1" push="1.35" hold="6" pull="0.55"/>
+    </Hit>
+    <Pre>
+      <Key t="-34" sw="-20" up="-0.02" sy="-0.05" lean="-3"/>
+      <Key t="-18" sw="-48" up="-0.06" sy="-0.14" sx="0.10" lean="-9" push="-0.07" stop="true"/>
+      <Key t="-6"  sw="-44" up="-0.05" sy="-0.09" sx="0.06" lean="-5" push="0.06"/>
+      <Key t="0"   sw="-6"  up="0.0"   sy="-0.02" lean="2" push="0.20"/>
+    </Pre>
+    <Post>
+      <Key t="40" sw="68" up="-0.04" sy="-0.03" stop="true"/>
+      <Key t="54" sw="14" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- 3-hit Piercing Barrage: two rapid stabs into deep forward lunge -->
+  <Routine id="combo_pierce_barrage" weight="0.95" combo="true" mirror="false" cold="true" kinds="Thrust, Slash">
+    <Hit sw="8" up="0" wx="0.40" push="0.44" lean="12" sy="0.06" sx="-0.045" hop="0.01" head="7" shf="-0.05" shr="-7" pt="1">
+      <Strike gap="0" amp="0.80" arc="1" push="0.70" hold="1" pull="0"/>
+      <Strike gap="8" amp="0.92" arc="1" push="0.85" hold="2" pull="0.50"/>
+      <Strike gap="11" amp="1.32" arc="1" push="1.40" hold="5" pull="0.65"/>
+    </Hit>
+    <Pre>
+      <Key t="-28" sw="-6" wx="-0.06" push="-0.04" sy="-0.02" pt="0.2"/>
+      <Key t="-11" sw="-8" wx="-0.18" push="-0.12" lean="-7" sy="-0.06" sx="0.04" pt="0.95" stop="true"/>
+      <Key t="-4"  sw="-8" wx="-0.14" push="-0.06" lean="-4" pt="1"/>
+      <Key t="0"   sw="-6" wx="0.14"  push="0.14"  lean="1" pt="1"/>
+    </Pre>
+    <Post>
+      <Key t="34" wx="0.16" lean="3" pt="0.5" stop="true"/>
+      <Key t="46" wx="0.02" lean="0" pt="0"/>
+    </Post>
+  </Routine>
+
+  <!-- 4-hit Phantom Execution: step-back feint slash -> inverse cut -> rising arc -> overhead execution -->
+  <Routine id="combo_abyssal_execution" weight="0.75" combo="true" mirror="true" cold="false" kinds="Slash, Thrust">
+    <Hit sw="102" up="0.05" wx="0.26" push="0.42" lean="16" sy="0.08" sx="-0.06" hop="0.12" head="11" landing="0.12" shf="-0.07" shr="-10">
+      <Strike gap="0" amp="0.75" arc="1" push="0.80" hold="2" pull="0"/>
+      <Strike gap="8" amp="0.90" arc="-1" push="0.90" hold="2" pull="0.25"/>
+      <Strike gap="9" amp="1.05" arc="-1" push="1.05" hold="2" pull="0.35"/>
+      <Strike gap="13" amp="1.42" arc="1" push="1.35" hold="6" pull="0.55"/>
+    </Hit>
+    <Pre>
+      <Key t="-34" sw="-24" up="0.04" push="-0.05" sy="-0.04" lean="-4"/>
+      <Key t="-14" sw="-80" up="0.10" push="-0.10" sy="-0.08" sx="0.06" lean="-8" stop="true"/>
+      <Key t="-5"  sw="-66" up="0.06" push="0.04"  sy="-0.05" lean="-3"/>
+      <Key t="0"   sw="-4"  up="0.03" push="0.18"  sy="-0.02" lean="2"/>
+    </Pre>
+    <Post>
+      <Key t="44" sw="64" up="-0.03" sy="-0.02" stop="true"/>
+      <Key t="58" sw="10" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- 4-hit Eternal Verdict: high guard -> double cross cleave -> rising cut -> aerial judgment slam -->
+  <Routine id="combo_omni_verdict" weight="0.75" combo="true" mirror="false" cold="false" kinds="all">
+    <Hit sw="108" up="0.08" wx="0.24" push="0.45" lean="17" sy="-0.07" sx="0.06" hop="0.18" head="12" landing="0.16" shf="-0.08" shr="-11">
+      <Strike gap="0" amp="0.85" arc="1" push="0.85" hold="2" pull="0"/>
+      <Strike gap="9" amp="0.95" arc="-1" push="0.95" hold="2" pull="0.30"/>
+      <Strike gap="10" amp="1.10" arc="-1" push="1.00" hold="3" pull="0.35"/>
+      <Strike gap="14" amp="1.48" arc="1" push="1.40" hold="7" pull="0.60"/>
+    </Hit>
+    <Pre>
+      <Key t="-36" sw="-18" up="0.06" sy="-0.03" lean="-2"/>
+      <Key t="-16" sw="-92" up="0.28" sy="-0.09" sx="0.06" lean="-7" push="-0.04" stop="true"/>
+      <Key t="-6"  sw="-82" up="0.22" sy="-0.05" lean="-2" push="0.06"/>
+      <Key t="0"   sw="-6"  up="0.05" sy="-0.02" lean="3" push="0.20"/>
+    </Pre>
+    <Post>
+      <Key t="46" sw="72" up="-0.04" sy="-0.03" stop="true"/>
+      <Key t="62" sw="12" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- ===== ABYSSAL SKULLBLADE EXCLUSIVE 5 MOVESET SKILLS ===== -->
+  <!-- Moveset 1: Phong Long Tram — massive sweeping abyssal dragon skull cleave -->
+  <Routine id="sk_abyssal_dragon_cleave" weight="1.0" combo="false" mirror="false" cold="true" kinds="Slash">
+    <Hit sw="108" up="0.04" wx="0.28" push="0.38" lean="16" sy="0.08" sx="-0.05" hop="0.06" head="10" shf="-0.07" shr="-10">
+      <Strike gap="0" amp="1.28" arc="1" push="1.15" hold="5" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-32" sw="-28" up="0.06" sy="-0.04" lean="-4"/>
+      <Key t="-14" sw="-96" up="0.22" sy="-0.09" sx="0.06" lean="-9" push="-0.06" stop="true"/>
+      <Key t="-5"  sw="-76" up="0.14" sy="-0.06" lean="-4" push="0.08"/>
+      <Key t="0"   sw="-8"  up="0.05" sy="-0.02" lean="3" push="0.24"/>
+    </Pre>
+    <Post>
+      <Key t="24" sw="78" up="-0.04" stop="true"/>
+      <Key t="40" sw="12" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Moveset 2: Bao Toc Anh Bo — phantom afterimage blink dash + twin speed-cut -->
+  <Routine id="sk_phantom_blink" weight="1.0" combo="true" mirror="false" cold="true" kinds="Slash, Thrust">
+    <Hit sw="82" up="0.0" wx="0.36" push="0.54" lean="18" sy="0.09" sx="-0.06" hop="0.04" head="9" shf="-0.06" shr="-8" pt="0.8">
+      <Strike gap="0" amp="0.92" arc="1" push="1.25" hold="2" pull="0"/>
+      <Strike gap="9" amp="1.22" arc="-1" push="1.35" hold="4" pull="0.45"/>
+    </Hit>
+    <Pre>
+      <Key t="-24" sw="-18" wx="-0.08" push="-0.08" sy="-0.09" sx="0.06" lean="-10"/>
+      <Key t="-10" sw="-32" wx="-0.16" push="-0.12" sy="-0.13" sx="0.09" lean="-14" stop="true"/>
+      <Key t="-3"  sw="-12" wx="0.10"  push="0.22"  sy="0.03"  lean="6"/>
+      <Key t="0"   sw="6"   wx="0.24"  push="0.42"  sy="0.06"  lean="12"/>
+    </Pre>
+    <Post>
+      <Key t="26" sw="22" up="0.02" stop="true"/>
+      <Key t="40" sw="4" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Moveset 3: Long Quyen Tan Anh — 3-hit abyssal cyclone spinning slash -->
+  <Routine id="sk_cyclone_vortex" weight="1.0" combo="true" mirror="true" cold="true" kinds="Slash">
+    <Hit sw="96" up="0.05" wx="0.24" push="0.30" lean="15" sy="0.08" sx="-0.06" hop="0.05" head="10">
+      <Strike gap="0" amp="0.86" arc="1" push="0.80" hold="2" pull="0"/>
+      <Strike gap="8" amp="0.98" arc="-1" push="0.85" hold="2" pull="0.30"/>
+      <Strike gap="9" amp="1.32" arc="1" push="1.15" hold="5" pull="0.40"/>
+    </Hit>
+    <Pre>
+      <Key t="-28" sw="-30" up="0.04" sy="-0.05" lean="-5"/>
+      <Key t="-12" sw="-86" up="0.14" sy="-0.10" sx="0.07" lean="-8" push="-0.04" stop="true"/>
+      <Key t="-4"  sw="-58" up="0.08" sy="-0.05" lean="-2" push="0.08"/>
+      <Key t="0"   sw="-4"  up="0.04" sy="0.0"   lean="3" push="0.18"/>
+    </Pre>
+    <Post>
+      <Key t="34" sw="46" up="-0.02" stop="true"/>
+      <Key t="48" sw="8" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Moveset 4: Long Phong Pha Kich — low dash rising uppercut + crystal spike dragon eruption -->
+  <Routine id="sk_soaring_pierce" weight="1.0" combo="true" mirror="false" cold="false" kinds="Slash, Thrust">
+    <Hit sw="-90" up="0.26" wx="0.24" push="0.44" lean="14" sy="0.08" sx="-0.06" hop="0.20" head="10" landing="0.15">
+      <Strike gap="0" amp="0.90" arc="1" push="0.95" hold="2" pull="0"/>
+      <Strike gap="11" amp="1.38" arc="-1" push="1.25" hold="5" pull="0.45"/>
+    </Hit>
+    <Pre>
+      <Key t="-30" sw="45" up="-0.08" sy="-0.05" lean="-4"/>
+      <Key t="-14" sw="68" up="-0.14" sy="-0.14" sx="0.10" lean="-10" push="-0.08" stop="true"/>
+      <Key t="-5"  sw="48" up="-0.08" sy="-0.06" lean="-4" push="0.12"/>
+      <Key t="0"   sw="8"  up="0.04"  sy="0.03"  lean="4" push="0.26" hop="0.10"/>
+    </Pre>
+    <Post>
+      <Key t="32" sw="-48" up="0.14" stop="true"/>
+      <Key t="46" sw="0" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Moveset 5: Ngu Mang Hac Tinh Tran — 5-hit lightning-fast pentagram star draw + obsidian crystal eruption -->
+  <Routine id="sk_pentagram_cataclysm" weight="0.9" combo="true" mirror="true" cold="false" kinds="Slash, Thrust">
+    <Hit sw="100" up="0.06" wx="0.28" push="0.36" lean="16" sy="0.08" sx="-0.05" hop="0.14" head="11" landing="0.16">
+      <Strike gap="0" amp="0.78" arc="1" push="0.80" hold="1" pull="0"/>
+      <Strike gap="7" amp="0.84" arc="-1" push="0.85" hold="1" pull="0.25"/>
+      <Strike gap="7" amp="0.92" arc="1" push="0.90" hold="1" pull="0.25"/>
+      <Strike gap="7" amp="1.05" arc="-1" push="1.00" hold="2" pull="0.30"/>
+      <Strike gap="11" amp="1.52" arc="1" push="1.35" hold="7" pull="0.55"/>
+    </Hit>
+    <Pre>
+      <Key t="-34" sw="-24" up="0.04" sy="-0.04" lean="-4"/>
+      <Key t="-14" sw="-86" up="0.16" sy="-0.12" sx="0.08" lean="-9" push="-0.06" stop="true"/>
+      <Key t="-5"  sw="-64" up="0.10" sy="-0.06" lean="-3" push="0.08"/>
+      <Key t="0"   sw="-6"  up="0.04" sy="-0.02" lean="3" push="0.20"/>
+    </Pre>
+    <Post>
+      <Key t="48" sw="66" up="-0.04" sy="-0.03" stop="true"/>
+      <Key t="64" sw="10" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- ===== TRAN AC (VOID INKBLADE) EXCLUSIVE 5 BLACK-INK MOVESET SKILLS ===== -->
+  <!-- Skill 1: Hac Nhat Tram — sweeping wide black-ink eclipse orbital ring cut -->
+  <Routine id="sk_ink_eclipse_ring" weight="1.0" combo="false" mirror="false" cold="true" kinds="Slash">
+    <Hit sw="102" up="0.02" wx="0.30" push="0.34" lean="14" sy="0.07" sx="-0.05" hop="0.04" head="9">
+      <Strike gap="0" amp="1.32" arc="1" push="1.15" hold="5" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-30" sw="-26" up="0.05" sy="-0.04" lean="-4"/>
+      <Key t="-14" sw="-88" up="0.12" sy="-0.08" sx="0.06" lean="-8" push="-0.04" stop="true"/>
+      <Key t="-5"  sw="-66" up="0.08" sy="-0.05" lean="-3" push="0.10"/>
+      <Key t="0"   sw="-6"  up="0.03" sy="-0.02" lean="3" push="0.22"/>
+    </Pre>
+    <Post>
+      <Key t="24" sw="72" up="-0.02" stop="true"/>
+      <Key t="40" sw="10" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Skill 2: Thai Hu Tram Ba — rooted ranged Cosmic-Void crescent missile slash wave -->
+  <Routine id="sk_ink_void_wave" weight="1.0" combo="false" mirror="false" cold="true" kinds="Slash">
+    <Hit sw="96" up="0.02" wx="0.32" push="0.14" lean="12" sy="0.06" sx="-0.04" hop="0.02" head="8">
+      <Strike gap="10" amp="1.45" arc="1" push="1.25" hold="5" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-26" sw="-22" up="0.04" sy="-0.04" lean="-4"/>
+      <Key t="-12" sw="-88" up="0.14" sy="-0.08" sx="0.05" lean="-8" push="-0.04" stop="true"/>
+      <Key t="-4"  sw="-42" up="0.06" sy="-0.03" lean="0"  push="0.04"/>
+      <Key t="0"   sw="8"   up="0.02" sy="0.0"   lean="5"  push="0.12"/>
+    </Pre>
+    <Post>
+      <Key t="28" sw="82" up="-0.02" stop="true"/>
+      <Key t="44" sw="12" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Skill 3: Hac Giap Ho The — heroic guard stance summoning protective Cosmic Void Nova Dome around caster -->
+  <Routine id="sk_ink_void_aegis" weight="1.0" combo="true" mirror="false" cold="true" kinds="Slash">
+    <Hit sw="-26" up="0.18" wx="0.08" push="0.06" lean="-4" sy="0.06" sx="-0.04" hop="0.03" head="-4">
+      <Strike gap="4" amp="0.90" arc="1" push="0.65" hold="2" pull="0"/>
+      <Strike gap="12" amp="1.22" arc="-1" push="0.95" hold="4" pull="0.25"/>
+    </Hit>
+    <Pre>
+      <Key t="-24" sw="14"  up="-0.04" sy="-0.06" lean="4"/>
+      <Key t="-12" sw="36"  up="-0.10" sy="-0.12" sx="0.08" lean="8" push="-0.02" stop="true"/>
+      <Key t="-4"  sw="4"   up="0.08"  sy="0.0"   lean="0" push="0.03"/>
+      <Key t="0"   sw="-22" up="0.16"  sy="0.05"  lean="-3" push="0.06"/>
+    </Pre>
+    <Post>
+      <Key t="30" sw="-18" up="0.10" stop="true"/>
+      <Key t="46" sw="0" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Skill 4: Le Anh Pha Toai — surging black-ink ground spikes + 5 crescent waves -->
+  <Routine id="sk_ink_shadow_spikes" weight="1.0" combo="true" mirror="false" cold="false" kinds="Slash, Thrust">
+    <Hit sw="-84" up="0.18" wx="0.26" push="0.42" lean="14" sy="0.08" sx="-0.06" hop="0.14" head="10" landing="0.12">
+      <Strike gap="0" amp="0.88" arc="1" push="0.95" hold="2" pull="0"/>
+      <Strike gap="9" amp="1.12" arc="-1" push="1.10" hold="2" pull="0.30"/>
+      <Strike gap="10" amp="1.42" arc="1" push="1.30" hold="5" pull="0.45"/>
+    </Hit>
+    <Pre>
+      <Key t="-28" sw="42" up="-0.06" sy="-0.05" lean="-4"/>
+      <Key t="-13" sw="64" up="-0.12" sy="-0.12" sx="0.09" lean="-9" push="-0.08" stop="true"/>
+      <Key t="-5"  sw="44" up="-0.06" sy="-0.06" lean="-4" push="0.12"/>
+      <Key t="0"   sw="6"  up="0.04"  sy="0.03"  lean="4" push="0.24" hop="0.08"/>
+    </Pre>
+    <Post>
+      <Key t="32" sw="-44" up="0.10" stop="true"/>
+      <Key t="46" sw="0" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Skill 5: Huyet Nguyet Vo Anh — Ultimate intersecting black-ink eclipse domain (4-hit) -->
+  <Routine id="sk_ink_blood_eclipse" weight="0.9" combo="true" mirror="true" cold="false" kinds="Slash, Thrust">
+    <Hit sw="104" up="0.06" wx="0.28" push="0.34" lean="16" sy="0.08" sx="-0.05" hop="0.12" head="11" landing="0.14">
+      <Strike gap="0" amp="0.82" arc="1" push="0.85" hold="1" pull="0"/>
+      <Strike gap="7" amp="0.90" arc="-1" push="0.90" hold="1" pull="0.25"/>
+      <Strike gap="7" amp="1.05" arc="1" push="1.00" hold="2" pull="0.30"/>
+      <Strike gap="10" amp="1.58" arc="-1" push="1.40" hold="7" pull="0.55"/>
+    </Hit>
+    <Pre>
+      <Key t="-32" sw="-24" up="0.04" sy="-0.04" lean="-4"/>
+      <Key t="-14" sw="-86" up="0.16" sy="-0.12" sx="0.08" lean="-9" push="-0.06" stop="true"/>
+      <Key t="-5"  sw="-64" up="0.10" sy="-0.06" lean="-3" push="0.08"/>
+      <Key t="0"   sw="-6"  up="0.04" sy="-0.02" lean="3" push="0.20"/>
+    </Pre>
+    <Post>
+      <Key t="46" sw="66" up="-0.04" sy="-0.03" stop="true"/>
+      <Key t="62" sw="10" up="0"/>
+    </Post>
+  </Routine>
+</Routines>

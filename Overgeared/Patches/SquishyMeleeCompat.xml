@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Safe conditional compatibility patch when running Overgeared alongside SQUISHY Melee (3839642536) -->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>SQUISHY Melee</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationConditional">
+          <xpath>Defs/ThingDef[defName="PF_Sword"]/weaponClasses</xpath>
+          <match Class="PatchOperationAdd">
+            <xpath>Defs/ThingDef[defName="PF_Sword"]/weaponClasses</xpath>
+            <value>
+              <li>MeleePiercer</li>
+            </value>
+          </match>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/ThingDef[defName="PF_Sword"]</xpath>
+            <value>
+              <weaponClasses>
+                <li>Melee</li>
+                <li>MeleePiercer</li>
+              </weaponClasses>
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationConditional">
+          <xpath>Defs/ThingDef[defName="PF_Axe"]/weaponClasses</xpath>
+          <match Class="PatchOperationAdd">
+            <xpath>Defs/ThingDef[defName="PF_Axe"]/weaponClasses</xpath>
+            <value>
+              <li>MeleePiercer</li>
+            </value>
+          </match>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/ThingDef[defName="PF_Axe"]</xpath>
+            <value>
+              <weaponClasses>
+                <li>Melee</li>
+                <li>MeleePiercer</li>
+              </weaponClasses>
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationConditional">
+          <xpath>Defs/ThingDef[defName="PF_Spear"]/weaponClasses</xpath>
+          <match Class="PatchOperationAdd">
+            <xpath>Defs/ThingDef[defName="PF_Spear"]/weaponClasses</xpath>
+            <value>
+              <li>MeleePiercer</li>
+            </value>
+          </match>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/ThingDef[defName="PF_Spear"]</xpath>
+            <value>
+              <weaponClasses>
+                <li>Melee</li>
+                <li>MeleePiercer</li>
+              </weaponClasses>
+            </value>
+          </nomatch>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+</Patch>

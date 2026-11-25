@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModMetaData>
+  <name>SQUISHY Melee</name>
+  <packageId>local.gunrecoil.melee</packageId>
+  <author>SQUISHY</author>
+  <description>This is expansion content for the “SQUISHY” firearm recoil mode, featuring melee combat animations.</description>
+  <supportedVersions>
+    <li>1.7</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>local.gunrecoil</packageId>
+      <displayName>SQUISHY Ranged</displayName>
+      <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3833016652</steamWorkshopUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>local.gunrecoil</li>
+    <li>Mlie.ShowMeYourHands</li>
+    <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
+  </loadAfter>
+  <modVersion>1.0.2</modVersion>
+</ModMetaData>

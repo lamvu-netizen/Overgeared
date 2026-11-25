@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RangedMeleeDefaults>
+  <stepMotion>false</stepMotion>
+  <meleeMotion>true</meleeMotion>
+  <meleeStrength>0.3</meleeStrength>
+  <comboMotion>false</comboMotion>
+  <dashDistance>0.80</dashDistance>
+  <weaponReach>0.0</weaponReach>
+  <pointAuto>1.0</pointAuto>
+  <pointTrim>0.0</pointTrim>
+  <heightStrength>1.0</heightStrength>
+  <hitStop>0.0</hitStop>
+  <smearTrail>false</smearTrail>
+  <chainMotion>false</chainMotion>
+  <cooldownMotion>true</cooldownMotion>
+  <shiverMotion>false</shiverMotion>
+  <breathMotion>true</breathMotion>
+  <compressLimit>0.8</compressLimit>
+  <readyPoseSpeed>1.0</readyPoseSpeed>
+  <bodyCoilStrength>1.0</bodyCoilStrength>
+  <bodyRecoilStrength>1.0</bodyRecoilStrength>
+  <weaponRecoilStrength>0.70</weaponRecoilStrength>
+  <headRecoilStrength>1.20</headRecoilStrength>
+  <missMotion>true</missMotion>
+  <dodgeMotion>true</dodgeMotion>
+  <hitMotion>true</hitMotion>
+  <hitTremble>true</hitTremble>
+  <hitStrength>1.0</hitStrength>
+</RangedMeleeDefaults>

@@ -16,7 +16,10 @@
   </modDependencies>
   <loadAfter>
     <li>brrainz.harmony</li>
+    <li>local.overgeared.core</li>
     <li>local.labormotion</li>
+    <li>local.gunrecoil</li>
+    <li>local.gunrecoil.melee</li>
   </loadAfter>
   <description>Personal Forge / 专属锻造
 Design and craft swords, axes, hammers and spears. Customize parts, size, materials, patterns, colors and enchantments; save plans and write each weapon's story.

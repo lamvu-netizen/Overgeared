@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Overgeared Core · Combat &amp; SkillFx Engine</name>
+  <packageId>local.overgeared.core</packageId>
+  <author>Overgeared Team</author>
+  <supportedVersions>
+    <li>1.7</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>local.gunrecoil</li>
+    <li>local.gunrecoil.melee</li>
+  </loadAfter>
+  <loadBefore>
+    <li>local.personalforge</li>
+  </loadBefore>
+  <description>Core animation and multi-frame SkillFx engine for Overgeared (RimWorld 1.7). Renders Fairycore-style multi-frame sprite sequences, world dimming, reality split hit-stop, pawn afterimages, and weapon-bound active skill combos.</description>
+</ModMetaData>

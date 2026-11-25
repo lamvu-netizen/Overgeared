@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Attach all 5 Fairycore-architecture multi-frame SkillFx movesets onto Abyssal Skullblade if present -->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>专属锻造 · Personal Forge</li>
+    </mods>
+    <match Class="PatchOperationConditional">
+      <xpath>Defs/ThingDef[defName="PF_Special_AbyssalSkullblade"]/comps</xpath>
+      <match Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="PF_Special_AbyssalSkullblade"]/comps</xpath>
+        <value>
+          <li Class="OvergearedCore.CompProperties_OvergearedWeaponSkills">
+            <cooldownTicks>180</cooldownTicks>
+            <skills>
+              <li>OG_Fx_PhongLongTram</li>
+              <li>OG_Fx_BaoTocAnhBo</li>
+              <li>OG_Fx_LongQuyenTanAnh</li>
+              <li>OG_Fx_LongPhongPhaKich</li>
+              <li>OG_Fx_NguMangTinhTran</li>
+            </skills>
+          </li>
+        </value>
+      </match>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="PF_Special_AbyssalSkullblade"]</xpath>
+        <value>
+          <comps>
+            <li Class="OvergearedCore.CompProperties_OvergearedWeaponSkills">
+              <cooldownTicks>180</cooldownTicks>
+              <skills>
+                <li>OG_Fx_PhongLongTram</li>
+                <li>OG_Fx_BaoTocAnhBo</li>
+                <li>OG_Fx_LongQuyenTanAnh</li>
+                <li>OG_Fx_LongPhongPhaKich</li>
+                <li>OG_Fx_NguMangTinhTran</li>
+              </skills>
+            </li>
+          </comps>
+        </value>
+      </nomatch>
+    </match>
+  </Operation>
+</Patch>

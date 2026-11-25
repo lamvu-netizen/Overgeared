@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- Holster: Tab and Preview -->
+  <GR_TabHolster>Holster</GR_TabHolster>
+	<GR_HolsterSelectItem>Select a weapon or shield to edit.</GR_HolsterSelectItem>
+  <GR_HolsterSelectWeapon>Select a weapon to edit.</GR_HolsterSelectWeapon>
+  <GR_HolsterNoBodyType>No body type information</GR_HolsterNoBodyType>
+  <GR_HolsterBodyMale>Male</GR_HolsterBodyMale>
+  <GR_HolsterBodyFemale>Female</GR_HolsterBodyFemale>
+  <GR_HolsterBodyThin>Thin</GR_HolsterBodyThin>
+  <GR_HolsterBodyHulk>Hulk</GR_HolsterBodyHulk>
+  <GR_HolsterBodyFat>Fat</GR_HolsterBodyFat>
+  <GR_HolsterPortraitUnavailable>Unable to load colonist portrait.</GR_HolsterPortraitUnavailable>
+  <GR_HolsterArrowNorth>↑</GR_HolsterArrowNorth>
+  <GR_HolsterArrowEast>→</GR_HolsterArrowEast>
+  <GR_HolsterArrowSouth>↓</GR_HolsterArrowSouth>
+  <GR_HolsterArrowWest>←</GR_HolsterArrowWest>
+  <GR_HolsterSavedTag>Saved</GR_HolsterSavedTag>
+  <GR_HolsterNoBodyTypePawns>No colonists with this body type.</GR_HolsterNoBodyTypePawns>
+  <GR_HolsterDummyBody>Dummy</GR_HolsterDummyBody>
+  <GR_HolsterUseDummyBody>Use Dummy</GR_HolsterUseDummyBody>
+  <GR_HolsterSaveBodyType>Save</GR_HolsterSaveBodyType>
+  <GR_HolsterBodyTypesUpdated>The holster position values for {0} of this body type have been applied to other body types whose values have not yet been saved.</GR_HolsterBodyTypesUpdated>
+  <GR_HolsterClassPresetUpdated>All five body-type holster positions for {0} are now the latest default for its ranged weapon class.</GR_HolsterClassPresetUpdated>
+
+  <!-- Holster: Weapon Settings -->
+  <GR_HolsterSettingsTitle>Holster Settings</GR_HolsterSettingsTitle>
+  <GR_HolsterWeaponEnabled>Enable {0}</GR_HolsterWeaponEnabled>
+  <GR_HolsterTargetColonists>Colonists Only</GR_HolsterTargetColonists>
+  <GR_HolsterTargetAllPawns>All Pawns</GR_HolsterTargetAllPawns>
+	<GR_HolsterWeaponInertia>Enable Holster Item Inertia (Adds Sway While Walking)</GR_HolsterWeaponInertia>
+  <GR_HolsterIndoors>Show Indoors</GR_HolsterIndoors>
+  <GR_HolsterFlipTexture>Flip Horizontally</GR_HolsterFlipTexture>
+  <GR_HolsterLayerFront>Draw Layer: In Front of Pawn</GR_HolsterLayerFront>
+  <GR_HolsterLayerBack>Draw Layer: Behind Pawn</GR_HolsterLayerBack>
+  <GR_HolsterResetPose>Reset Position</GR_HolsterResetPose>
+
+  <!-- Holster: Custom Presets -->
+  <GR_HolsterPresetsHeader>Custom Presets</GR_HolsterPresetsHeader>
+  <GR_HolsterSavePreset>Save</GR_HolsterSavePreset>
+  <GR_HolsterSavePresetHeading>Save Holster Preset</GR_HolsterSavePresetHeading>
+  <GR_HolsterManagePresets>Manage</GR_HolsterManagePresets>
+  <GR_HolsterApplyPresetLabel>Apply ▼</GR_HolsterApplyPresetLabel>
+  <GR_HolsterPresetSaved>Holster preset saved.</GR_HolsterPresetSaved>
+  <GR_HolsterSelectPreset>Select Preset</GR_HolsterSelectPreset>
+  <GR_HolsterApplyPreset>Apply</GR_HolsterApplyPreset>
+  <GR_HolsterRenamePreset>Rename</GR_HolsterRenamePreset>
+  <GR_HolsterRenameConfirm>Confirm</GR_HolsterRenameConfirm>
+  <GR_HolsterDeletePreset>Delete</GR_HolsterDeletePreset>
+  <GR_HolsterCancel>Cancel</GR_HolsterCancel>
+  <GR_HolsterDeletePresetConfirm>Delete the '{0}' preset?</GR_HolsterDeletePresetConfirm>
+  <GR_HolsterNoPresets>No saved presets.</GR_HolsterNoPresets>
+  <GR_HolsterPresetNameEmpty>Enter a preset name.</GR_HolsterPresetNameEmpty>
+  <GR_HolsterPresetNameExists>A preset with this name already exists.</GR_HolsterPresetNameExists>
+</LanguageData>

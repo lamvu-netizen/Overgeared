@@ -2,33 +2,22 @@
 Mod Asset & C# Code Exporter / Importer for Overgeared (PersonalForge 1.7).
 
 Supports:
-1. Direct PNG texture installation into Textures/PersonalForge/Parts/ or Patterns/
-   (both replacing built-in slots and adding new part indices >=6 / >=7).
+1. Direct PNG texture installation into Textures/PersonalForge/Parts/ or Patterns/.
 2. Packing directly into expansion_atlas.png when replacing slots head_*_4..5,
    guard_5..6, grip_4..5, pommel_4..5.
-3. Updating Languages/English/Keyed/PersonalForge.xml & ChineseSimplified cleanly.
-4. Generating C# 1.7 code snippets / full patch file (WeaponDesign + ExpandedParts +
-   WeaponArt extension) ready to import into PersonalForge C# source.
+3. Updating Languages/English/Keyed/PersonalForge_Custom.xml & ChineseSimplified.
+4. Generating C# 1.7 code for custom parts AND custom/expanded elements
+   (EnchantmentVisualStyle, WeaponDesign, DamageDef XML).
 """
 from __future__ import annotations
 
-import os
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 
 from PIL import Image
 
-from mod_data import (
-    BUILTIN_GRIPS,
-    BUILTIN_GUARDS,
-    BUILTIN_HEADS,
-    BUILTIN_POMMELS,
-    CustomPartEntry,
-    KINDS,
-    ModAssetStore,
-    WeaponDesignState,
-)
+from mod_data import KINDS, CustomPartEntry, ModAssetStore, WeaponDesignState
 from splitter import trim_and_pad
 
 
@@ -49,17 +38,11 @@ def save_part_to_mod(
     tang_root: float = 0.08,
     pack_into_atlas_if_builtin: bool = True,
 ) -> Tuple[str, Path]:
-    """
-    Saves a cropped/prepared part image into Overgeared/Textures/PersonalForge/
-    and updates ForgeStudio_CustomParts.json + Language XML.
-    Returns (part_id, saved_path).
-    """
     cleaned = trim_and_pad(pil_img, pad=2, target_max_dim=256)
 
     if category == "pattern":
         part_id = f"pattern_{index}"
         store.patterns_dir.mkdir(parents=True, exist_ok=True)
-        # Patterns work best at 256x256
         pat_img = pil_img.convert("RGBA").resize((256, 256), Image.Resampling.LANCZOS)
         out_path = store.patterns_dir / f"{part_id}.png"
         pat_img.save(out_path, "PNG")
@@ -102,7 +85,6 @@ def save_part_to_mod(
         row_td = atlas_cell // 4
         x0, y0 = col * cw, row_td * ch
 
-        # Clear cell and fit cleaned part inside cw x ch
         blank = Image.new("RGBA", (cw, ch), (0, 0, 0, 0))
         pw, ph = cleaned.size
         scale = min((cw - 8) / max(pw, 1), (ch - 8) / max(ph, 1), 1.0)
@@ -147,8 +129,8 @@ def save_part_to_mod(
 
 
 def update_language_xml(store: ModAssetStore) -> List[Path]:
-    """Updates Keyed/PersonalForge_Custom.xml in English & ChineseSimplified with custom part names."""
-    if not store.custom_parts:
+    """Updates Keyed/PersonalForge_Custom.xml in English & ChineseSimplified with custom part & element names."""
+    if not store.custom_parts and not store.custom_elements:
         return []
     written: List[Path] = []
     for lang in ("English", "ChineseSimplified"):
@@ -160,6 +142,10 @@ def update_language_xml(store: ModAssetStore) -> List[Path]:
         for pid, entry in sorted(store.custom_parts.items()):
             el = ET.SubElement(root, f"PF_Custom_{pid}")
             el.text = entry.name
+        for elem in store.custom_elements:
+            ET.SubElement(root, f"PF_{elem.key}").text = elem.name
+            ET.SubElement(root, f"PF_{elem.key}Desc").text = elem.description
+            ET.SubElement(root, f"PF_{elem.key}Cost").text = elem.cost_text
         tree = ET.ElementTree(root)
         ET.indent(tree, space="  ")
         tree.write(out_xml, encoding="utf-8", xml_declaration=True)
@@ -168,13 +154,6 @@ def update_language_xml(store: ModAssetStore) -> List[Path]:
 
 
 def generate_csharp_code(store: ModAssetStore, design: Optional[WeaponDesignState] = None) -> str:
-    """
-    Generates ready-to-import C# 1.7 code for PersonalForge (RimWorld 1.7)
-    covering:
-    - Extended WeaponDesign part arrays & stat profiles
-    - Direct texture loading override (no 4x4 atlas limit)
-    - Optional current WeaponDesign preset initializer
-    """
     heads_by_kind: List[List[Tuple[int, str, float, float, float, float, int]]] = [[], [], [], []]
     for k in range(4):
         for idx, pid, label in store.get_heads(k):
@@ -188,11 +167,12 @@ def generate_csharp_code(store: ModAssetStore, design: Optional[WeaponDesignStat
     guards = store.get_guards(0)
     grips = store.get_grips()
     pommels = store.get_pommels(0)
+    elements = store.get_all_elements()
 
     lines: List[str] = []
     lines.append("// ============================================================================")
-    lines.append("// PersonalForge 1.7 - Generated Custom Parts & Preset Code (Overgeared Studio)")
-    lines.append("// Import file này vào project C# PersonalForge (RimWorld 1.7) hoặc copy các mảng.")
+    lines.append("// PersonalForge 1.7 - Generated Custom Parts, Elements & Preset Code")
+    lines.append("// Import file này vào project C# PersonalForge (RimWorld 1.7) hoặc copy mảng.")
     lines.append("// ============================================================================")
     lines.append("using System.Collections.Generic;")
     lines.append("using UnityEngine;")
@@ -210,7 +190,6 @@ def generate_csharp_code(store: ModAssetStore, design: Optional[WeaponDesignStat
     lines.append("        };")
     lines.append("")
 
-    # Extra heads (> 5)
     extra_heads = [e for e in store.custom_parts.values() if e.category == "head" and e.index >= 6]
     extra_guards = [e for e in store.custom_parts.values() if e.category == "guard" and e.index >= 7]
     extra_grips = [e for e in store.custom_parts.values() if e.category == "grip" and e.index >= 6]
@@ -222,7 +201,7 @@ def generate_csharp_code(store: ModAssetStore, design: Optional[WeaponDesignStat
     lines.append("        public static readonly string[] PommelNames = new string[] { " + ", ".join(f'"{lbl}"' for _, _, lbl in pommels) + " };")
     lines.append("")
 
-    lines.append("        // 3. Socket X cho các Head mới (head >= 6) dùng trong WeaponArt.Compose")
+    lines.append("        // 3. Socket X cho các Head mới (head >= 6)")
     lines.append("        public static readonly Dictionary<string, float> CustomHeadSockets = new Dictionary<string, float>")
     lines.append("        {")
     for e in store.custom_parts.values():
@@ -233,28 +212,51 @@ def generate_csharp_code(store: ModAssetStore, design: Optional[WeaponDesignStat
 
     if extra_guards or extra_grips or extra_pommels:
         lines.append("        // 4. ComponentProfile mở rộng cho Guard / Grip / Pommel mới")
-        if extra_guards:
-            lines.append("        // Thêm vào WeaponDesign.GuardProfiles:")
-            for e in sorted(extra_guards, key=lambda x: x.index):
-                lines.append(f"        // [{e.index}] {e.name}: new ComponentProfile({e.damage:.2f}f, {e.cooldown:.2f}f, {e.mass:.2f}f, {e.penetration:.3f}f),")
-        if extra_grips:
-            lines.append("        // Thêm vào WeaponDesign.GripProfiles:")
-            for e in sorted(extra_grips, key=lambda x: x.index):
-                lines.append(f"        // [{e.index}] {e.name}: new ComponentProfile({e.damage:.2f}f, {e.cooldown:.2f}f, {e.mass:.2f}f, {e.penetration:.3f}f),")
-        if extra_pommels:
-            lines.append("        // Thêm vào WeaponDesign.PommelProfiles:")
-            for e in sorted(extra_pommels, key=lambda x: x.index):
-                lines.append(f"        // [{e.index}] {e.name}: new ComponentProfile({e.damage:.2f}f, {e.cooldown:.2f}f, {e.mass:.2f}f, {e.penetration:.3f}f),")
+        for e in sorted(extra_guards, key=lambda x: x.index):
+            lines.append(f"        // Guard[{e.index}] {e.name}: new ComponentProfile({e.damage:.2f}f, {e.cooldown:.2f}f, {e.mass:.2f}f, {e.penetration:.3f}f),")
+        for e in sorted(extra_grips, key=lambda x: x.index):
+            lines.append(f"        // Grip[{e.index}] {e.name}: new ComponentProfile({e.damage:.2f}f, {e.cooldown:.2f}f, {e.mass:.2f}f, {e.penetration:.3f}f),")
+        for e in sorted(extra_pommels, key=lambda x: x.index):
+            lines.append(f"        // Pommel[{e.index}] {e.name}: new ComponentProfile({e.damage:.2f}f, {e.cooldown:.2f}f, {e.mass:.2f}f, {e.penetration:.3f}f),")
         lines.append("")
 
     if extra_heads:
-        lines.append("        // 5. Head Stats mở rộng cho head >= 6 (Damage, Cooldown, Work, Mass, Cost)")
+        lines.append("        // 5. Head Stats mở rộng cho head >= 6")
         for e in sorted(extra_heads, key=lambda x: (x.kind, x.index)):
             lines.append(f'        // {e.part_id} ("{e.name}"): dmg={e.damage:.2f}f, cd={e.cooldown:.2f}f, work={e.work_mult:.2f}f, mass={e.mass:.2f}f, cost={e.cost}')
         lines.append("")
 
+    lines.append(f"        // 6. Danh sách Nguyên Tố Khảm mở rộng ({len(elements) - 1} nguyên tố)")
+    lines.append(f"        public const int EnchantmentCount = {len(elements) - 1};")
+    lines.append("        public static readonly string[] ElementNames = new string[] { " + ", ".join(f'"{el.name}"' for el in elements) + " };")
+    lines.append("        public static readonly string[] DamageNames = new string[] { " + ", ".join(f'"{el.damage_def}"' for el in elements) + " };")
+    lines.append("        public static readonly int[] ElementDamage = new int[] { " + ", ".join(str(el.damage) for el in elements) + " };")
+    sword_only_ids = [str(el.id) for el in elements if el.allowed_kinds == [0]]
+    lines.append("        public static readonly HashSet<int> SwordOnlyElementIds = new HashSet<int> { " + ", ".join(sword_only_ids) + " };")
+    lines.append("")
+    lines.append("        public static Color ElementTint(int element) => element switch")
+    lines.append("        {")
+    for el in elements:
+        if el.id == 0:
+            continue
+        r, g, b = el.primary_rgb
+        lines.append(f"            {el.id} => new Color({r/255.0:.3f}f, {g/255.0:.3f}f, {b/255.0:.3f}f), // {el.name}")
+    lines.append("            _ => Color.white,")
+    lines.append("        };")
+    lines.append("")
+    lines.append("        public static Color ElementCore(int element) => element switch")
+    lines.append("        {")
+    for el in elements:
+        if el.id == 0:
+            continue
+        r, g, b = el.secondary_rgb
+        lines.append(f"            {el.id} => new Color({r/255.0:.3f}f, {g/255.0:.3f}f, {b/255.0:.3f}f), // {el.name}")
+    lines.append("            _ => Color.white,")
+    lines.append("        };")
+    lines.append("")
+
     if design is not None:
-        lines.append("        // 6. Preset WeaponDesign đang test trong Forge Studio")
+        lines.append("        // 7. Preset WeaponDesign đang test trong Forge Studio")
         lines.append("        public static WeaponDesign CreatePreset()")
         lines.append("        {")
         lines.append("            return new WeaponDesign")
@@ -297,11 +299,19 @@ def generate_csharp_code(store: ModAssetStore, design: Optional[WeaponDesignStat
 
 
 def generate_xml_custom_defs(store: ModAssetStore) -> str:
-    """Generates a clean XML manifest of custom parts for Overgeared."""
-    root = ET.Element("OvergearedCustomParts")
-    root.set("rimWorldVersion", "1.7")
+    """Generates XML manifest for custom parts + DamageDefs for custom elements."""
+    root = ET.Element("Defs")
+    for elem in store.custom_elements:
+        dd = ET.SubElement(root, "DamageDef", ParentName="PF_ElementStrike")
+        ET.SubElement(dd, "defName").text = elem.damage_def
+        ET.SubElement(dd, "label").text = f"{elem.name} enchantment"
+        ET.SubElement(dd, "defaultDamage").text = str(elem.damage)
+        ET.SubElement(dd, "deathMessage").text = f"{{0}} was slain by {elem.name}."
+
+    parts_el = ET.SubElement(root, "OvergearedCustomParts")
+    parts_el.set("rimWorldVersion", "1.7")
     for pid, e in sorted(store.custom_parts.items()):
-        el = ET.SubElement(root, "Part")
+        el = ET.SubElement(parts_el, "Part")
         el.set("id", pid)
         for k, v in {
             "category": e.category,

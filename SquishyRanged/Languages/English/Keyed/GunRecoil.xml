@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- translate only the text between the tags.
+       Keep the key names, keep the {0} {1} ... placeholders (the mod fills them in) and keep \n where a line break is wanted. -->
+
+  <!-- General -->
+  <GR_OpenHint>Opens in a separate, resizable window. Drag to move or resize the corners.</GR_OpenHint>
+  <GR_OpenWindow>Open Settings</GR_OpenWindow>
+  <GR_WindowModeHint>Default Window Layout</GR_WindowModeHint>
+  <GR_TitleDrag>SQUISHY</GR_TitleDrag>
+  <GR_Auto>Auto</GR_Auto>
+  <GR_SelectLeft>Select a weapon from the left panel.</GR_SelectLeft>
+  <GR_ModEnabled>Enable Mod</GR_ModEnabled>
+  <GR_RangedEnabled>Enable Ranged Recoil</GR_RangedEnabled>
+  <GR_WalkAnimationEnabled>Enable Walk Animation</GR_WalkAnimationEnabled>
+  <GR_MainButtonOption>Show button on main toolbar</GR_MainButtonOption>
+  <GR_ShootingSkillRecoilOption>Reduce Recoil with Shooting Skill</GR_ShootingSkillRecoilOption>
+  <GR_ShootingSkillRecoilTip>Starting at level 11, weapon and body recoil decrease by 4% per level, up to 40% at level 20. A fun progression bonus for your pawns.</GR_ShootingSkillRecoilTip>
+  <GR_DefaultStyle>Default body recoil style (overridable per weapon)</GR_DefaultStyle>
+  <GR_HeavyDefaultStyle>Default body recoil style (operator pawn recoil)</GR_HeavyDefaultStyle>
+  <GR_WeaponCategoryRanged>Ranged</GR_WeaponCategoryRanged>
+  <GR_WeaponCategoryMelee>Melee</GR_WeaponCategoryMelee>
+  <GR_WeaponCategoryHeavy>Heavy</GR_WeaponCategoryHeavy>
+  <GR_PawnExclusions>Excluded Races: {0}  ▼</GR_PawnExclusions>
+  <GR_AllMods>All Mods</GR_AllMods>
+  <GR_SourceButton>Weapon Source: {0}  ▼</GR_SourceButton>
+  <GR_SelectHint>Select a weapon on the left.\nGreen = custom values, White = automatic values.</GR_SelectHint>
+  <GR_Stats>Shots: {0} | Interval: {1} ticks | Aim: {2}s | Cooldown: {3} ticks</GR_Stats>
+  <GR_ClassSource>Class: {0}   Source: {1}</GR_ClassSource>
+  <GR_SwitchUnified>Unified Layout</GR_SwitchUnified>
+  <GR_SwitchDocked>Docked Layout</GR_SwitchDocked>
+  <GR_SwitchTip>Docked Layout: The weapon list stays on the left and details on the right, leaving the center free for gameplay. Click again to return to the unified window.</GR_SwitchTip>
+  <GR_TabCasings>Casing Settings</GR_TabCasings>
+  <GR_CasingEffectsEnabled>Enable Casing Ejection for {0}</GR_CasingEffectsEnabled>
+  <GR_CasingGlobalSettings>Global Settings</GR_CasingGlobalSettings>
+  <GR_CasingWeaponSettings>Per-weapon Settings</GR_CasingWeaponSettings>
+  <GR_CasingLifetime>Casing Lifetime: {0}s</GR_CasingLifetime>
+  <GR_CasingLimit>Map-wide casing limit: {0}</GR_CasingLimit>
+  <GR_CasingSize>Casing size (0=default): {0}</GR_CasingSize>
+  <GR_CasingPreviewTitle>Casing ejection preview - {0}</GR_CasingPreviewTitle>
+  <GR_CasingPreviewHint>Scroll over a casing to rotate it · Scroll elsewhere to zoom the weapon</GR_CasingPreviewHint>
+  <GR_CasingZoomOut>Zoom preview out 20%</GR_CasingZoomOut>
+  <GR_CasingZoomIn>Zoom preview in 20%</GR_CasingZoomIn>
+  <GR_CasingTypeLabel>Select casing type</GR_CasingTypeLabel>
+  <GR_CasingTypeName>Casing {0}</GR_CasingTypeName>
+  <GR_CasingOffsetHorizontal>Casing horizontal position: {0}</GR_CasingOffsetHorizontal>
+  <GR_CasingOffsetVertical>Casing vertical position: {0}</GR_CasingOffsetVertical>
+  <GR_CasingRotation>Casing rotation: {0}°</GR_CasingRotation>
+  <GR_CasingFlipHorizontal>Flip casing texture horizontally</GR_CasingFlipHorizontal>
+  <GR_ClassButton>Weapon Class: {0} ({1})  ▼</GR_ClassButton>
+  <GR_BodyMotionSettings>Body Motion &amp; Burst</GR_BodyMotionSettings>
+  <GR_WeaponPositionSettings>Weapon Position</GR_WeaponPositionSettings>
+  <GR_CustomClassManagement>Custom Classes</GR_CustomClassManagement>
+  <GR_HeavyCustomClassManagement>Heavy Custom Classes</GR_HeavyCustomClassManagement>
+  <GR_HeavyHandsTitle>SMYH per-weapon hand settings</GR_HeavyHandsTitle>
+  <GR_HeavyHandsToggle>Use hands for this heavy weapon</GR_HeavyHandsToggle>
+  <GR_HeavyAutoSelectTip>Click a heavy weapon to select it automatically.</GR_HeavyAutoSelectTip>
+  <GR_CustomClassName>Class Name</GR_CustomClassName>
+  <GR_CustomClassTip>Save this weapon's recoil and melee motion settings as a reusable class.</GR_CustomClassTip>
+  <GR_CustomClassHint>Apply saved classes from the Weapon Class menu above. Creating and managing classes are separate actions.</GR_CustomClassHint>
+  <GR_CustomClassCreateHeading>Create Class from Current Settings</GR_CustomClassCreateHeading>
+  <GR_CustomClassCurrent>Current Class: {0}</GR_CustomClassCurrent>
+  <GR_CustomClassSave>Save as New Class</GR_CustomClassSave>
+  <GR_CustomClassSaveShort>Save Class</GR_CustomClassSaveShort>
+  <GR_CustomClassManageShort>Manage</GR_CustomClassManageShort>
+  <GR_CustomClassManagerEmpty>No custom classes saved.</GR_CustomClassManagerEmpty>
+  <GR_CustomClassSelected>Selected Class: {0}</GR_CustomClassSelected>
+  <GR_CustomClassErrorEmpty>Enter a class name.</GR_CustomClassErrorEmpty>
+  <GR_CustomClassOverwrite>Overwrite</GR_CustomClassOverwrite>
+  <GR_CustomClassOverwriteConfirm>Overwrite custom class '{0}' with the current settings?</GR_CustomClassOverwriteConfirm>
+  <GR_CustomClassRename>Rename</GR_CustomClassRename>
+  <GR_CustomClassRenameConfirm>Save Name</GR_CustomClassRenameConfirm>
+  <GR_CustomClassCancel>Cancel</GR_CustomClassCancel>
+  <GR_CustomClassDelete>Delete</GR_CustomClassDelete>
+  <GR_CustomClassErrorExists>A class with that name already exists.</GR_CustomClassErrorExists>
+  <GR_CustomClassSaved>Custom class saved.</GR_CustomClassSaved>
+  <GR_CustomClassRenamed>Custom class renamed.</GR_CustomClassRenamed>
+  <GR_CustomClassDeleteConfirm>Delete custom class '{0}'? Weapons using it will revert to automatic classification.</GR_CustomClassDeleteConfirm>
+  <GR_CustomClassDeleted>Custom class deleted.</GR_CustomClassDeleted>
+  <GR_Manual>Manual</GR_Manual>
+
+  <!-- Body motion styles and fire modes -->
+  <GR_Style0>Standard</GR_Style0>
+  <GR_Style1>Exag. A</GR_Style1>
+  <GR_Style2>Exag. B</GR_Style2>
+  <GR_Style3>Tactical</GR_Style3>
+  <GR_StyleTip0></GR_StyleTip0>
+  <GR_StyleTip1>Exaggerated A: Compression-based recoil</GR_StyleTip1>
+  <GR_StyleTip2>Exaggerated B: Stretch-based recoil</GR_StyleTip2>
+  <GR_StyleTip3>Tactical: Subtle, controlled recoil</GR_StyleTip3>
+  <GR_Fire1>Per Shot</GR_Fire1>
+  <GR_Fire2>Jitter</GR_Fire2>
+  <GR_StyleManual>Body Style - Auto: {0} (Default)</GR_StyleManual>
+  <GR_FireManual>Shot Motion - Auto: Jitter under 6 ticks; otherwise Per Shot</GR_FireManual>
+
+  <!-- Recoil tab -->
+  <GR_TabRecoil>Recoil Settings</GR_TabRecoil>
+  <GR_RecoilGlobalSettings>Global Settings</GR_RecoilGlobalSettings>
+  <GR_RecoilPerWeaponSettings>Per-Weapon Settings</GR_RecoilPerWeaponSettings>
+  <GR_RecoilWeaponSettingsHeader>{0} Settings</GR_RecoilWeaponSettingsHeader>
+  <GR_TabMuzzleFlash>Muzzle Flash</GR_TabMuzzleFlash>
+  <GR_TabHandsShort>Hands (SMYH)</GR_TabHandsShort>
+  <GR_TabHands>Hands (SMYH)</GR_TabHands>
+  <GR_TabPawnExclusions>Race Settings</GR_TabPawnExclusions>
+  <GR_PawnExclusionSearch>Search Races</GR_PawnExclusionSearch>
+  <GR_PawnExclusionHint>Click a category to expand its races. Search expands matching categories. Recoil and walking animations can be enabled separately. Weapon and body recoil multipliers can also be adjusted separately.</GR_PawnExclusionHint>
+  <GR_PawnColRace>Race</GR_PawnColRace>
+  <GR_PawnColWeapon>Weapon</GR_PawnColWeapon>
+  <GR_PawnColBody>Body</GR_PawnColBody>
+  <GR_PawnColWalk>Walk</GR_PawnColWalk>
+  <GR_PawnColEnabled>Enabled</GR_PawnColEnabled>
+  <GR_PawnColUse>Use</GR_PawnColUse>
+  <GR_PawnColRecoil>Apply Recoil</GR_PawnColRecoil>
+  <GR_PawnRaceCategory_Humanoids>Humanoids</GR_PawnRaceCategory_Humanoids>
+  <GR_PawnRaceCategory_Mechanoids>Mechanoids</GR_PawnRaceCategory_Mechanoids>
+  <GR_PawnRaceCategory_Animals>Animals</GR_PawnRaceCategory_Animals>
+  <GR_PawnRaceCategory_Other>Other</GR_PawnRaceCategory_Other>
+  <GR_WeaponRecoilGroup>Weapon Recoil</GR_WeaponRecoilGroup>
+  <GR_WeaponRecoilTip>Adjusts weapon pushback and muzzle rise.\nKick determines how much force is transferred to the body.</GR_WeaponRecoilTip>
+  <GR_HeavyWeaponRecoilGroup>Heavy Weapons Recoil Settings</GR_HeavyWeaponRecoilGroup>
+  <GR_HeavyWeaponRecoilTip>Adjusts the recoil of the heavy weapon and the force transferred to its operator.</GR_HeavyWeaponRecoilTip>
+  <GR_BodyRecoilGroup>Body Recoil</GR_BodyRecoilGroup>
+  <GR_BodyRecoilTip>Adjusts body movement, head recoil, and residual motion.\nBody Recoil Strength controls the multiplier applied to the transferred force.</GR_BodyRecoilTip>
+  <GR_NoTemplate>Class ({0}) uses bow or throwing animations, so body recoil templates do not apply. Manual values below only affect the recoil spring.</GR_NoTemplate>
+  <GR_PosXManual>Weapon X Position - Auto: {0}</GR_PosXManual>
+  <GR_PosXLabel>Weapon X Position</GR_PosXLabel>
+  <GR_PosYManual>Weapon Y Position - Auto: {0}</GR_PosYManual>
+  <GR_PosYNorthLabel>Adjust Gun Y Position (while the pawn is facing North)</GR_PosYNorthLabel>
+  <GR_PosYEastLabel>Adjust Gun Y Position (while the pawn is facing East)</GR_PosYEastLabel>
+  <GR_PosYSouthLabel>Adjust Gun Y Position (while the pawn is facing South)</GR_PosYSouthLabel>
+  <GR_PosYWestLabel>Adjust Gun Y Position (while the pawn is facing West)</GR_PosYWestLabel>
+  <GR_PosYZero>Reset to 0</GR_PosYZero>
+  <GR_RotationManual>Weapon Rotation - Auto: 0°</GR_RotationManual>
+  <GR_RotationLabel>Weapon Rotation</GR_RotationLabel>
+  <GR_HumanBodyTypeOnly>Per Body Type</GR_HumanBodyTypeOnly>
+  <GR_HumanBodyTypeButton>Body Types</GR_HumanBodyTypeButton>
+  <GR_HumanBodyTypeMale>Male</GR_HumanBodyTypeMale>
+  <GR_HumanBodyTypeFemale>Female</GR_HumanBodyTypeFemale>
+  <GR_HumanBodyTypeThin>Thin</GR_HumanBodyTypeThin>
+  <GR_HumanBodyTypeHulk>Hulk</GR_HumanBodyTypeHulk>
+  <GR_HumanBodyTypeFat>Fat</GR_HumanBodyTypeFat>
+  <GR_KickManual>Kick - Auto: {0}</GR_KickManual>
+  <GR_KickLabel>Weapon Pushback (0 = None)</GR_KickLabel>
+  <GR_RiseManual>Rise - Auto: {0}°</GR_RiseManual>
+  <GR_RiseLabel>Muzzle Rise (0 = None)</GR_RiseLabel>
+  <GR_BodyManual>Body Recoil (scales with Kick) - Auto: {0}</GR_BodyManual>
+  <GR_BodyLabel>Body Recoil (0 = None)</GR_BodyLabel>
+  <GR_ResidualManual>Residual Recoil (Sniper) - Auto: {0}</GR_ResidualManual>
+  <GR_ResidualLabel>Residual Recoil (0 = None)</GR_ResidualLabel>
+  <GR_ResidualHint></GR_ResidualHint>
+  <GR_HeadManual>Head Recoil - Auto: {0}</GR_HeadManual>
+  <GR_HeadLabel>Head Recoil (0 = None)</GR_HeadLabel>
+  <GR_HeadHint></GR_HeadHint>
+  <GR_ResetAuto>Reset to Auto</GR_ResetAuto>
+  <GR_DockedAutoSelectTip>Click a pawn to auto-select their primary weapon.</GR_DockedAutoSelectTip>
+
+  <!-- Hand editor -->
+  <GR_Edit_NotLoaded>Show Me Your Hands is not loaded.</GR_Edit_NotLoaded>
+  <GR_Edit_NoSettings>SMYH settings object not found.</GR_Edit_NoSettings>
+  <GR_Edit_NoStructure>SMYH per-weapon hand settings structure not found.</GR_Edit_NoStructure>
+  <GR_Edit_ConnectFailed>SMYH connection failed: {0}</GR_Edit_ConnectFailed>
+  <GR_Edit_ConnectFailedShort>SMYH Connection Failed</GR_Edit_ConnectFailedShort>
+  <GR_Edit_Title>SMYH Hand Settings - {0}</GR_Edit_Title>
+  <GR_Edit_Main>Main Hand</GR_Edit_Main>
+  <GR_Edit_MainSize>Main Hand Size</GR_Edit_MainSize>
+  <GR_Edit_Off>Off Hand</GR_Edit_Off>
+  <GR_Edit_OffSize>Off Hand Size</GR_Edit_OffSize>
+  <GR_Edit_Save>Save Positions</GR_Edit_Save>
+  <GR_Edit_SaveSuccess>Hand positions saved.</GR_Edit_SaveSuccess>
+  <GR_Edit_Reset>Reset Weapon Settings</GR_Edit_Reset>
+  <GR_Edit_Dirty>Unsaved Changes - Click Save to apply (hand sizes apply immediately)</GR_Edit_Dirty>
+  <GR_Edit_PreviewTitle>Preview</GR_Edit_PreviewTitle>
+  <GR_Edit_PreviewHint>Drag with left-click to move hands · Scroll over a hand to rotate (Shift: 5x speed)</GR_Edit_PreviewHint>
+  <GR_Edit_NoPreview>Weapon preview unavailable.</GR_Edit_NoPreview>
+  <GR_Edit_Show>Show</GR_Edit_Show>
+  <GR_Edit_LeftRight>Left / Right</GR_Edit_LeftRight>
+  <GR_Edit_ForwardBack>Up / Down</GR_Edit_ForwardBack>
+  <GR_Edit_Rotation>Rotation</GR_Edit_Rotation>
+  <GR_Edit_Behind>Draw Behind Weapon</GR_Edit_Behind>
+  <GR_Edit_SizeManual>{0} Manual (Default: 1.00)</GR_Edit_SizeManual>
+  <GR_Edit_SizeValue>{0} Scale: {1}</GR_Edit_SizeValue>
+
+  <!-- Show Me Your Hands link and diagnostics -->
+  <GR_Smyh_MissingModClass>ShowMeYourHandsMod class</GR_Smyh_MissingModClass>
+  <GR_Smyh_MissingSelectedDef>SelectedDef property</GR_Smyh_MissingSelectedDef>
+  <GR_Smyh_MissingDrawMethod>drawWeaponOptions method</GR_Smyh_MissingDrawMethod>
+  <GR_Smyh_NotFound>Not found: {0}</GR_Smyh_NotFound>
+  <GR_Smyh_RelatedMethods>Related methods in SMYH Mod class: {0}</GR_Smyh_RelatedMethods>
+  <GR_Smyh_RuntimeError>Stopped due to a runtime error (check the log).\nError: {0}</GR_Smyh_RuntimeError>
+  <GR_Smyh_NotLoaded>Show Me Your Hands is not loaded.</GR_Smyh_NotLoaded>
+  <GR_Smyh_Summary>SMYH Package: {0} | Mod Class: {1} | HandDrawer: {2} | Main: {3}</GR_Smyh_Summary>
+  <GR_Yes>Yes</GR_Yes>
+  <GR_No>No</GR_No>
+  <GR_Smyh_DiscoverError>SMYH Discovery Error: {0}</GR_Smyh_DiscoverError>
+  <GR_Hand_NotTried>Hand Size Link: Not Tried</GR_Hand_NotTried>
+  <GR_Hand_NoSmyh>Hand Size Link: SMYH Not Found</GR_Hand_NoSmyh>
+  <GR_Hand_NoClasses>Hand Size Link Failed: SMYH HandDrawer/Main/Mod classes not found.</GR_Hand_NoClasses>
+  <GR_Hand_NoMembers>Hand Size Link Failed: Required members not found ({0})</GR_Hand_NoMembers>
+  <GR_Hand_BadArgs>Hand Size Link Failed: Unexpected drawMainHand/drawOffHand arguments.</GR_Hand_BadArgs>
+  <GR_Hand_Active>Hand Size Link: Active</GR_Hand_Active>
+  <GR_Hand_Error>Hand Size Link Error: {0}</GR_Hand_Error>
+
+  <!-- Turrets, mounted guns, cannons and mortars -->
+  <GR_TurretEnabled>Enable turret and mounted gun recoil</GR_TurretEnabled>
+  <GR_TurretOperatorBody>Pass recoil to the pawn manning a turret</GR_TurretOperatorBody>
+  <GR_TurretFlashFollow>Turret muzzle flash follows recoil (needs Muzzle Flash)</GR_TurretFlashFollow>
+  <GR_TurretTabNA>This tab does not apply to turrets.</GR_TurretTabNA>
+</LanguageData>

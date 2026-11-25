@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Attach all 5 Black-Ink Shadow SkillFx movesets onto Trấn Ác · Thái Hư Hắc Kiếm if present -->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>专属锻造 · Personal Forge</li>
+    </mods>
+    <match Class="PatchOperationConditional">
+      <xpath>Defs/ThingDef[defName="PF_Special_TranAcInkblade"]/comps</xpath>
+      <match Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="PF_Special_TranAcInkblade"]/comps</xpath>
+        <value>
+          <li Class="OvergearedCore.CompProperties_OvergearedWeaponSkills">
+            <cooldownTicks>180</cooldownTicks>
+            <skills>
+              <li>OG_Fx_HacNhatTram</li>
+              <li>OG_Fx_ThaiHuTramBa</li>
+              <li>OG_Fx_HacGiapHoThe</li>
+              <li>OG_Fx_LeAnhPhaToai</li>
+              <li>OG_Fx_HuyetNguyetVoAnh</li>
+            </skills>
+          </li>
+        </value>
+      </match>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="PF_Special_TranAcInkblade"]</xpath>
+        <value>
+          <comps>
+            <li Class="OvergearedCore.CompProperties_OvergearedWeaponSkills">
+              <cooldownTicks>180</cooldownTicks>
+              <skills>
+                <li>OG_Fx_HacNhatTram</li>
+                <li>OG_Fx_DoanAnhTamLien</li>
+                <li>OG_Fx_HacAnhLoanVu</li>
+                <li>OG_Fx_LeAnhPhaToai</li>
+                <li>OG_Fx_HuyetNguyetVoAnh</li>
+              </skills>
+            </li>
+          </comps>
+        </value>
+      </nomatch>
+    </match>
+  </Operation>
+</Patch>

@@ -16,4 +16,34 @@
   <PF_EnemyEnchantChance>Enchanted share of custom weapons: {0}</PF_EnemyEnchantChance>
   <PF_EnemyScope>New hostile adult humanlikes only. Ranged, bonded and special weapons are preserved; 0% disables replacement.</PF_EnemyScope>
   <PF_ResetEnemySettings>Reset chances</PF_ResetEnemySettings>
+  <PF_Radiant>Radiant</PF_Radiant>
+  <PF_Void>Void</PF_Void>
+  <PF_Starlight>Starlight</PF_Starlight>
+  <PF_SpiritWind>Sakura Wind</PF_SpiritWind>
+  <PF_Magma>Magma</PF_Magma>
+  <PF_Frostfire>Frostfire</PF_Frostfire>
+  <PF_RadiantDesc>Hit: +4 radiant damage · Solar halo &amp; sacred rays</PF_RadiantDesc>
+  <PF_VoidDesc>Hit: +4 void damage · Abyssal vortex aura</PF_VoidDesc>
+  <PF_StarlightDesc>Hit: +3 starlight damage · Iridescent celestial stars</PF_StarlightDesc>
+  <PF_SpiritWindDesc>Hit: +3 spirit cut · Drifting sakura petals</PF_SpiritWindDesc>
+  <PF_MagmaDesc>Hit: +5 magma damage · Molten glowing veins</PF_MagmaDesc>
+  <PF_FrostfireDesc>Hit: +4 frostfire damage · Dual ice-flame helix</PF_FrostfireDesc>
+  <PF_RadiantCost>Gold 10 · Silver 15</PF_RadiantCost>
+  <PF_VoidCost>Uranium 10 · Gold 8</PF_VoidCost>
+  <PF_StarlightCost>Jade 10 · Silver 12 · Gold 6</PF_StarlightCost>
+  <PF_SpiritWindCost>Jade 12 · Gold 6</PF_SpiritWindCost>
+  <PF_MagmaCost>Chemfuel 25 · Steel 15 · Gold 6</PF_MagmaCost>
+  <PF_FrostfireCost>Chemfuel 12 · Jade 10 · Gold 6</PF_FrostfireCost>
+  <PF_AzureJet>Azure Jet</PF_AzureJet>
+  <PF_EmberTendrils>Ember Crackle</PF_EmberTendrils>
+  <PF_SonicSlash>Sonic Wind</PF_SonicSlash>
+  <PF_IceArmor>Ice Armor</PF_IceArmor>
+  <PF_PlasmaWeb>Plasma Web</PF_PlasmaWeb>
+  <PF_WaterSheath>Water Sheath</PF_WaterSheath>
+  <PF_EclipseFlare>Eclipse Flare</PF_EclipseFlare>
+  <PF_ShadowStrife>Shadow Strife (Sword Only)</PF_ShadowStrife>
+  <PF_EternalAlpha>Eternal Alpha (Sword Only)</PF_EternalAlpha>
+  <PF_NovaBurn>Nova Burn (Sword Only)</PF_NovaBurn>
+  <PF_AbyssalMiasma>Abyssal Miasma</PF_AbyssalMiasma>
+  <PF_InkVoid>Void Ink Mist</PF_InkVoid>
 </LanguageData>

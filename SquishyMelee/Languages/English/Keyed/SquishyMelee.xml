@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- Weapon filters and selected-weapon summary -->
+  <SM_Enabled>Enable All Melee Animations</SM_Enabled>
+  <SM_FilterRanged>Ranged</SM_FilterRanged>
+  <SM_FilterMelee>Melee</SM_FilterMelee>
+  <SM_MeleeStats>{0} tools / Avg. damage {1} / Avg. cooldown {2}s</SM_MeleeStats>
+  <SM_ToolLine>Damage {0} / Cooldown {1}s</SM_ToolLine>
+
+  <!-- Main editor tabs -->
+  <SM_TabMelee>Melee Motion</SM_TabMelee>
+  <SM_TabHands>Hands (SMYH)</SM_TabHands>
+  <SM_TabHandsShort>Hands (SMYH)</SM_TabHandsShort>
+  <SM_TabRaces>Race Settings</SM_TabRaces>
+  <SM_MeleeTitle>[ SQUISHY MELEE ]</SM_MeleeTitle>
+  <SM_MeleeDescription>Squishy Melee does not affect combat balance. It only adds visual effects.</SM_MeleeDescription>
+  <SM_GlobalTitle>Global Settings</SM_GlobalTitle>
+  <SM_WeaponSettingsHeader>{0} Settings</SM_WeaponSettingsHeader>
+  <SM_WeaponSettingsWithShieldsHeader>{0} · {1} Settings</SM_WeaponSettingsWithShieldsHeader>
+
+  <!-- Melee Motion tab: global settings, in display order -->
+  <SM_SecStyle>[ Style ]</SM_SecStyle>
+  <SM_StepMotion>Classic Animation (30 FPS)</SM_StepMotion>
+  <SM_StepMotionTip>Changes melee and hit poses every 2 ticks. Disable for smooth, per-tick motion. Does not affect gun recoil.</SM_StepMotionTip>
+  <SM_SecAttack>[ Attack Motion ]</SM_SecAttack>
+  <SM_MeleeMotion>Squishy-Style Attacks</SM_MeleeMotion>
+  <SM_MeleeMotionTip>Controls the attack itself. The pawn dashes forward and strikes at impact, then wobbles as the body springs back. The weapon follows an arc around the body. Slash, stab, chop, or bite is chosen automatically based on the weapon's damage type.</SM_MeleeMotionTip>
+  <SM_MeleeStrength>Attack Motion Strength</SM_MeleeStrength>
+  <SM_DashDistance>Attack Dash Distance</SM_DashDistance>
+  <SM_WeaponReach>Weapon Position (Left: Closer / Right: Farther)</SM_WeaponReach>
+  <SM_PointAuto>Adjust Thrust Tip Direction (Aims the weapon tip at the target)</SM_PointAuto>
+  <SM_PointTrim>Fine-Tune Thrust Tip Angle (Adjust per weapon)</SM_PointTrim>
+  <SM_HeightStrength>Motion Height (Weapon Lift and Jump Height)</SM_HeightStrength>
+  <SM_HitStop>Hit Stop Duration</SM_HitStop>
+  <SM_Routine_snap>Short swing (for short cooldowns)</SM_Routine_snap>
+  <SM_DebugLog>Write attacks to the log (for finding what looks wrong)</SM_DebugLog>
+  <SM_DebugLogTip>At every attack, the routine played, the routine it leads into, how long the game really took from the attack before, and the time scale of the lead-in are written to the log. When a motion looks wrong, these lines show why. Keep it off otherwise.</SM_DebugLogTip>
+  <SM_SecRoutines>[ Attack Patterns ]</SM_SecRoutines>
+  <SM_ChainMotion>Vary Attack Patterns (Randomly selects routines based on weapon cooldown)</SM_ChainMotion>
+  <SM_ChainMotionTip>Randomly selects from several attack routines, regardless of attack type. Each cooldown becomes one continuous sequence: the next move flows straight from the previous strike, such as a standing swing into a leap slash, a retreat, or a crouching leap. Hits always land at the correct moment. Disable to use basic swings only.</SM_ChainMotionTip>
+  <SM_RoutineWeightsHint>Chance for each routine. 0 disables it, 1 is normal, and 2 makes it twice as common. The left 0 button disables a routine; the right button restores its default.</SM_RoutineWeightsHint>
+  <SM_Routine_classic>Basic Swing</SM_Routine_classic>
+  <SM_Routine_overhead>Overhead Chop</SM_Routine_overhead>
+  <SM_Routine_crouch_dash>Forward Slash</SM_Routine_crouch_dash>
+  <SM_Routine_rising_cut>Rising Slash</SM_Routine_rising_cut>
+  <SM_Routine_leap_slam>Leaping Chop</SM_Routine_leap_slam>
+  <SM_Routine_leap_slash>Leaping Slash</SM_Routine_leap_slash>
+  <SM_Routine_back_thrust>Retreating Thrust</SM_Routine_back_thrust>
+  <SM_Routine_quick_thrust>Quick Thrust</SM_Routine_quick_thrust>
+  <SM_Routine_head_butt>Body Slam</SM_Routine_head_butt>
+  <SM_Routine_pounce>Leaping Body Slam</SM_Routine_pounce>
+  <SM_Routine_sweep>Wide Swing</SM_Routine_sweep>
+  <SM_Routine_swing_dash>Feint and Forward Slash</SM_Routine_swing_dash>
+  <SM_Routine_rise_chop>Delayed Chop</SM_Routine_rise_chop>
+  <SM_Routine_jab_lunge>Aim and Lunge</SM_Routine_jab_lunge>
+  <SM_Routine_retreat_swing>Retreat and Slash</SM_Routine_retreat_swing>
+  <SM_ResetShort>Reset</SM_ResetShort>
+  <SM_SecCooldown>[ Cooldown · Idle Motion ]</SM_SecCooldown>
+  <SM_CooldownMotion>Squishy Follow-Through</SM_CooldownMotion>
+  <SM_CooldownMotionTip>Body and head recoil control the full reaction to a hit, including the initial bend and follow-up wobble. 0 disables movement. Turn this off for a smooth return with no wobble. If time remains before the next attack, the weapon moves into its ready pose and the body coils before a quick pullback just before the attack. Attack speed and hit timing are unchanged.</SM_CooldownMotionTip>
+  <SM_BreathMotion>Idle Breathing</SM_BreathMotion>
+  <SM_BreathMotionTip>While waiting for the next move, the weapon and body sway gently as if breathing.</SM_BreathMotionTip>
+  <SM_CompressLimit>Short Cooldown Compression Limit (Lower = Faster)</SM_CompressLimit>
+  <SM_ReadyPoseSpeed>Next Attack Prep Speed</SM_ReadyPoseSpeed>
+  <SM_ReadyPoseSpeedTip>0.00 is the slowest, 1.00 is normal, and 2.00 is twice as fast. Arrival time is limited when little time remains before the next attack.</SM_ReadyPoseSpeedTip>
+  <SM_BodyCoilStrength>Pre-Attack Body Coil</SM_BodyCoilStrength>
+  <SM_SecRecoil>[ Recoil Strength ]</SM_SecRecoil>
+  <SM_BodyRecoilStrength>Body Follow-Through</SM_BodyRecoilStrength>
+  <SM_WeaponRecoilStrength>Weapon Follow-Through</SM_WeaponRecoilStrength>
+  <SM_HeadRecoilStrength>Head Follow-Through</SM_HeadRecoilStrength>
+  <SM_SecMiss>[ Misses · Dodging ]</SM_SecMiss>
+  <SM_MissMotion>Miss Stumble</SM_MissMotion>
+  <SM_MissMotionTip>On a miss, the pawn overextends and stumbles to regain balance, without a hit stop. Disable to use the normal attack motion even when missing.</SM_MissMotionTip>
+  <SM_DodgeMotion>Opponent Dodge (Side Leap)</SM_DodgeMotion>
+  <SM_DodgeMotionTip>When an attack misses or is dodged, the target leaps sideways and lands.</SM_DodgeMotionTip>
+  <SM_SecHit>[ Hit Reaction ]</SM_SecHit>
+  <SM_HitMotion>Squishy Hit Reaction (Compress → Stretch → Bounce)</SM_HitMotion>
+  <SM_HitMotionTip>On taking damage, the body is pushed away from the attacker, compresses sharply, then stretches out before bouncing and returning to shape. Stronger hits cause bigger reactions. Melee reactions sync with the attacker's strike. Also reacts to gunfire.</SM_HitMotionTip>
+  <SM_HitTremble>Combine Rapid Hits into One Tremble</SM_HitTremble>
+  <SM_HitTrembleTip>Rapid hits combine into a capped tremble instead of stacking recoil. Impacts from opposite directions partially cancel each other. Disable to let each hit reaction stack as usual.</SM_HitTrembleTip>
+  <SM_HitStrength>Hit Reaction Strength</SM_HitStrength>
+  <SM_SecSpacing>[ Duel Spacing ]</SM_SecSpacing>
+  <SM_SpacingMotion>Duel Spacing (Keep Fighters Apart)</SM_SpacingMotion>
+  <SM_SpacingMotionTip>With one-tile melee weapons, fighters can appear to overlap. During melee, each pawn is drawn slightly toward the opposite edge of its tile. Actual positions and weapon range are unchanged; only the draw position moves.</SM_SpacingMotionTip>
+  <SM_DuelSpacing>Retreat Distance (Tiles, Max 0.45)</SM_DuelSpacing>
+  <SM_SecShield>[ Shields ]</SM_SecShield>
+  <SM_ShieldFollow>Shield Follow (Follow Body)</SM_ShieldFollow>
+  <SM_ShieldFollowTip>When enabled, VEF shields follow the pawn's duel position and combat movements. When disabled, shields stay at their default VEF position.</SM_ShieldFollowTip>
+  <SM_ShieldMotion>Shield Moves (Use Shield Instead of Weapon)</SM_ShieldMotion>
+  <SM_ShieldMotionTip>When attacking, shield users may raise their shield to block, shove with it, or block and shove instead of using the main weapon. The attack still deals its normal damage.</SM_ShieldMotionTip>
+  <SM_ShieldChance>Shield Move Chance (Per Attack)</SM_ShieldChance>
+  <SM_ShieldStrength>Shield Move Strength</SM_ShieldStrength>
+  <SM_ShieldMotionKind>Shield Move Types</SM_ShieldMotionKind>
+  <SM_ShieldMotionKindTip>One selected move is chosen at random. Selecting all three works like Auto and randomly uses any of them.</SM_ShieldMotionKindTip>
+  <SM_ShieldKind1>Block</SM_ShieldKind1>
+  <SM_ShieldKind2>Shove</SM_ShieldKind2>
+  <SM_ShieldKind3>Block and Shove</SM_ShieldKind3>
+  <SM_ShieldGuard>Actual Blocking (Block Melee Attacks During Shield Moves)</SM_ShieldGuard>
+  <SM_ShieldGuardTip>While a shield move plays, melee attacks from the current opponent are blocked by the amount below. Disable for animation only, with no gameplay effect. Does not block ranged attacks.</SM_ShieldGuardTip>
+  <SM_ShieldBlockMul>Damage Taken While Blocking (0% = None)</SM_ShieldBlockMul>
+  <SM_ShieldReflect>Damage Reflected to Attacker</SM_ShieldReflect>
+  <SM_Blocked>Blocked!</SM_Blocked>
+  <SM_ResetGlobalDefaults>Reset All Global Settings</SM_ResetGlobalDefaults>
+
+  <!-- Melee Motion tab: selected weapon settings -->
+  <SM_MeleeHint>These settings apply only to this weapon. Disabled options use the global setting.</SM_MeleeHint>
+  <SM_SecCommon>[ General ]</SM_SecCommon>
+  <SM_MeleeBodyManual>Motion Strength (Off: 1.00)</SM_MeleeBodyManual>
+  <SM_MeleeBodyLabel>Strength</SM_MeleeBodyLabel>
+  <SM_DashDistanceManual>Attack Dash Distance (Adjust for 2-tile weapons)</SM_DashDistanceManual>
+  <SM_WeaponReachManual>Weapon Position (Adjust Body-to-Weapon Gap)</SM_WeaponReachManual>
+  <SM_PointTrimManual>Fine-Tune Thrust Tip Angle (Adjust angled thrust weapons manually)</SM_PointTrimManual>
+  <SM_WeaponRoutinesHint>Attack routine chances. Dimmed options use global settings; custom values appear in blue. The 0 button disables a routine for this weapon only. Use Global to follow global settings.</SM_WeaponRoutinesHint>
+  <SM_UseGlobalSettings>Global</SM_UseGlobalSettings>
+  <SM_ReadyPoseSpeedManual>Next Attack Prep Speed</SM_ReadyPoseSpeedManual>
+  <SM_BodyCoilManual>Pre-Attack Body Coil</SM_BodyCoilManual>
+  <SM_BodyRecoilManual>Body Follow-Through</SM_BodyRecoilManual>
+  <SM_WeaponRecoilManual>Weapon Follow-Through</SM_WeaponRecoilManual>
+  <SM_HeadRecoilManual>Head Follow-Through</SM_HeadRecoilManual>
+  <SM_ResetAuto>Reset to Auto</SM_ResetAuto>
+
+  <!-- Conditional shield-position controls -->
+  <SM_ShieldPositionTitle>Adjust {0} Position</SM_ShieldPositionTitle>
+  <SM_ShieldOffsetsHint>Adjust the shield's side and forward/back position. The same reference is used in every facing direction. Each offset can be adjusted ±0.50 tiles from its XML default.</SM_ShieldOffsetsHint>
+  <SM_ShieldSide>Horizontal offset relative to shield</SM_ShieldSide>
+  <SM_ShieldForward>Vertical offset relative to shield</SM_ShieldForward>
+  <SM_ShieldShowAdvanced>Per-direction fine adjustment</SM_ShieldShowAdvanced>
+  <SM_ShieldHideAdvanced>Per-direction fine adjustment</SM_ShieldHideAdvanced>
+  <SM_ShieldAdvancedHint>Add world X/Z offsets for individual directions only if needed. Existing saved direction-specific values are also applied here.</SM_ShieldAdvancedHint>
+  <SM_ShieldNorth>North (adjust while the pawn is facing north)</SM_ShieldNorth>
+  <SM_ShieldHorizontal>Horizontal</SM_ShieldHorizontal>
+  <SM_ShieldVertical>Vertical</SM_ShieldVertical>
+  <SM_ShieldEast>East (adjust while the pawn is facing east)</SM_ShieldEast>
+  <SM_ShieldSouth>South (adjust while the pawn is facing south)</SM_ShieldSouth>
+  <SM_ShieldWest>West (adjust while the pawn is facing west)</SM_ShieldWest>
+
+  <!-- Race settings tab -->
+  <SM_RaceSearch>Search Races</SM_RaceSearch>
+  <SM_RaceHint>Click a category to expand its race list. Search automatically expands matching categories. Race strength is a multiplier of global settings; 100% is the default and maximum. Human body types use an additional 70–130% multiplier.</SM_RaceHint>
+  <SM_RaceName>Race</SM_RaceName>
+  <SM_RaceAttack>Attack Strength</SM_RaceAttack>
+  <SM_RaceHit>Hit Reaction Strength</SM_RaceHit>
+  <SM_RaceEnabled>Enable Motion</SM_RaceEnabled>
+  <SM_RaceWalk>Walking</SM_RaceWalk>
+  <SM_RaceNameTip>Race to configure. Search by race name or Def name.</SM_RaceNameTip>
+  <SM_RaceAttackTip>Attack motion strength for this race. 100% uses the global value; 0% disables the motion.</SM_RaceAttackTip>
+  <SM_RaceHitTip>Hit reaction strength for this race. 100% uses the global value; 0% disables the motion.</SM_RaceHitTip>
+  <SM_RaceEnabledTip>Disable to turn off melee animations for this race.</SM_RaceEnabledTip>
+  <SM_RaceWalkTip>Enable walking motion for this race.</SM_RaceWalkTip>
+  <SM_RaceCategoryTip>Click to expand or collapse this category. During a search, matching races are shown automatically.</SM_RaceCategoryTip>
+  <SM_RaceCategory_Humanoids>Humanoids</SM_RaceCategory_Humanoids>
+  <SM_RaceCategory_Mechanoids>Mechanoids</SM_RaceCategory_Mechanoids>
+  <SM_RaceCategory_Animals>Animals</SM_RaceCategory_Animals>
+  <SM_RaceCategory_Other>Other</SM_RaceCategory_Other>
+  <SM_RaceBodyTypeButton>Body Type Settings</SM_RaceBodyTypeButton>
+  <SM_RaceBodyTypeButtonTip>Adjust human attack and hit reaction strength by body type.</SM_RaceBodyTypeButtonTip>
+  <SM_RaceBodyTypeAttackTip>Attack strength multiplier for this body type, applied to race settings. 100% = unchanged.</SM_RaceBodyTypeAttackTip>
+  <SM_RaceBodyTypeHitTip>Hit reaction multiplier for this body type, applied to race settings. 100% = unchanged.</SM_RaceBodyTypeHitTip>
+
+  <!-- SquishyRanged integration -->
+  <SM_RangedGlobalTitle>Ranged Weapon Melee Settings</SM_RangedGlobalTitle>
+  <SM_RangedGlobalTooltip>These global melee settings apply only to ranged weapons' melee attacks.</SM_RangedGlobalTooltip>
+
+  <!-- Options-page-only and legacy labels retained for compatibility -->
+  <SM_SettingsHint>Per-weapon settings (swing style, strength, and attack patterns) are in the SQUISHY window's Melee Motion tab when a melee weapon is selected. The options below can be toggled individually; only enabled motions will play.</SM_SettingsHint>
+  <SM_SmearTrail>Fast Swing Trail</SM_SmearTrail>
+  <SM_SmearTrailTip>A brief, blurred trail appears along the weapon's path during fast swings. Not shown during slow moves.</SM_SmearTrailTip>
+  <SM_ShiverMotion>Idle Weapon Tremble</SM_ShiverMotion>
+  <SM_ShiverMotionTip>While waiting for the next move, the weapon and body tremble. Can only be enabled with either this or Breathing, not both.</SM_ShiverMotionTip>
+  <SM_ComboMotion>Multi-Hit (Multiple Swings per Attack)</SM_ComboMotion>
+  <SM_ComboMotionTip>Gameplay damage is applied once per attack, but the animation can perform two quick thrusts, two chops, or a swing followed by a return slash. The second hit continues with a dash in the same attack cycle. The target also staggers slightly with each hit. Disable to always perform a single hit.</SM_ComboMotionTip>
+  <SM_RecoilStrengthTip>0 = no follow-through, 1.00 = XML default strength, 2.00 = twice that strength. Does not affect the attack's main hit motion.</SM_RecoilStrengthTip>
+  <SM_PreviewSection>Preview</SM_PreviewSection>
+  <SM_PreviewHint>Preview: Select a colonist on the map, then click a button. Animations won't play while the game is paused in the large window; use Docked mode instead. Press Attack repeatedly to chain moves.</SM_PreviewHint>
+  <SM_PreviewSwing>Attack</SM_PreviewSwing>
+  <SM_PreviewMiss>Miss</SM_PreviewMiss>
+  <SM_PreviewHit>Hit</SM_PreviewHit>
+  <SM_PreviewDodge>Dodge</SM_PreviewDodge>
+  <SM_PreviewNoPawn>Select a colonist on the map first.</SM_PreviewNoPawn>
+  <SM_MeleeKindManual>Set Swing Type (Off: Auto by attack tool's damage type)</SM_MeleeKindManual>
+  <SM_MeleeKind0>Slash</SM_MeleeKind0>
+  <SM_MeleeKind1>Stab</SM_MeleeKind1>
+  <SM_MeleeKind2>Chop</SM_MeleeKind2>
+  <SM_MeleeKind3>Bite</SM_MeleeKind3>
+  <SM_PatternManual>Lock Attack Pattern (Off: Randomly choose single or multi-hit)</SM_PatternManual>
+  <SM_PatternHint>If the cooldown is too short to finish the move, it switches to a single hit. Requires Multi-Hit to be enabled.</SM_PatternHint>
+  <SM_Pat0_0>Single Slash</SM_Pat0_0>
+  <SM_Pat0_1>Double Slash (Down, Then Up)</SM_Pat0_1>
+  <SM_Pat0_2>Swing and Return Slash</SM_Pat0_2>
+  <SM_Pat0_3>Quick Double Slash (Same Direction)</SM_Pat0_3>
+  <SM_Pat0_4>Rising Slash (Low to High)</SM_Pat0_4>
+  <SM_Pat0_5>Leaping Slash</SM_Pat0_5>
+  <SM_Pat1_0>Single Thrust</SM_Pat1_0>
+  <SM_Pat1_1>Double Thrust</SM_Pat1_1>
+  <SM_Pat1_2>Quick Double Thrust</SM_Pat1_2>
+  <SM_Pat1_3>Thrust and Lunge (Deeper Second Hit)</SM_Pat1_3>
+  <SM_Pat1_4>Low Lunge Thrust</SM_Pat1_4>
+  <SM_Pat1_5>Leaping Thrust</SM_Pat1_5>
+  <SM_Pat2_0>Single Chop</SM_Pat2_0>
+  <SM_Pat2_1>Double Chop</SM_Pat2_1>
+  <SM_Pat2_2>Chop and Sweep</SM_Pat2_2>
+  <SM_Pat2_3>Leaping Chop</SM_Pat2_3>
+  <SM_Pat3_0>Single Bite</SM_Pat3_0>
+  <SM_Pat3_1>Double Bite</SM_Pat3_1>
+  <SM_Pat3_2>Bite and Shake</SM_Pat3_2>
+  <SM_Pat3_3>Leaping Pounce</SM_Pat3_3>
+  <SM_FilterAll>All</SM_FilterAll>
+  <SM_SwitchUnified>Switch UI · Unified</SM_SwitchUnified>
+  <SM_SwitchDocked>Switch UI · Docked</SM_SwitchDocked>
+  <SM_SwitchTip>Docked mode: the list stays on the left and details on the right, leaving the center of the map clear for gameplay. Click again to return to the single large window.</SM_SwitchTip>
+  <SM_WeaponTitle>This Weapon</SM_WeaponTitle>
+  <SM_RangedMeleeSettings>Ranged Weapon Melee Motion</SM_RangedMeleeSettings>
+  <SM_RangedWeaponTitle>{0} Melee Settings</SM_RangedWeaponTitle>
+  <SM_Routine_combo_cross_slash>Cross Double Slash (2-Hit Combo)</SM_Routine_combo_cross_slash>
+  <SM_Routine_combo_whirl_flurry>Triple Flurry Combo (3-Hit)</SM_Routine_combo_whirl_flurry>
+  <SM_Routine_combo_rising_tempest>Rising Tempest (3-Hit Aerial)</SM_Routine_combo_rising_tempest>
+  <SM_Routine_combo_pierce_barrage>Triple Thrust Barrage (3-Hit)</SM_Routine_combo_pierce_barrage>
+  <SM_Routine_combo_abyssal_execution>Phantom Execution (4-Hit Combo)</SM_Routine_combo_abyssal_execution>
+  <SM_Routine_combo_omni_verdict>Eternal Verdict (4-Hit Judgment)</SM_Routine_combo_omni_verdict>
+  <SM_Routine_sk_abyssal_dragon_cleave>[Skullblade I] Abyssal Dragon Cleave</SM_Routine_sk_abyssal_dragon_cleave>
+  <SM_Routine_sk_phantom_blink>[Skullblade II] Phantom Afterimage Rush (2-Hit)</SM_Routine_sk_phantom_blink>
+  <SM_Routine_sk_cyclone_vortex>[Skullblade III] Abyssal Cyclone Vortex (3-Hit)</SM_Routine_sk_cyclone_vortex>
+  <SM_Routine_sk_soaring_pierce>[Skullblade IV] Dragon Fang Piercer (2-Hit)</SM_Routine_sk_soaring_pierce>
+  <SM_Routine_sk_pentagram_cataclysm>[Skullblade V] Void Pentagram Cataclysm (5-Hit Ult)</SM_Routine_sk_pentagram_cataclysm>
+  <SM_Routine_sk_ink_eclipse_ring>[Inkblade I] Twilight Black-Ring Slash</SM_Routine_sk_ink_eclipse_ring>
+  <SM_Routine_sk_ink_void_wave>[Inkblade II] Void Crescent Ranged Wave</SM_Routine_sk_ink_void_wave>
+  <SM_Routine_sk_ink_void_aegis>[Inkblade III] Cosmic Void Armor Dome (Aegis)</SM_Routine_sk_ink_void_aegis>
+  <SM_Routine_sk_ink_shadow_spikes>[Inkblade IV] Obsidian Shadow Spike Surge (3-Hit)</SM_Routine_sk_ink_shadow_spikes>
+  <SM_Routine_sk_ink_blood_eclipse>[Inkblade V] Blood-Eclipse Ink Domain (4-Hit Ult)</SM_Routine_sk_ink_blood_eclipse>
+</LanguageData>

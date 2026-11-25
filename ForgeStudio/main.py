@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Callable, Dict, List, Optional, Tuple
 
 from PIL import Image
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCore import Qt, QTimer, Signal
 from PySide6.QtGui import QColor, QFont, QIcon, QPixmap
 from PySide6.QtWidgets import (
     QApplication,
@@ -22,6 +22,8 @@ from PySide6.QtWidgets import (
     QCheckBox,
     QColorDialog,
     QComboBox,
+    QDialog,
+    QDialogButtonBox,
     QFileDialog,
     QFrame,
     QGridLayout,
@@ -36,6 +38,7 @@ from PySide6.QtWidgets import (
     QPlainTextEdit,
     QPushButton,
     QScrollArea,
+    QSpinBox,
     QStackedWidget,
     QTabWidget,
     QTextEdit,
@@ -43,8 +46,9 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from combat_arena_widget import RimWorldCombatArenaWidget
 from exporter import generate_csharp_code, generate_xml_custom_defs, update_language_xml
-from forge_canvas import ForgePreviewCanvas, HeldPreviewWidget
+from forge_canvas import ForgePreviewCanvas
 from mod_data import (
     COLOR_PRESETS,
     CRAFTS,
@@ -59,11 +63,15 @@ from mod_data import (
     ModAssetStore,
     PATTERN_LAYOUTS,
     PATTERN_PARTS,
+    VFX_STYLES,
     WeaponDesignState,
+    is_element_allowed,
 )
 from renderer import ComposedResult, compose_weapon
+from special_weapons_widget import SpecialWeaponsWorkspace
 from splitter_widget import PartSplitterWorkspace
 from theme import FORGE_QSS, ForgeSlider, pil_to_qpixmap
+from vfx_studio_widget import VfxStudioWorkspace
 
 
 DEFAULT_MOD_ROOT = Path(r"d:\1IDK\Overgeared")
@@ -98,7 +106,7 @@ class PartCardButton(QPushButton):
 
 class ForgeWorkspace(QWidget):
     """Tab 1: Exact RimWorld 1.7 Personal Forge Replica."""
-    designChanged = None
+    openVfxStudioRequested = Signal()
 
     def __init__(self, store: ModAssetStore, parent: Optional[QWidget] = None):
         super().__init__(parent)
@@ -217,10 +225,12 @@ class ForgeWorkspace(QWidget):
         mid_lay.addLayout(mid_top)
 
         self.preview_canvas = ForgePreviewCanvas(self.store.get_sparkle_pil())
+        self.preview_canvas.set_store(self.store)
         mid_lay.addWidget(self.preview_canvas, 1)
 
-        self.held_preview = HeldPreviewWidget()
-        mid_lay.addWidget(self.held_preview)
+        self.combat_arena = RimWorldCombatArenaWidget(self.store.mod_root)
+        self.combat_arena.set_exclusive_skills(None)
+        mid_lay.addWidget(self.combat_arena)
 
         body.addWidget(mid_panel, 1)
 
@@ -634,31 +644,187 @@ class ForgeWorkspace(QWidget):
         lay.addWidget(self.edit_story, 1)
         self.left_stack.addWidget(w)
 
-    # ---- Left Page 4: Enchant ----
+    # ---- Left Page 4: Enchant (12+ Elements + Socket Gem + Custom Element Creator) ----
     def _build_page_enchant(self) -> None:
-        scroll = QScrollArea()
-        scroll.setWidgetResizable(True)
         w = QWidget()
         lay = QVBoxLayout(w)
+        lay.setContentsMargins(0, 0, 0, 0)
+        lay.setSpacing(6)
+
+        ctrl_box = QFrame()
+        ctrl_box.setStyleSheet("background: #131718; border: 1px solid #353f42; border-radius: 3px;")
+        cl = QVBoxLayout(ctrl_box)
+        cl.setContentsMargins(8, 6, 8, 6)
+        cl.setSpacing(4)
+
+        top_row = QHBoxLayout()
+        self.chk_socket_gem = QCheckBox("Khảm Ngọc trên vũ khí")
+        self.chk_socket_gem.setChecked(True)
+        self.chk_socket_gem.toggled.connect(lambda c: self._set_attr("socket_gem", c))
+        btn_new_elem = QPushButton("✨ + Tạo Nguyên Tố (Studio)")
+        btn_new_elem.setObjectName("PrimaryBtn")
+        btn_new_elem.clicked.connect(self.openVfxStudioRequested.emit)
+        top_row.addWidget(self.chk_socket_gem, 1)
+        top_row.addWidget(btn_new_elem)
+        cl.addLayout(top_row)
+
+        self.sl_vfx_int = ForgeSlider("Cường độ & Độ lớn VFX", 0.3, 2.5, 0.1, 1.25)
+        self.sl_vfx_int.valueChanged.connect(lambda v: self._set_attr("vfx_intensity", v))
+        cl.addWidget(self.sl_vfx_int)
+        lay.addWidget(ctrl_box)
+
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        self.enchant_list_host = QWidget()
+        self.enchant_list_lay = QVBoxLayout(self.enchant_list_host)
+        self.enchant_list_lay.setContentsMargins(2, 2, 2, 2)
+        self.enchant_list_lay.setSpacing(6)
         self.enchant_group = QButtonGroup(self)
-        for i, (ename, edesc) in enumerate(zip(ENCHANTMENTS, ENCHANTMENT_DESCRIPTIONS)):
-            b = QPushButton(f"{ename}\n{edesc}")
-            b.setCheckable(True)
-            b.setStyleSheet("text-align: left; padding: 8px;")
-            if i == 0:
-                b.setChecked(True)
-            self.enchant_group.addButton(b, i)
-            lay.addWidget(b)
         self.enchant_group.idClicked.connect(lambda i: self._set_attr("enchantment", i))
-        lay.addStretch()
-        scroll.setWidget(w)
-        self.left_stack.addWidget(scroll)
+        self._rebuild_enchant_list()
+        scroll.setWidget(self.enchant_list_host)
+        lay.addWidget(scroll, 1)
+
+        self.left_stack.addWidget(w)
+
+    def _rebuild_enchant_list(self) -> None:
+        while self.enchant_list_lay.count():
+            it = self.enchant_list_lay.takeAt(0)
+            if it.widget():
+                it.widget().deleteLater()
+        for b in list(self.enchant_group.buttons()):
+            self.enchant_group.removeButton(b)
+
+        for elem in self.store.get_elements_for_kind(self.design.kind):
+            pr, pg, pb = elem.primary_rgb
+            sr, sg, sb = elem.secondary_rgb
+            row_w = QWidget()
+            row_l = QHBoxLayout(row_w)
+            row_l.setContentsMargins(0, 0, 0, 0)
+            row_l.setSpacing(4)
+
+            txt = f"{elem.name}"
+            if elem.allowed_kinds == [0]:
+                txt += "  [⚔ Chỉ Kiếm]"
+            if elem.id > 0:
+                txt += f"\n{elem.description}\nNguyên liệu: {elem.cost_text}"
+            else:
+                txt += f"\n{elem.description}"
+
+            b = QPushButton(txt)
+            b.setCheckable(True)
+            b.setStyleSheet(
+                f"text-align: left; padding: 8px 10px; "
+                f"border-left: 6px solid qlineargradient(x1:0,y1:0,x2:0,y2:1, stop:0 rgb({sr},{sg},{sb}), stop:1 rgb({pr},{pg},{pb}));"
+            )
+            if elem.id == self.design.enchantment:
+                b.setChecked(True)
+            self.enchant_group.addButton(b, elem.id)
+            row_l.addWidget(b, 1)
+
+            if not elem.is_builtin:
+                btn_del = QPushButton("✕")
+                btn_del.setFixedSize(26, 26)
+                btn_del.setToolTip("Xóa nguyên tố tùy chỉnh này")
+                btn_del.clicked.connect(lambda _, eid=elem.id: self._delete_custom_element(eid))
+                row_l.addWidget(btn_del)
+
+            self.enchant_list_lay.addWidget(row_w)
+
+        self.enchant_list_lay.addStretch()
+
+    def _delete_custom_element(self, elem_id: int) -> None:
+        if self.design.enchantment == elem_id:
+            self.design.enchantment = 0
+        self.store.remove_custom_element(elem_id)
+        self._rebuild_enchant_list()
+        self._render_now()
+
+    def _create_custom_element_dialog(self) -> None:
+        dlg = QDialog(self)
+        dlg.setWindowTitle("Tạo Nguyên Tố Khảm Mới (1.7)")
+        dlg.resize(400, 360)
+        dl = QVBoxLayout(dlg)
+        fg = QGridLayout()
+
+        fg.addWidget(QLabel("Tên nguyên tố:"), 0, 0)
+        ed_name = QLineEdit("Abyssal Flame (Hắc Hỏa)")
+        fg.addWidget(ed_name, 0, 1)
+
+        fg.addWidget(QLabel("Mô tả hiệu ứng:"), 1, 0)
+        ed_desc = QLineEdit("Đánh trúng: +5 sát thương bóng tối · Đốt cháy linh hồn")
+        fg.addWidget(ed_desc, 1, 1)
+
+        fg.addWidget(QLabel("Sát thương cộng:"), 2, 0)
+        sp_dmg = QSpinBox()
+        sp_dmg.setRange(1, 20)
+        sp_dmg.setValue(4)
+        fg.addWidget(sp_dmg, 2, 1)
+
+        fg.addWidget(QLabel("Kiểu VFX trên vũ khí:"), 3, 0)
+        cb_vfx = QComboBox()
+        for vkey, vlabel in VFX_STYLES:
+            cb_vfx.addItem(vlabel, vkey)
+        cb_vfx.setCurrentIndex(7)  # Void default
+        fg.addWidget(cb_vfx, 3, 1)
+
+        fg.addWidget(QLabel("Nguyên liệu (hiển thị):"), 4, 0)
+        ed_cost = QLineEdit("Gold 8 · Jade 10")
+        fg.addWidget(ed_cost, 4, 1)
+
+        prim_rgb = [180, 60, 255]
+        sec_rgb = [255, 190, 255]
+
+        btn_pcol = QPushButton("Chọn màu chính (Aura)")
+        btn_pcol.setStyleSheet(f"border-left: 8px solid rgb({prim_rgb[0]},{prim_rgb[1]},{prim_rgb[2]});")
+        def pick_p():
+            c = QColorDialog.getColor(QColor(*prim_rgb), dlg, "Màu chính")
+            if c.isValid():
+                prim_rgb[0], prim_rgb[1], prim_rgb[2] = c.red(), c.green(), c.blue()
+                btn_pcol.setStyleSheet(f"border-left: 8px solid rgb({prim_rgb[0]},{prim_rgb[1]},{prim_rgb[2]});")
+        btn_pcol.clicked.connect(pick_p)
+
+        btn_scol = QPushButton("Chọn màu lõi (Highlight)")
+        btn_scol.setStyleSheet(f"border-left: 8px solid rgb({sec_rgb[0]},{sec_rgb[1]},{sec_rgb[2]});")
+        def pick_s():
+            c = QColorDialog.getColor(QColor(*sec_rgb), dlg, "Màu lõi")
+            if c.isValid():
+                sec_rgb[0], sec_rgb[1], sec_rgb[2] = c.red(), c.green(), c.blue()
+                btn_scol.setStyleSheet(f"border-left: 8px solid rgb({sec_rgb[0]},{sec_rgb[1]},{sec_rgb[2]});")
+        btn_scol.clicked.connect(pick_s)
+
+        fg.addWidget(btn_pcol, 5, 0)
+        fg.addWidget(btn_scol, 5, 1)
+        dl.addLayout(fg)
+
+        btns = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        btns.accepted.connect(dlg.accept)
+        btns.rejected.connect(dlg.reject)
+        dl.addWidget(btns)
+
+        if dlg.exec() == QDialog.DialogCode.Accepted:
+            elem = self.store.add_custom_element(
+                name=ed_name.text().strip() or "Custom Element",
+                description=ed_desc.text().strip() or "Custom elemental strike",
+                damage=sp_dmg.value(),
+                primary_rgb=(prim_rgb[0], prim_rgb[1], prim_rgb[2]),
+                secondary_rgb=(sec_rgb[0], sec_rgb[1], sec_rgb[2]),
+                vfx_style=str(cb_vfx.currentData()),
+                cost_text=ed_cost.text().strip() or "Gold 8",
+            )
+            self.design.enchantment = elem.id
+            self._rebuild_enchant_list()
+            self._render_now()
 
     # ---- State updates & Rendering ----
     def _on_kind_changed(self, kind: int) -> None:
         self.design.kind = kind
         # Clamp indices safely
         self.design.head = min(self.design.head, len(self.store.get_heads(kind)) - 1)
+        cur_elem = self.store.get_element(self.design.enchantment)
+        if not is_element_allowed(cur_elem, kind):
+            self.design.enchantment = 0
+        self._rebuild_enchant_list()
         self._rebuild_parts_grid()
         self.schedule_render()
 
@@ -796,6 +962,8 @@ class ForgeWorkspace(QWidget):
             self.enchant_group.button(self.design.enchantment).setChecked(True)
 
         self.chk_link_pommel.setChecked(self.design.link_pommel_tint)
+        self.chk_socket_gem.setChecked(self.design.socket_gem)
+        self.sl_vfx_int.set_value(self.design.vfx_intensity, emit=False)
         self.edit_wname.setText(self.design.name)
         self.edit_inscr.setText(self.design.inscription)
         self.edit_story.setPlainText(self.design.story)
@@ -814,7 +982,8 @@ class ForgeWorkspace(QWidget):
         self.design.guard_tint = random.choice(COLOR_PRESETS)[1]
         self.design.grip_tint = random.choice(COLOR_PRESETS)[1]
         self.design.pattern_color = random.choice(COLOR_PRESETS)[1]
-        self.design.enchantment = random.randint(0, 6)
+        all_elems = self.store.get_elements_for_kind(k)
+        self.design.enchantment = random.choice(all_elems).id
         self._rebuild_parts_grid()
         self._refresh_all_controls()
         self.schedule_render()
@@ -825,16 +994,19 @@ class ForgeWorkspace(QWidget):
     def _render_now(self) -> None:
         res = compose_weapon(self.store, self.design, resolution=512)
         self._last_composed = res
-        self.preview_canvas.set_composed(res, self.design.enchantment)
-        self.held_preview.set_composed(res, self.design.enchantment)
+        elem = self.store.get_element(self.design.enchantment)
+        st = self.store.compute_stats(self.design)
+        self.preview_canvas.set_composed(res, elem, self.design.socket_gem, self.design.vfx_intensity)
+        self.combat_arena.set_composed(
+            res, elem, self.design.socket_gem, self.design.vfx_intensity,
+            base_damage=float(st["damage"]), cooldown_sec=float(st["cooldown"]),
+        )
 
         title = self.design.name.strip() or f"Custom {KINDS[self.design.kind]}"
         self.lbl_weapon_name.setText(title)
         self.lbl_enchant_badge.setText(
-            f"Enchantment: {ENCHANTMENTS[self.design.enchantment]}" if self.design.enchantment > 0 else "No enchantment"
+            f"Nguyên tố khảm: {elem.name}" if elem.id > 0 else "Chưa khảm nguyên tố"
         )
-
-        st = self.store.compute_stats(self.design)
         self._stat_labels["damage"].setText(f"{st['damage']:.1f}")
         self._stat_labels["ap"].setText(f"{st['armor_pen'] * 100:.1f}%")
         self._stat_labels["cooldown"].setText(f"{st['cooldown']:.2f} s")
@@ -1105,18 +1277,33 @@ class ForgeStudioWindow(QMainWindow):
         # Tabs
         self.tabs = QTabWidget()
         self.forge_tab = ForgeWorkspace(self.store)
+        self.special_tab = SpecialWeaponsWorkspace(self.store)
         self.splitter_tab = PartSplitterWorkspace(self.store)
+        self.vfx_tab = VfxStudioWorkspace(self.store)
         self.code_tab = CodeSyncWorkspace(self.store, self.forge_tab)
 
         self.tabs.addTab(self.forge_tab, "⚒️ Lò Rèn & Test Trang Bị (1.7)")
+        self.tabs.addTab(self.special_tab, "🗡️ Vũ Khí Đặc Biệt")
         self.tabs.addTab(self.splitter_tab, "✂️ Import Ảnh & Tách Part Nhanh")
+        self.tabs.addTab(self.vfx_tab, "✨ Tự Tạo Hiệu Ứng / Nguyên Tố")
         self.tabs.addTab(self.code_tab, "💻 Import vào Code (C# / XML 1.7)")
         main_lay.addWidget(self.tabs, 1)
 
         # Wire cross-tab signals
         self.splitter_tab.partTestedInForge.connect(self._on_test_part_in_forge)
         self.splitter_tab.modPartsUpdated.connect(self._on_mod_parts_updated)
+        self.forge_tab.openVfxStudioRequested.connect(lambda: self.tabs.setCurrentIndex(3))
+        self.vfx_tab.elementSaved.connect(self._on_custom_element_saved)
         self.tabs.currentChanged.connect(self._on_tab_changed)
+
+    def _on_custom_element_saved(self, elem_id: int) -> None:
+        self.forge_tab.design.enchantment = elem_id
+        self.forge_tab._rebuild_enchant_list()
+        self.forge_tab._refresh_all_controls()
+        self.forge_tab._render_now()
+        self.special_tab.refresh_vfx_list()
+        self.code_tab.refresh_code()
+        self.tabs.setCurrentIndex(0)
 
     def _on_test_part_in_forge(self, cat: str, kind: int, slot_idx: int, pil_img: Image.Image, sock: float) -> None:
         self.forge_tab.preview_custom_part(cat, kind, slot_idx, pil_img, sock)
@@ -1141,7 +1328,9 @@ class ForgeStudioWindow(QMainWindow):
         self.code_tab.refresh_code()
 
     def _on_tab_changed(self, idx: int) -> None:
-        if idx == 2:
+        if idx == 1:
+            self.special_tab.refresh_vfx_list()
+        elif idx == 4:
             self.code_tab.refresh_code()
 
     def _pick_mod_folder(self) -> None:
@@ -1149,9 +1338,16 @@ class ForgeStudioWindow(QMainWindow):
         if folder:
             self.store.set_mod_root(folder)
             self.lbl_mod_path.setText(f"Thư mục Mod: {self.store.mod_root}")
+            self.forge_tab.preview_canvas.set_store(self.store)
+            self.special_tab.preview_canvas.set_store(self.store)
+            self.vfx_tab.preview.set_store(self.store)
             self.forge_tab._rebuild_parts_grid()
             self.forge_tab._rebuild_pattern_buttons()
+            self.forge_tab._rebuild_enchant_list()
             self.forge_tab._render_now()
+            self.special_tab.refresh_vfx_list()
+            self.special_tab._render_now()
+            self.vfx_tab._refresh_preview()
             self.splitter_tab._refresh_slot_combo()
             self.code_tab.refresh_code()
 

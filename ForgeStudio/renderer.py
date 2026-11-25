@@ -25,9 +25,11 @@ SWORD_TANG_ROOTS = [1.0 / 32.0, 5.0 / 64.0, 0.0625, 3.0 / 32.0]
 @dataclass
 class ComposedResult:
     image_rgba: Image.Image          # Top-down PIL RGBA (256x256 or 512x512)
+    blade_mask_alpha: Image.Image    # Top-down PIL L mask of the blade/head region for rim-glow
     resolution: int
     draw_size: float
     grip_y_norm: float               # Normalized 0..1 from bottom
+    socket_gem_y_norm: float         # Normalized 0..1 from bottom (guard/blade junction)
     equipped_angle: float            # 25 for sword/axe/hammer, 65 for spear
     enchant_span: Tuple[float, float]
     enchant_center_x: float
@@ -555,8 +557,18 @@ def compose_weapon(
             anchors.append(((best_x + 0.5) / resolution - 0.5, (row_y + 0.5) / resolution - 0.5))
 
     grip_y = (32.0 + ([62.0, 76.0, 76.0, 90.0][kind] - 32.0) * design.handle_length) * num22 + num23
+    socket_gem_y = ((num10 + num8 * 0.52) * num22 + num23) / 256.0
     draw_size = (1.6 if kind == 3 else 1.05) * design.overall_size / max(num22, 1e-4)
     equipped_angle = 65.0 if kind == 3 else 25.0
+
+    # Extract blade region alpha mask (top-down L) for rim-aura glow
+    scale_res = resolution / 256.0
+    blade_y_bot = max(0, int(math.floor((num6 * num22 + num23) * scale_res)))
+    blade_y_top = min(resolution, int(math.ceil(((num6 + num3) * num22 + num23) * scale_res)))
+    blade_alpha_bu = np.zeros((resolution, resolution), dtype=np.float32)
+    blade_alpha_bu[blade_y_bot:blade_y_top, :] = target[blade_y_bot:blade_y_top, :, 3]
+    blade_mask_u8 = np.flipud(np.clip(blade_alpha_bu * 255.0 + 0.5, 0, 255).astype(np.uint8))
+    blade_mask_pil = Image.fromarray(blade_mask_u8, "L")
 
     # Flip bottom-up -> top-down RGBA8
     u8 = np.flipud(np.clip(target * 255.0 + 0.5, 0, 255).astype(np.uint8))
@@ -564,9 +576,11 @@ def compose_weapon(
 
     return ComposedResult(
         image_rgba=img,
+        blade_mask_alpha=blade_mask_pil,
         resolution=resolution,
         draw_size=draw_size,
         grip_y_norm=grip_y / 256.0,
+        socket_gem_y_norm=socket_gem_y,
         equipped_angle=equipped_angle,
         enchant_span=enchant_span,
         enchant_center_x=enchant_center_x,

@@ -106,6 +106,124 @@
     <deathMessage>{0} died from an enchanted blood siphon.</deathMessage>
   </DamageDef>
   <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_RadiantStrike</defName>
+    <label>radiant enchantment</label>
+    <defaultDamage>4</defaultDamage>
+    <deathMessage>{0} was purified by radiant light.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_VoidStrike</defName>
+    <label>void enchantment</label>
+    <hediff>Crush</hediff>
+    <armorCategory>Blunt</armorCategory>
+    <defaultDamage>4</defaultDamage>
+    <deathMessage>{0} was consumed by void energy.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_StarlightStrike</defName>
+    <label>starlight enchantment</label>
+    <defaultDamage>3</defaultDamage>
+    <deathMessage>{0} was struck down by celestial starlight.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_SpiritWindStrike</defName>
+    <label>sakura wind enchantment</label>
+    <hediff>Cut</hediff>
+    <armorCategory>Sharp</armorCategory>
+    <defaultDamage>3</defaultDamage>
+    <deathMessage>{0} was sliced by drifting spirit wind.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_MagmaStrike</defName>
+    <label>magma enchantment</label>
+    <defaultDamage>5</defaultDamage>
+    <deathMessage>{0} was incinerated by molten magma.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_FrostfireStrike</defName>
+    <label>frostfire enchantment</label>
+    <defaultDamage>4</defaultDamage>
+    <deathMessage>{0} was shattered by frostfire.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_AzureJetStrike</defName>
+    <label>azure jet enchantment</label>
+    <defaultDamage>5</defaultDamage>
+    <deathMessage>{0} was incinerated by azure flame.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_EmberTendrilsStrike</defName>
+    <label>ember crackle enchantment</label>
+    <defaultDamage>4</defaultDamage>
+    <deathMessage>{0} was reduced to ash by dark embers.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_SonicSlashStrike</defName>
+    <label>sonic wind enchantment</label>
+    <hediff>Cut</hediff>
+    <armorCategory>Sharp</armorCategory>
+    <defaultDamage>4</defaultDamage>
+    <deathMessage>{0} was severed by a sonic wind arc.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_IceArmorStrike</defName>
+    <label>ice armor enchantment</label>
+    <hediff>Frostbite</hediff>
+    <armorCategory>Blunt</armorCategory>
+    <defaultDamage>4</defaultDamage>
+    <deathMessage>{0} was crushed by crystalline ice.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_PlasmaWebStrike</defName>
+    <label>plasma web enchantment</label>
+    <defaultDamage>5</defaultDamage>
+    <deathMessage>{0} was vaporized by an electric plasma web.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_WaterSheathStrike</defName>
+    <label>water sheath enchantment</label>
+    <hediff>Crush</hediff>
+    <armorCategory>Blunt</armorCategory>
+    <defaultDamage>3</defaultDamage>
+    <deathMessage>{0} was overwhelmed by crashing water force.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_EclipseFlareStrike</defName>
+    <label>eclipse flare enchantment</label>
+    <defaultDamage>6</defaultDamage>
+    <deathMessage>{0} was obliterated by an eclipse solar lance.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_ShadowStrifeStrike</defName>
+    <label>shadow strife sword enchantment</label>
+    <defaultDamage>6</defaultDamage>
+    <deathMessage>{0} was consumed by white guard-flame and black strife smoke.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_EternalAlphaStrike</defName>
+    <label>eternal alpha sword enchantment</label>
+    <defaultDamage>6</defaultDamage>
+    <deathMessage>{0} was cloven by radiant celestial gold.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_NovaBurnStrike</defName>
+    <label>nova burn sword enchantment</label>
+    <defaultDamage>7</defaultDamage>
+    <deathMessage>{0} was annihilated in a violet supernova eruption.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_AbyssalMiasmaStrike</defName>
+    <label>abyssal miasma enchantment</label>
+    <defaultDamage>6</defaultDamage>
+    <deathMessage>{0} was consumed by abyssal violet flame and dark void smoke.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_InkVoidStrike</defName>
+    <label>void ink enchantment</label>
+    <defaultDamage>7</defaultDamage>
+    <deathMessage>{0} was severed by silent black-ink void slashes.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
     <defName>PF_VenomTick</defName>
     <label>lingering venom</label>
     <workerClass>DamageWorker_AddInjury</workerClass>

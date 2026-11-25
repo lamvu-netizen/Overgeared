@@ -1,13 +1,11 @@
 """
-Data models, built-in RimWorld 1.7 / Personal Forge constants, texture loaders,
-and custom-part persistence for Overgeared Forge Studio.
+Data models, built-in RimWorld 1.7 / Personal Forge constants, elemental sockets,
+texture loaders, and custom-part / custom-element persistence for Overgeared Forge Studio.
 """
 from __future__ import annotations
 
 import json
-import os
-import xml.etree.ElementTree as ET
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, asdict, field
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -17,7 +15,7 @@ from PIL import Image
 
 # Weapon kinds
 KINDS = ["Sword", "Axe", "Hammer", "Spear"]
-KINDS_VI = ["Kiếm (Sword)", "Rìu (Axe)", "Búa (Hammer)", "Giáo (Spear)"]
+KINDS_VI = ["Kiếm (Sword)", "Rìu (Axe)", "Búa (Hammer)", "Giáo (Giáo / Spear)"]
 
 PART_CATEGORIES = ["head", "guard", "grip", "pommel"]
 PART_CATEGORY_LABELS = ["Lưỡi / Đầu (Head)", "Chắn tay (Guard)", "Cán (Grip)", "Chuôi (Pommel)"]
@@ -63,16 +61,177 @@ CRAFT_DESCRIPTIONS: List[str] = [
     "Damage +4% · Armor penetration +4 pp · Plasteel +8 · Work +40% · Crafting 10",
 ]
 
-ENCHANTMENTS: List[str] = ["None", "Flame", "Frost", "Thunder", "Venom", "Concussion", "Siphon"]
-ENCHANTMENT_DESCRIPTIONS: List[str] = [
-    "No elemental damage",
-    "On hit: +4 fire damage",
-    "On hit: +3 frost damage · Slow 15% for 2s",
-    "On hit: +3 shock damage; +5 vs. mechanoids",
-    "Hit: +2 venom; 1/s for 3s",
-    "Hit: +2 blunt; 0.5s stun (4s CD)",
-    "Hit: +2 cut; heals up to 1 HP (4s CD)",
+VFX_STYLES: List[Tuple[str, str]] = [
+    ("abyssal_miasma", "U Minh Tử Khí (Abyssal Miasma)"),
+    ("shadow_strife", "Shadow Strife (Bạch Viêm Hắc Vụ · Chỉ Kiếm)"),
+    ("eternal_alpha", "Eternal Alpha (Thần Quang Hoàng Kim · Chỉ Kiếm)"),
+    ("nova_burn", "Nova Burn (Siêu Tân Tinh Tím · Chỉ Kiếm)"),
+    ("azure_jet", "Thanh Diêm Kiếm (Blue Flame Jet)"),
+    ("ember_tendrils", "U Hỏa Tàn Tro (Ember Crackle)"),
+    ("sonic_slash", "Bạch Trảm Sóng Âm (Sonic Ripples)"),
+    ("ice_armor", "Băng Giáp Tinh Thể (Ice Chevron Armor)"),
+    ("plasma_web", "Huyền Lôi Mạng (Voronoi Plasma)"),
+    ("water_sheath", "Thủy Lưu Bọt Biển (Water Sheath)"),
+    ("eclipse_flare", "Nhật Thực Hắc Tâm (Eclipse Lance)"),
+    ("flame", "Hỏa Long Xoắn 3D (Fire Swirl)"),
+    ("thunder", "Sấm Sét Phân Nhánh (Fractal Lightning)"),
+    ("slashes", "Vệt Chém Trăng Khuyết (Crescent Slash)"),
 ]
+
+
+@dataclass
+class VfxLayerSpec:
+    """Modular, no-code VFX layer (procedural or imported image) for custom elements."""
+    layer_type: str = "image_overlay"  # ribbon, lightning, particles, rings, rays, image_overlay, image_particles
+    primary_rgb: Tuple[int, int, int] = (255, 130, 45)
+    secondary_rgb: Tuple[int, int, int] = (255, 240, 190)
+    scale: float = 1.0
+    speed: float = 1.0
+    opacity: float = 1.0
+    count: int = 10
+    direction: str = "pulse"           # pulse, flow_up, spin, wrap, up, down, orbit, inward
+    shape: str = "ember"               # ember, crystal, petal, star, bubble, orb
+    image_rel_path: str = ""           # relative to Textures/PersonalForge/
+    keep_image_colors: bool = True
+    behind_weapon: bool = False
+    offset_y: float = 0.0
+    enabled: bool = True
+
+
+@dataclass
+class ElementDef:
+    id: int
+    key: str
+    name: str
+    description: str
+    damage_def: str
+    damage: int
+    cost_text: str
+    ingredients: List[List]  # [[label, amount], ...]
+    primary_rgb: Tuple[int, int, int]
+    secondary_rgb: Tuple[int, int, int]
+    vfx_style: str
+    is_builtin: bool = True
+    layers: List[Dict] = field(default_factory=list)  # Optional list of VfxLayerSpec dicts
+    allowed_kinds: Optional[List[int]] = None  # None = all weapon kinds; [0] = Sword only
+
+
+def is_element_allowed(elem: ElementDef, kind: int) -> bool:
+    """Returns True if the element can be applied to the specified weapon kind index."""
+    return elem.allowed_kinds is None or kind in elem.allowed_kinds
+
+
+BUILTIN_ELEMENTS: List[ElementDef] = [
+    ElementDef(0, "None", "None (Không khảm)", "Không có sát thương nguyên tố", "", 0, "No extra materials", [], (120, 130, 134), (180, 190, 195), "none"),
+    ElementDef(1, "Flame", "Flame (Lửa)", "Đánh trúng: +4 sát thương lửa · Tàn lửa bùng cháy", "PF_FlameStrike", 4, "Chemfuel 20 · Gold 6", [["Chemfuel", 20], ["Gold", 6]], (255, 125, 43), (255, 224, 140), "flame"),
+    ElementDef(2, "Frost", "Frost (Băng)", "Đánh trúng: +3 sát thương băng · Làm chậm 15% trong 2s", "PF_FrostStrike", 3, "Jade 12 · Gold 6", [["Jade", 12], ["Gold", 6]], (94, 209, 255), (215, 246, 255), "frost"),
+    ElementDef(3, "Thunder", "Thunder (Sét)", "Đánh trúng: +3 sát thương sốc (+5 lên Mechanoid)", "PF_StormStrike", 3, "Component 2 · Gold 6", [["Component", 2], ["Gold", 6]], (76, 118, 255), (240, 248, 255), "thunder"),
+    ElementDef(4, "Venom", "Venom (Độc)", "Đánh trúng: +2 độc · Rút 1 HP/s trong 3s", "PF_VenomStrike", 2, "Herbal med 12 · Gold 6", [["Herbal med", 12], ["Gold", 6]], (102, 255, 61), (205, 255, 175), "venom"),
+    ElementDef(5, "Concussion", "Concussion (Chấn Động)", "Đánh trúng: +2 đòn nặng · Choáng 0.5s (hồi 4s)", "PF_ConcussionStrike", 2, "Uranium 10 · Gold 6", [["Uranium", 10], ["Gold", 6]], (255, 209, 82), (255, 245, 200), "concussion"),
+    ElementDef(6, "Siphon", "Siphon (Hút Máu)", "Đánh trúng: +2 cắt · Hồi tối đa 1 HP (hồi 4s)", "PF_SiphonStrike", 2, "Medicine 6 · Gold 6", [["Medicine", 6], ["Gold", 6]], (255, 51, 92), (255, 165, 185), "siphon"),
+    # --- 6 NEW GORGEOUS ELEMENTS FOR 1.7 ---
+    ElementDef(7, "Radiant", "Radiant (Thánh Quang)", "Đánh trúng: +4 ánh sáng thiêng · Thiêu rụi thực thể bóng tối", "PF_RadiantStrike", 4, "Gold 10 · Silver 15", [["Gold", 10], ["Silver", 15]], (255, 218, 92), (255, 252, 224), "radiant"),
+    ElementDef(8, "Void", "Void (Hư Không)", "Đánh trúng: +4 hư vô · Xuyên giáp năng lượng & gây nhiễu tâm trí", "PF_VoidStrike", 4, "Uranium 10 · Gold 8", [["Uranium", 10], ["Gold", 8]], (155, 77, 255), (56, 18, 110), "void"),
+    ElementDef(9, "Starlight", "Starlight (Tinh Quang)", "Đánh trúng: +3 tinh tú · Tia sáng ngân hà đa sắc rực rỡ", "PF_StarlightStrike", 3, "Jade 10 · Silver 12 · Gold 6", [["Jade", 10], ["Silver", 12], ["Gold", 6]], (92, 225, 230), (255, 119, 233), "starlight"),
+    ElementDef(10, "SpiritWind", "Sakura Wind (Phong Linh)", "Đánh trúng: +3 phong nhận · Cánh anh đào xoay theo đường chém", "PF_SpiritWindStrike", 3, "Jade 12 · Gold 6", [["Jade", 12], ["Gold", 6]], (255, 148, 194), (168, 255, 224), "sakura"),
+    ElementDef(11, "Magma", "Magma (Dung Nham)", "Đánh trúng: +5 nham thạch · Mạch dung nham đỏ rực trên lưỡi", "PF_MagmaStrike", 5, "Chemfuel 25 · Steel 15 · Gold 6", [["Chemfuel", 25], ["Steel", 15], ["Gold", 6]], (255, 68, 18), (255, 196, 48), "magma"),
+    ElementDef(12, "Frostfire", "Frostfire (Băng Hỏa)", "Đánh trúng: +4 băng hỏa · Song xoắn lam-cam làm chậm & thiêu đốt", "PF_FrostfireStrike", 4, "Chemfuel 12 · Jade 10 · Gold 6", [["Chemfuel", 12], ["Jade", 10], ["Gold", 6]], (60, 240, 255), (255, 110, 40), "frostfire"),
+    # --- 7 STYLIZED BLADE COATINGS & FLARES ---
+    ElementDef(13, "AzureJet", "Azure Jet (Thanh Diêm Kiếm)", "Đánh trúng: +5 thanh diêm · Luồng lửa lam phóng dọc mũi & gai chắn", "PF_AzureJetStrike", 5, "Chemfuel 20 · Plasteel 10 · Gold 6", [["Chemfuel", 20], ["Plasteel", 10], ["Gold", 6]], (30, 155, 255), (175, 242, 255), "azure_jet"),
+    ElementDef(14, "EmberTendrils", "Ember Crackle (U Hỏa)", "Đánh trúng: +4 u hỏa · Vòng chắn & tia lửa nứt tàn tro", "PF_EmberTendrilsStrike", 4, "Chemfuel 18 · Gold 6", [["Chemfuel", 18], ["Gold", 6]], (245, 105, 25), (255, 215, 115), "ember_tendrils"),
+    ElementDef(15, "SonicSlash", "Sonic Wind (Bạch Trảm)", "Đánh trúng: +4 trảm khí · Sóng âm bạc-đen & tia xuyên tốc", "PF_SonicSlashStrike", 4, "Silver 20 · Plasteel 8", [["Silver", 20], ["Plasteel", 8]], (190, 200, 215), (250, 252, 255), "sonic_slash"),
+    ElementDef(16, "IceArmor", "Ice Armor (Băng Giáp)", "Đánh trúng: +4 băng giáp · Giáp tinh thể băng sắc nhọn bọc lưỡi", "PF_IceArmorStrike", 4, "Jade 18 · Silver 10", [["Jade", 18], ["Silver", 10]], (55, 175, 248), (225, 250, 255), "ice_armor"),
+    ElementDef(17, "PlasmaWeb", "Plasma Web (Lôi Mạng)", "Đánh trúng: +5 lôi mạng · Màng năng lượng tế bào lam-trắng", "PF_PlasmaWebStrike", 5, "Component 3 · Plasteel 8", [["Component", 3], ["Plasteel", 8]], (40, 145, 255), (235, 250, 255), "plasma_web"),
+    ElementDef(18, "WaterSheath", "Water Sheath (Thủy Lưu)", "Đánh trúng: +3 thủy lưu · Dòng nước bọt trắng uốn lượn quanh lưỡi", "PF_WaterSheathStrike", 3, "Jade 14 · Silver 8", [["Jade", 14], ["Silver", 8]], (55, 130, 215), (242, 250, 255), "water_sheath"),
+    ElementDef(19, "EclipseFlare", "Eclipse Flare (Nhật Thực)", "Đánh trúng: +6 nhật thực · Tinh tú hắc tâm & thương quang đỏ vàng", "PF_EclipseFlareStrike", 6, "Gold 12 · Uranium 10", [["Gold", 12], ["Uranium", 10]], (220, 45, 25), (255, 232, 145), "eclipse_flare"),
+    # --- 3 SWORD-ONLY LEGENDARY SHADERS ---
+    ElementDef(20, "ShadowStrife", "Shadow Strife (Bạch Viêm Hắc Vụ)", "Đánh trúng: +6 hắc vụ · Bạch viêm bùng tại đốc & khói đen quấn lưỡi kiếm", "PF_ShadowStrifeStrike", 6, "Bioferrite 15 · Silver 12 · Gold 8", [["Bioferrite", 15], ["Silver", 12], ["Gold", 8]], (22, 23, 28), (242, 248, 255), "shadow_strife", allowed_kinds=[0]),
+    ElementDef(21, "EternalAlpha", "Eternal Alpha (Thần Quang Hoàng Kim)", "Đánh trúng: +6 thần quang · Cánh hoàng kim & hào quang thiên giới cho kiếm", "PF_EternalAlphaStrike", 6, "Gold 20 · Plasteel 12 · Silver 10", [["Gold", 20], ["Plasteel", 12], ["Silver", 10]], (245, 198, 72), (255, 250, 228), "eternal_alpha", allowed_kinds=[0]),
+    ElementDef(22, "NovaBurn", "Nova Burn (Siêu Tân Tinh Tím)", "Đánh trúng: +7 siêu tân tinh · Hắc tâm vòng quỹ đạo & thương tím trắng", "PF_NovaBurnStrike", 7, "Uranium 16 · Gold 12 · Component 3", [["Uranium", 16], ["Gold", 12], ["Component", 3]], (198, 86, 255), (255, 240, 220), "nova_burn", allowed_kinds=[0]),
+    # --- SIGNATURE SPECIAL WEAPON VFX ---
+    ElementDef(23, "AbyssalMiasma", "Abyssal Miasma (U Minh Tử Khí)", "Đánh trúng: +6 tử khí · Ngọn lửa tím họng kiếm chuyển khói đen hắc ám", "PF_AbyssalMiasmaStrike", 6, "Bioferrite 18 · Obsidian 10 · Gold 8", [["Bioferrite", 18], ["Silver", 10], ["Gold", 8]], (32, 14, 52), (225, 65, 255), "abyssal_miasma"),
+    ElementDef(24, "InkVoid", "Thái Hư Mặc Khí (Void Ink Mist)", "Đánh trúng: +7 mặc khí · Hắc hỏa & sương bạc trắng quấn quanh kiếm", "PF_InkVoidStrike", 7, "Plasteel 16 · Bioferrite 12 · Gold 8", [["Plasteel", 16], ["Bioferrite", 12], ["Gold", 8]], (16, 16, 22), (228, 234, 248), "ink_void"),
+]
+
+
+@dataclass
+class SpecialWeaponDef:
+    """Standalone complete legendary weapon (no modular forge part assembly required)."""
+    id: str
+    def_name: str
+    name: str
+    subtitle: str
+    kind: int
+    description: str
+    lore: str
+    damage: float
+    armor_pen: float
+    cooldown: float
+    mass: float
+    work: float
+    req_skill: int
+    default_element_id: int
+    ingredients: List[List]
+    texture_rel_path: str
+    exclusive_skills: List[str] = field(default_factory=list)
+
+
+SPECIAL_WEAPONS: List[SpecialWeaponDef] = [
+    SpecialWeaponDef(
+        id="abyssal_skullblade",
+        def_name="PF_Special_AbyssalSkullblade",
+        name="Hắc Sọ Tử Viêm Kiếm (Abyssal Skullblade)",
+        subtitle="Vũ Khí Đặc Biệt · Nguyên Khối Hoàn Chỉnh · 5 Skill Riêng",
+        kind=0,
+        description="Đại kiếm ma đầu lâu nguyên khối: chuôi vuốt kẹp mảnh tinh thể tím, chắn tay 3 hốc sọ thép tối và lưỡi hắc diện thạch rực tử khí chuyển sương đen.",
+        lore="Được rèn nguyên khối từ thép ám ảnh và tinh thể hư không mà không cần ghép từng phôi rời. Ngọn lửa tử linh bùng ra từ khe sọ rồi hóa thành màn sương đen nuốt chửng mọi nhát chém.",
+        damage=32.0,
+        armor_pen=0.44,
+        cooldown=2.35,
+        mass=2.25,
+        work=14500.0,
+        req_skill=14,
+        default_element_id=23,
+        ingredients=[["Plasteel", 55], ["Bioferrite", 30], ["Gold", 12], ["Uranium", 15]],
+        texture_rel_path="Special/AbyssalSkullblade.png",
+        exclusive_skills=[
+            "sk_abyssal_dragon_cleave",
+            "sk_phantom_blink",
+            "sk_cyclone_vortex",
+            "sk_soaring_pierce",
+            "sk_pentagram_cataclysm",
+        ],
+    ),
+    SpecialWeaponDef(
+        id="tran_ac_inkblade",
+        def_name="PF_Special_TranAcInkblade",
+        name="Trấn Ác · Thái Hư Hắc Kiếm (Void Inkblade)",
+        subtitle="Vũ Khí Đặc Biệt · Nguyên Khối Hoàn Chỉnh · 5 Skill Hắc Ảnh",
+        kind=0,
+        description="Hắc kiếm nguyên khối thân hắc thiết hoa văn cổ điển khảm ngọc lam-tím, chuôi quấn da đen kết vương miện hắc thạch và lưỡi bạc sắc lạnh tỏa hắc khí sương trắng.",
+        lore="Thanh trọng kiếm Trấn Ác mang Thái Hư Kiếm Ý, mỗi đường vung đều kéo theo những dải mặc ảnh đen đặc sắc bén cắt nát không gian.",
+        damage=34.0,
+        armor_pen=0.48,
+        cooldown=2.15,
+        mass=2.10,
+        work=15200.0,
+        req_skill=15,
+        default_element_id=24,
+        ingredients=[["Plasteel", 60], ["Bioferrite", 28], ["Silver", 20], ["Gold", 14]],
+        texture_rel_path="Special/TranAcInkblade.png",
+        exclusive_skills=[
+            "sk_ink_eclipse_ring",
+            "sk_ink_void_wave",
+            "sk_ink_void_aegis",
+            "sk_ink_shadow_spikes",
+            "sk_ink_blood_eclipse",
+        ],
+    ),
+]
+
+# Legacy list accessors
+ENCHANTMENTS: List[str] = [e.name for e in BUILTIN_ELEMENTS]
+ENCHANTMENT_DESCRIPTIONS: List[str] = [e.description for e in BUILTIN_ELEMENTS]
 
 COLOR_PRESETS: List[Tuple[str, Tuple[float, float, float]]] = [
     ("Natural", (1.0, 1.0, 1.0)),
@@ -94,7 +253,7 @@ COLOR_PRESETS: List[Tuple[str, Tuple[float, float, float]]] = [
 class MaterialInfo:
     def_name: str
     label: str
-    color: Tuple[float, float, float]  # RimWorld stuffProps.color (0..1)
+    color: Tuple[float, float, float]
     sharp_damage_mult: float = 1.0
     blunt_damage_mult: float = 1.0
     cooldown_mult: float = 1.0
@@ -102,7 +261,6 @@ class MaterialInfo:
     market_value: float = 1.9
 
 
-# RimWorld 1.7 standard metals & grip materials
 METALS: List[MaterialInfo] = [
     MaterialInfo("Steel", "Steel", (1.0, 1.0, 1.0), 1.0, 1.0, 1.0, 1.0, 1.9),
     MaterialInfo("Silver", "Silver", (0.78, 0.80, 0.84), 0.9, 0.9, 1.0, 1.3, 1.0),
@@ -185,23 +343,22 @@ CRAFT_SKILLS = [4, 8, 8, 10]
 
 @dataclass
 class CustomPartEntry:
-    """User-added or overridden part entry."""
-    part_id: str          # e.g. "head_0_6", "guard_7", "grip_6", "pommel_6"
-    category: str         # "head", "guard", "grip", "pommel", "pattern"
-    kind: int             # 0..3 for head, -1 for shared
-    index: int            # slot index
-    name: str             # display name
+    part_id: str
+    category: str
+    kind: int
+    index: int
+    name: str
     damage: float = 1.0
     cooldown: float = 1.0
     mass: float = 1.0
     penetration: float = 0.0
     work_mult: float = 1.0
     cost: int = 10
-    socket_x: Optional[float] = None  # override head socket X (0..1) if desired
-    tang_root: float = 0.08           # sword tang root fraction
+    socket_x: Optional[float] = None
+    tang_root: float = 0.08
     is_atlas_cell: bool = False
     atlas_cell: int = -1
-    texture_rel_path: str = ""        # relative to Textures/PersonalForge/
+    texture_rel_path: str = ""
 
 
 @dataclass
@@ -221,11 +378,11 @@ class WeaponDesignState:
     pattern_strength: float = 0.6
     pattern_rotation: int = 0
     pattern_color: Tuple[float, float, float] = (0.24, 0.22, 0.19)
-    pattern_parts: int = 1      # bitmask: 1=Blade, 2=Guard, 4=Pommel, 8=Grip
-    pattern_layout: int = 0     # 0=All over, 1=Center, 2=Edge
+    pattern_parts: int = 1
+    pattern_layout: int = 0
     pattern_offset_x: float = 0.0
     pattern_offset_y: float = 0.0
-    metal_finish: int = 0       # 0=Natural, 1=Matte, 2=Blackened, 3=Antique bronze
+    metal_finish: int = 0
     head_tint: Tuple[float, float, float] = (1.0, 1.0, 1.0)
     guard_tint: Tuple[float, float, float] = (1.0, 1.0, 1.0)
     grip_tint: Tuple[float, float, float] = (1.0, 1.0, 1.0)
@@ -233,9 +390,11 @@ class WeaponDesignState:
     pommel_tint: Tuple[float, float, float] = (1.0, 1.0, 1.0)
     craft: int = 0
     enchantment: int = 0
-    head_material_idx: int = 0  # Steel
-    guard_material_idx: int = 0 # Steel
-    grip_material_idx: int = 0  # WoodLog
+    socket_gem: bool = True
+    vfx_intensity: float = 1.25
+    head_material_idx: int = 0
+    guard_material_idx: int = 0
+    grip_material_idx: int = 0
     name: str = ""
     inscription: str = ""
     story: str = ""
@@ -249,7 +408,7 @@ class WeaponDesignState:
 
 
 class ModAssetStore:
-    """Manages loading, caching, and saving textures & custom parts for Overgeared (1.7)."""
+    """Manages loading, caching, and saving textures, custom parts & elements for Overgeared (1.7)."""
 
     def __init__(self, mod_root: str | Path):
         self.mod_root = Path(mod_root)
@@ -258,20 +417,23 @@ class ModAssetStore:
         self.patterns_dir = self.textures_root / "Patterns"
         self.effects_dir = self.textures_root / "Effects"
         self.registry_path = self.mod_root / "ForgeStudio_CustomParts.json"
+        self.elements_path = self.mod_root / "ForgeStudio_CustomElements.json"
 
-        # Cache of bottom-up float32 RGBA arrays [H, W, 4] (0..1)
         self._part_cache: Dict[str, np.ndarray] = {}
         self._head_socket_cache: Dict[str, float] = {}
         self._center_socket_cache: Dict[str, Tuple[float, float, float]] = {}
         self._pattern_sums_cache: Dict[int, np.ndarray] = {}
         self._atlas_arr: Optional[np.ndarray] = None
         self._sparkle_pil: Optional[Image.Image] = None
+        self._effect_pil_cache: Dict[str, Image.Image] = {}
 
-        # Temporary in-memory override textures from Splitter ("Test ngay trong Lò Rèn")
         self.temp_textures: Dict[str, np.ndarray] = {}
+        self.temp_effect_pils: Dict[str, Image.Image] = {}
         self.custom_parts: Dict[str, CustomPartEntry] = {}
+        self.custom_elements: List[ElementDef] = []
 
         self.load_custom_registry()
+        self.load_custom_elements()
 
     def set_mod_root(self, new_root: str | Path) -> None:
         self.mod_root = Path(new_root)
@@ -280,8 +442,10 @@ class ModAssetStore:
         self.patterns_dir = self.textures_root / "Patterns"
         self.effects_dir = self.textures_root / "Effects"
         self.registry_path = self.mod_root / "ForgeStudio_CustomParts.json"
+        self.elements_path = self.mod_root / "ForgeStudio_CustomElements.json"
         self.clear_caches()
         self.load_custom_registry()
+        self.load_custom_elements()
 
     def clear_caches(self) -> None:
         self._part_cache.clear()
@@ -290,6 +454,7 @@ class ModAssetStore:
         self._pattern_sums_cache.clear()
         self._atlas_arr = None
         self._sparkle_pil = None
+        self._effect_pil_cache.clear()
 
     def load_custom_registry(self) -> None:
         self.custom_parts.clear()
@@ -309,9 +474,98 @@ class ModAssetStore:
         }
         self.registry_path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 
+    # ---- Elements (0..12 built-in + user custom elements) ----
+    def load_custom_elements(self) -> None:
+        self.custom_elements.clear()
+        if self.elements_path.exists():
+            try:
+                raw = json.loads(self.elements_path.read_text(encoding="utf-8"))
+                for item in raw.get("elements", []):
+                    item["primary_rgb"] = tuple(item["primary_rgb"])
+                    item["secondary_rgb"] = tuple(item["secondary_rgb"])
+                    item["is_builtin"] = False
+                    self.custom_elements.append(ElementDef(**item))
+            except Exception:
+                pass
+
+    def save_custom_elements(self) -> None:
+        data = {
+            "version": "1.7",
+            "elements": [asdict(e) for e in self.custom_elements],
+        }
+        self.elements_path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    def get_all_elements(self) -> List[ElementDef]:
+        return list(BUILTIN_ELEMENTS) + list(self.custom_elements)
+
+    def get_elements_for_kind(self, kind: int) -> List[ElementDef]:
+        return [e for e in self.get_all_elements() if is_element_allowed(e, kind)]
+
+    def get_element(self, elem_id: int) -> ElementDef:
+        for e in self.get_all_elements():
+            if e.id == elem_id:
+                return e
+        return BUILTIN_ELEMENTS[0]
+
+    def add_custom_element(
+        self,
+        name: str,
+        description: str,
+        damage: int,
+        primary_rgb: Tuple[int, int, int],
+        secondary_rgb: Tuple[int, int, int],
+        vfx_style: str,
+        cost_text: str = "Gold 8 · Jade 8",
+        ingredients: Optional[List[List]] = None,
+        layers: Optional[List[Dict]] = None,
+        allowed_kinds: Optional[List[int]] = None,
+    ) -> ElementDef:
+        all_ids = {e.id for e in self.get_all_elements()}
+        new_id = len(BUILTIN_ELEMENTS)
+        while new_id in all_ids:
+            new_id += 1
+        safe_key = "".join(ch for ch in name.title() if ch.isalnum()) or f"Element{new_id}"
+        ed = ElementDef(
+            id=new_id,
+            key=safe_key,
+            name=name,
+            description=description,
+            damage_def=f"PF_{safe_key}Strike",
+            damage=damage,
+            cost_text=cost_text,
+            ingredients=ingredients if ingredients is not None else [["Gold", 8], ["Jade", 8]],
+            primary_rgb=primary_rgb,
+            secondary_rgb=secondary_rgb,
+            vfx_style=vfx_style,
+            is_builtin=False,
+            layers=layers if layers is not None else [],
+            allowed_kinds=list(allowed_kinds) if allowed_kinds is not None else None,
+        )
+        self.custom_elements.append(ed)
+        self.save_custom_elements()
+        return ed
+
+    def get_effect_pil(self, rel_path: str) -> Optional[Image.Image]:
+        if not rel_path:
+            return None
+        if rel_path in self.temp_effect_pils:
+            return self.temp_effect_pils[rel_path]
+        if rel_path in self._effect_pil_cache:
+            return self._effect_pil_cache[rel_path]
+        p = self.textures_root / rel_path
+        if p.exists():
+            with Image.open(p) as im:
+                rgba = im.convert("RGBA")
+                self._effect_pil_cache[rel_path] = rgba
+                return rgba
+        return None
+
+    def remove_custom_element(self, elem_id: int) -> None:
+        self.custom_elements = [e for e in self.custom_elements if e.id != elem_id]
+        self.save_custom_elements()
+
     # ---- Lists of available parts (built-in + custom) ----
     def get_heads(self, kind: int) -> List[Tuple[int, str, str]]:
-        """Returns list of (index, part_id, display_name)."""
         items: List[Tuple[int, str, str]] = []
         base_names = BUILTIN_HEADS[kind]
         max_idx = len(base_names) - 1
@@ -448,7 +702,6 @@ class ModAssetStore:
         return self._atlas_arr
 
     def set_temp_part(self, name: str, pil_img: Image.Image, socket_x: Optional[float] = None) -> None:
-        """Sets an in-memory preview part (top-down PIL RGBA) so Forge preview updates instantly."""
         arr = self._pil_to_bottomup_f32(pil_img)
         self.temp_textures[name] = arr
         self._part_cache.pop(name, None)
@@ -464,19 +717,14 @@ class ModAssetStore:
         self._head_socket_cache.pop(name, None)
 
     def get_part(self, name: str) -> Optional[np.ndarray]:
-        """Returns bottom-up float32 RGBA [H, W, 4] matching WeaponArt.Part(name)."""
         if name in self.temp_textures:
             return self.temp_textures[name]
         if name in self._part_cache:
             return self._part_cache[name]
 
-        # 1. Check standalone PNG first if user placed custom/override file
         standalone = self.parts_dir / f"{name}.png"
         cell = self._atlas_cell(name)
 
-        # If it's an atlas cell AND no custom override file exists, slice from expansion_atlas
-        # Wait: if user replaced an atlas cell via expansion_atlas, load from atlas;
-        # if standalone file exists for a non-atlas part (or custom part >=6), load standalone.
         if cell >= 0 and not (name in self.custom_parts and not self.custom_parts[name].is_atlas_cell and standalone.exists()):
             atlas = self._load_atlas()
             if atlas is not None:
@@ -498,14 +746,10 @@ class ModAssetStore:
                     out = np.zeros((out_h, out_w, 4), dtype=np.float32)
                     out[2:2 + (max_y - min_y + 1), 2:2 + (max_x - min_x + 1)] = cell_arr[min_y:max_y + 1, min_x:max_x + 1]
                     self._part_cache[name] = out
-                    # Compute HeadSocket as in ExpandedParts.cs
                     scan_y = max(2, min(out_h - 3, round(out_h * 0.045)))
                     row_alpha = out[scan_y, :, 3] > (128.0 / 255.0)
                     opaque_xs = np.where(row_alpha)[0]
-                    if len(opaque_xs) > 0:
-                        sock = float(np.mean(opaque_xs + 0.5) / out_w)
-                    else:
-                        sock = 0.5
+                    sock = float(np.mean(opaque_xs + 0.5) / out_w) if len(opaque_xs) > 0 else 0.5
                     self._head_socket_cache[name] = sock
                     return out
 
@@ -547,7 +791,6 @@ class ModAssetStore:
         return 0.5
 
     def get_center_socket(self, name: str) -> Tuple[float, float, float]:
-        """Exact port of WeaponJoints.CenterSocket(Texture2D)."""
         if name in self._center_socket_cache:
             return self._center_socket_cache[name]
         arr = self.get_part(name)
@@ -562,8 +805,7 @@ class ModAssetStore:
             self._center_socket_cache[name] = res
             return res
         min_y, max_y = int(ys[0]), int(ys[-1])
-        sample_y = round(min_y + (max_y - min_y) * 0.84)
-        sample_y = max(0, min(h - 1, sample_y))
+        sample_y = max(0, min(h - 1, round(min_y + (max_y - min_y) * 0.84)))
         left = cx
         right = cx
         while left > 0 and arr[sample_y, left - 1, 3] > (160.0 / 255.0):
@@ -575,7 +817,6 @@ class ModAssetStore:
         return res
 
     def get_pattern_sums(self, index: int) -> Optional[np.ndarray]:
-        """Exact 257x257 integral image from WeaponArt.PatternArea(index)."""
         if index == 0:
             return None
         if index in self._pattern_sums_cache:
@@ -583,7 +824,6 @@ class ModAssetStore:
         temp_key = f"pattern_{index}"
         if temp_key in self.temp_textures:
             arr = self.temp_textures[temp_key]
-            # Convert back to uint8 256x256
             h, w, _ = arr.shape
             r_chan = np.clip(arr[:, :, 0] * 255.0, 0, 255).astype(np.int32)
             ys = (np.arange(256) * h) // 256
@@ -613,7 +853,6 @@ class ModAssetStore:
                 self._sparkle_pil = Image.open(p).convert("RGBA")
         return self._sparkle_pil
 
-    # ---- Stats calculation matching WeaponDesign.cs + Dialog_Forge.cs ----
     def compute_stats(self, design: WeaponDesignState) -> dict:
         kind = design.kind
         head = design.head
@@ -635,17 +874,9 @@ class ModAssetStore:
         comp_pen = gp.penetration + grp.penetration + pp.penetration
 
         if head == 3:
-            h_dmg = MASTER_DAMAGE[kind]
-            h_cd = MASTER_COOLDOWN[kind]
-            h_work = HEAD_WORK[3]
-            h_mass = HEAD_MASS[3]
-            h_cost = HEAD_COST[3]
+            h_dmg, h_cd, h_work, h_mass, h_cost = MASTER_DAMAGE[kind], MASTER_COOLDOWN[kind], HEAD_WORK[3], HEAD_MASS[3], HEAD_COST[3]
         elif head < len(HEAD_DAMAGE):
-            h_dmg = HEAD_DAMAGE[head]
-            h_cd = HEAD_COOLDOWN[head]
-            h_work = HEAD_WORK[head]
-            h_mass = HEAD_MASS[head]
-            h_cost = HEAD_COST[head]
+            h_dmg, h_cd, h_work, h_mass, h_cost = HEAD_DAMAGE[head], HEAD_COOLDOWN[head], HEAD_WORK[head], HEAD_MASS[head], HEAD_COST[head]
         else:
             hc = self._custom_stats(f"head_{kind}_{head}")
             h_dmg, h_cd, h_work, h_mass, h_cost = hc.damage, hc.cooldown, hc.work_mult, hc.mass, hc.cost
@@ -670,7 +901,6 @@ class ModAssetStore:
         work = BASE_WORK[kind] * h_work * (1.0 + 0.55 * adv_parts) * CRAFT_WORK[design.craft] + (4500.0 if design.enchantment > 0 else 0.0)
         req_skill = max(10 if design.enchantment > 0 else 0, max(12 if adv_parts > 0 else 4, CRAFT_SKILLS[design.craft]))
 
-        # Ingredients
         ingredients: Dict[str, int] = {}
         def add_ing(label: str, amt: int):
             ingredients[label] = ingredients.get(label, 0) + amt
@@ -682,23 +912,15 @@ class ModAssetStore:
             add_ing(head_mat.label, 6)
         if design.craft == 3:
             add_ing("Plasteel", 8)
-        if design.enchantment > 0:
-            add_ing("Gold", 6)
-            ench_map = {
-                1: ("Chemfuel", 20),
-                2: ("Jade", 12),
-                3: ("Component", 2),
-                4: ("Herbal med", 12),
-                5: ("Uranium", 10),
-                6: ("Medicine", 6),
-            }
-            el, ea = ench_map[design.enchantment]
-            add_ing(el, ea)
+
+        elem = self.get_element(design.enchantment)
+        if elem.id > 0:
+            for ing_label, ing_amt in elem.ingredients:
+                add_ing(ing_label, int(ing_amt))
+
         if adv_parts > 0:
             add_ing("Plasteel", 12 * adv_parts)
             add_ing("Gold", 4 * adv_parts)
-
-        ench_dmg = 0 if design.enchantment == 0 else (4 if design.enchantment == 1 else (2 if design.enchantment >= 4 else 3))
 
         return {
             "damage": damage,
@@ -708,7 +930,7 @@ class ModAssetStore:
             "mass": mass,
             "work": work,
             "req_skill": req_skill,
-            "ench_damage": ench_dmg,
+            "ench_damage": elem.damage,
             "ingredients": ingredients,
             "base_mat_damage": BASE_WEAPON_DAMAGE[kind] * mat_dmg,
             "base_mat_cooldown": BASE_WEAPON_COOLDOWN[kind] * mat_cd,

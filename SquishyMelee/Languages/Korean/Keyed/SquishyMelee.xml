@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<!-- Weapon filters and selected-weapon summary -->
+  <SM_Enabled>근접 애니메이션 전체 사용</SM_Enabled>
+  <SM_FilterRanged>원거리</SM_FilterRanged>
+  <SM_FilterMelee>근거리</SM_FilterMelee>
+  <SM_MeleeStats>도구 {0}개 / 평균 위력 {1} / 평균 쿨다운 {2}초</SM_MeleeStats>
+  <SM_ToolLine>위력 {0} / 쿨다운 {1}초</SM_ToolLine>
+
+  <!-- Main editor tabs -->
+  <SM_TabMelee>근접 모션</SM_TabMelee>
+  <SM_TabHands>손 (SMYH)</SM_TabHands>
+  <SM_TabHandsShort>손 (SMYH)</SM_TabHandsShort>
+  <SM_TabRaces>종족별 설정</SM_TabRaces>
+  <SM_MeleeTitle>[ 스퀴시 밀리 ]</SM_MeleeTitle>
+  <SM_MeleeDescription>스퀴시 밀리는 근접 전투 밸런스에 관여하지 않습니다. 오직 시각적 효과만 제공합니다.</SM_MeleeDescription>
+  <SM_GlobalTitle>전체 설정</SM_GlobalTitle>
+  <SM_WeaponSettingsHeader>{0} 설정</SM_WeaponSettingsHeader>
+  <SM_WeaponSettingsWithShieldsHeader>{0}·{1} 설정</SM_WeaponSettingsWithShieldsHeader>
+
+  <!-- Melee Motion tab: global settings, in display order -->
+  <SM_SecStyle>[ 스타일 ]</SM_SecStyle>
+  <SM_StepMotion>올드 애니메이션 모드 (30프레임)</SM_StepMotion>
+  <SM_StepMotionTip>근접 / 피격 모션의 자세를 두 틱마다 바꿉니다. 끄면 매 틱 부드럽게 이어집니다. 총 반동 모션에는 영향이 없습니다.</SM_StepMotionTip>
+  <SM_SecAttack>[ 공격 동작 ]</SM_SecAttack>
+  <SM_MeleeMotion>스퀴시 스타일 공격 모션</SM_MeleeMotion>
+  <SM_MeleeMotionTip>공격하는 순간의 동작입니다. 타격 순간에 앞으로 살짝 대시하며 내려치고, 제자리로 돌아오는 힘으로 몸이 흔들립니다. 무기는 몸 둘레를 호를 그리며 지나갑니다. 무기의 피해 유형에 따라 베기 / 찌르기 / 내려치기 / 물기가 자동으로 정해집니다.</SM_MeleeMotionTip>
+  <SM_MeleeStrength>공격 모션 세기</SM_MeleeStrength>
+  <SM_DashDistance>공격 대시 거리</SM_DashDistance>
+  <SM_WeaponReach>무기 위치 (왼쪽: 몸에 가깝게 / 오른쪽: 몸에서 멀게)</SM_WeaponReach>
+  <SM_PointAuto>찌르기 공격 무기 끝 방향 배율 조정 (무기 끝을 타겟을 향하게 만드는 용도)</SM_PointAuto>
+  <SM_PointTrim>찌르기 공격 무기 끝 각도 미세 조정 (각 무기별로 조정하는 것을 추천)</SM_PointTrim>
+  <SM_HeightStrength>동작 높이 (무기를 드는 높이, 도약 높이)</SM_HeightStrength>
+  <SM_HitStop>타격 순간 정지(히트스톱) 길이</SM_HitStop>
+  <SM_Routine_snap>짧은 휘두르기 (짧은 쿨다운용)</SM_Routine_snap>
+  <SM_DebugLog>공격 기록을 로그에 남기기 (문제 찾기용)</SM_DebugLog>
+  <SM_DebugLogTip>공격할 때마다 어떤 동작을 하고 다음에 무슨 동작으로 이어질지, 게임이 실제로 공격 사이에 걸린 시간, 접근 동작의 시간 배율을 로그에 적습니다. 동작이 어색할 때 이 줄들을 같이 보면 원인을 찾을 수 있습니다. 평소에는 꺼두세요.</SM_DebugLogTip>
+  <SM_SecRoutines>[ 공격 패턴 ]</SM_SecRoutines>
+  <SM_ChainMotion>공격 패턴 다양화 (각 무기의 쿨다운 길이에 맞는 루틴을 확률로 선택합니다)</SM_ChainMotion>
+  <SM_ChainMotionTip>공격 종류와 상관없이 여러 공격 동작(루틴) 중 하나가 확률에 따라 골라집니다. 한 번의 쿨다운이 하나의 흐름이 되어, 타격 후 자세에서 곧바로 다음 동작(제자리에서 휘두른 뒤 바로 도약해서 베기, 뒤로 물러서기, 웅크렸다 도약하기 등)으로 이어지고 타격은 항상 정확한 시점에 들어갑니다. 끄면 기본 휘두르기만 나옵니다.</SM_ChainMotionTip>
+  <SM_RoutineWeightsHint>공격 루틴별 확률입니다. 0이면 나오지 않고, 1이 기본, 2는 두 배로 자주 나옵니다. 왼쪽 0 버튼은 그 루틴을 끄고, 오른쪽 버튼은 기본값으로 되돌립니다.</SM_RoutineWeightsHint>
+  <SM_Routine_classic>기본 휘두르기</SM_Routine_classic>
+  <SM_Routine_overhead>높이 들어 내려치기</SM_Routine_overhead>
+  <SM_Routine_crouch_dash>전진 베기</SM_Routine_crouch_dash>
+  <SM_Routine_rising_cut>올려치기</SM_Routine_rising_cut>
+  <SM_Routine_leap_slam>도약 내려치기</SM_Routine_leap_slam>
+  <SM_Routine_leap_slash>도약 베기</SM_Routine_leap_slash>
+  <SM_Routine_back_thrust>후진 찌르기</SM_Routine_back_thrust>
+  <SM_Routine_quick_thrust>빠른 찌르기</SM_Routine_quick_thrust>
+  <SM_Routine_head_butt>몸통 박치기</SM_Routine_head_butt>
+  <SM_Routine_pounce>도약 몸통 박치기</SM_Routine_pounce>
+  <SM_Routine_sweep>크게 휘두르기</SM_Routine_sweep>
+  <SM_Routine_swing_dash>페이크 후 전진 베기</SM_Routine_swing_dash>
+  <SM_Routine_rise_chop>시간차 내려치기</SM_Routine_rise_chop>
+  <SM_Routine_jab_lunge>조준 후 전진 찌르기</SM_Routine_jab_lunge>
+  <SM_Routine_retreat_swing>후진 후 전진 베기</SM_Routine_retreat_swing>
+  <SM_ResetShort>초기화</SM_ResetShort>
+  <SM_SecCooldown>[ 쿨다운 · 대기 동작 ]</SM_SecCooldown>
+  <SM_CooldownMotion>타격 후 말랑한 잔여 반동</SM_CooldownMotion>
+  <SM_CooldownMotionTip>몸 반동 세기와 고개 반동 세기는 타격 때의 반응 전체(처음 꺾임과 이어지는 흔들림)의 크기이고, 0이면 움직이지 않습니다. 이 옵션을 끄면 흔들림 없이 부드럽게 돌아옵니다. 다음 공격까지 시간이 남으면 무기를 공격 시작 자세로 옮기고, 몸을 수축한 채 공격 직전에 빠르게 한 번 더 뒤로 당깁니다. 실제 공격 속도와 타격 판정은 바뀌지 않습니다.</SM_CooldownMotionTip>
+  <SM_BreathMotion>대기 중 호흡 흔들림</SM_BreathMotion>
+  <SM_BreathMotionTip>다음 동작을 시작하기 전 기다리는 동안 무기와 몸이 숨쉬듯 천천히 미약하게 흔들립니다.</SM_BreathMotionTip>
+  <SM_CompressLimit>짧은 쿨다운 시간 압축 한도 (낮을수록 더 빠르게 압축)</SM_CompressLimit>
+  <SM_ReadyPoseSpeed>다음 공격 준비 속도</SM_ReadyPoseSpeed>
+  <SM_ReadyPoseSpeedTip>0.00은 가능한 가장 느린 속도, 1.00은 기본 속도, 2.00은 기본의 두 배 속도입니다. 다음 공격 전에 남은 시간이 짧으면 도착 시점은 제한됩니다.</SM_ReadyPoseSpeedTip>
+  <SM_BodyCoilStrength>공격 전 몸 수축 세기</SM_BodyCoilStrength>
+  <SM_SecRecoil>[ 반동 세기 ]</SM_SecRecoil>
+  <SM_BodyRecoilStrength>몸 잔여 반동 세기</SM_BodyRecoilStrength>
+  <SM_WeaponRecoilStrength>무기 잔여 반동 세기</SM_WeaponRecoilStrength>
+  <SM_HeadRecoilStrength>고개 잔여 반동 세기</SM_HeadRecoilStrength>
+  <SM_SecMiss>[ 헛스윙 · 회피 ]</SM_SecMiss>
+  <SM_MissMotion>헛스윙 휘청임</SM_MissMotion>
+  <SM_MissMotionTip>공격이 빗맞으면 타격 멈춤 없이 더 멀리 내지르고 휘청이며 균형을 잡습니다. 끄면 빗맞아도 평소 공격과 같은 동작입니다.</SM_MissMotionTip>
+  <SM_DodgeMotion>상대 회피 (옆으로 뛰어 피하기)</SM_DodgeMotion>
+  <SM_DodgeMotionTip>공격이 빗맞거나 피해지면 상대가 옆으로 뛰어올랐다 착지합니다.</SM_DodgeMotionTip>
+  <SM_SecHit>[ 피격 모션 ]</SM_SecHit>
+  <SM_HitMotion>피격 모션 (수축 → 원복 → 통통 튐)</SM_HitMotion>
+  <SM_HitMotionTip>피해를 입으면 때린 쪽 반대로 밀리며 몸이 확 눌렸다가 더 길게 늘어나고, 살짝 뛰어올라 착지하며 원래 모양으로 돌아옵니다. 피해량이 클수록 크게 반응합니다. 근접 피격은 상대가 내지르는 순간에 맞춰 반응합니다. 총에 맞아도 반응합니다.</SM_HitMotionTip>
+  <SM_HitTremble>빠른 연속 피격을 하나의 떨림으로 합치기</SM_HitTremble>
+  <SM_HitTrembleTip>짧은 간격으로 여러 번 맞으면 반동을 계속 겹치지 않고, 크기가 제한된 진동으로 합칩니다. 반대 방향 충격은 밀림 방향을 일부 상쇄합니다. 끄면 기존처럼 피격 반응이 각각 겹칠 수 있습니다.</SM_HitTrembleTip>
+  <SM_HitStrength>피격 모션 세기</SM_HitStrength>
+  <SM_SecSpacing>[ 대치 간격 ]</SM_SecSpacing>
+  <SM_SpacingMotion>대치 간격 (전투시 서로 충분한 거리를 유지함)</SM_SpacingMotion>
+  <SM_SpacingMotionTip>사거리 한 칸짜리 무기로 마주 서면 몸이 겹쳐 보입니다. 근접전 중인 폰은 자기 칸 안에서 상대 반대편 가장자리로 살짝 물러난 모습으로 그려집니다. 폰의 위치와 사거리는 그대로이고 그려지는 위치만 바뀝니다.</SM_SpacingMotionTip>
+  <SM_DuelSpacing>물러서는 거리 (칸, 최대 0.45)</SM_DuelSpacing>
+  <SM_SecShield>[ 방패 ]</SM_SecShield>
+  <SM_ShieldFollow>방패 연동 (몸 따라다니기)</SM_ShieldFollow>
+  <SM_ShieldFollowTip>켜면 VEF 방패가 폰의 대치 위치와 몸의 전투 동작을 따라 움직입니다. 끄면 방패는 VEF 기본 위치에 표시됩니다.</SM_ShieldFollowTip>
+  <SM_ShieldMotion>방패 기술 (공격 대신 방패를 쓰는 모션)</SM_ShieldMotion>
+  <SM_ShieldMotionTip>방패를 낀 폰이 공격할 때 일정 확률로 주무기 모션 대신 방패를 들어 막거나, 방패로 밀치거나, 막은 뒤 밀칩니다. 공격 자체의 피해는 그대로 들어갑니다.</SM_ShieldMotionTip>
+  <SM_ShieldChance>방패 기술 확률 (공격당)</SM_ShieldChance>
+  <SM_ShieldStrength>방패 기술 세기</SM_ShieldStrength>
+  <SM_ShieldMotionKind>방패 기술 모션</SM_ShieldMotionKind>
+  <SM_ShieldMotionKindTip>선택한 모션 중 하나가 무작위로 나옵니다. 세 가지를 모두 선택하면 자동과 같이 세 모션 중 무작위로 나옵니다.</SM_ShieldMotionKindTip>
+  <SM_ShieldKind1>막기</SM_ShieldKind1>
+  <SM_ShieldKind2>밀치기</SM_ShieldKind2>
+  <SM_ShieldKind3>막고 밀치기</SM_ShieldKind3>
+  <SM_ShieldGuard>실제 방어 효과 (방패 모션 중 상대의 근접 공격 막기)</SM_ShieldGuard>
+  <SM_ShieldGuardTip>방패 모션이 재생되는 동안 지금 싸우고 있는 상대의 근접 공격은 아래 비율대로 막습니다. 끄면 모션만 나오고 게임 결과는 바뀌지 않습니다. 원거리 공격은 막지 않습니다.</SM_ShieldGuardTip>
+  <SM_ShieldBlockMul>막는 동안 들어오는 피해 (0% = 완전히 무시)</SM_ShieldBlockMul>
+  <SM_ShieldReflect>막은 피해 중 상대에게 되돌리는 비율</SM_ShieldReflect>
+  <SM_Blocked>막음!</SM_Blocked>
+  <SM_ResetGlobalDefaults>전체 설정 기본값으로 되돌리기</SM_ResetGlobalDefaults>
+
+  <!-- Melee Motion tab: selected weapon settings -->
+  <SM_MeleeHint>아래 항목은 해당 무기에만 적용되며 꺼짐 항목은 전체설정을 따릅니다.</SM_MeleeHint>
+  <SM_SecCommon>[ 일반 ]</SM_SecCommon>
+  <SM_MeleeBodyManual>모션 세기 (꺼짐: 1.00)</SM_MeleeBodyManual>
+  <SM_MeleeBodyLabel>세기</SM_MeleeBodyLabel>
+  <SM_DashDistanceManual>공격 대시 거리 (사거리 2칸 무기는 조정 필요)</SM_DashDistanceManual>
+  <SM_WeaponReachManual>무기 위치 (몸통과 무기의 간격 조절)</SM_WeaponReachManual>
+  <SM_PointTrimManual>찌르기 공격 무기 끝 각도 미세 조정 (무기를 사선으로 들고 찌르는 무기는 직접 각도 수정)</SM_PointTrimManual>
+  <SM_WeaponRoutinesHint>공격 패턴 확률입니다. 흐리게 보이는 것은 전체 설정을 따르고, 직접 바꾼 항목은 하늘색으로 표시됩니다. 0 버튼은 해당 무기에서만 끄며, 전체 설정 버튼을 누르면 전체 설정을 따릅니다.</SM_WeaponRoutinesHint>
+  <SM_UseGlobalSettings>전체 설정</SM_UseGlobalSettings>
+  <SM_ReadyPoseSpeedManual>다음 공격 준비 속도 </SM_ReadyPoseSpeedManual>
+  <SM_BodyCoilManual>공격 전 몸 수축 세기 </SM_BodyCoilManual>
+  <SM_BodyRecoilManual>몸 잔여 반동 세기 </SM_BodyRecoilManual>
+  <SM_WeaponRecoilManual>무기 잔여 반동 세기 </SM_WeaponRecoilManual>
+  <SM_HeadRecoilManual>고개 잔여 반동 세기 </SM_HeadRecoilManual>
+  <SM_ResetAuto>자동값으로 되돌리기</SM_ResetAuto>
+
+  <!-- Conditional shield-position controls -->
+  <SM_ShieldPositionTitle>{0} 위치 조정</SM_ShieldPositionTitle>
+  <SM_ShieldOffsetsHint>방패 기준 좌우와 앞뒤 위치를 조정합니다. 방향이 바뀌어도 같은 기준이 유지됩니다. XML 기본값을 중심으로 각각 ±0.50칸 범위에서 조절합니다.</SM_ShieldOffsetsHint>
+  <SM_ShieldSide>방패 기준 좌우</SM_ShieldSide>
+  <SM_ShieldForward>방패 기준 상하</SM_ShieldForward>
+  <SM_ShieldShowAdvanced>방향별 미세 보정</SM_ShieldShowAdvanced>
+  <SM_ShieldHideAdvanced>방향별 미세 보정</SM_ShieldHideAdvanced>
+  <SM_ShieldAdvancedHint>필요한 경우에만 방향별 월드 좌표(X/Z) 보정을 추가합니다. 기존에 저장된 방향별 값도 여기에 적용됩니다.</SM_ShieldAdvancedHint>
+  <SM_ShieldNorth>북쪽 (폰이 북쪽을 바라본 상태에서 조정)</SM_ShieldNorth>
+  <SM_ShieldHorizontal>좌우 이동</SM_ShieldHorizontal>
+  <SM_ShieldVertical>상하 이동</SM_ShieldVertical>
+  <SM_ShieldEast>동쪽 (폰이 동쪽을 바라본 상태에서 조정)</SM_ShieldEast>
+  <SM_ShieldSouth>남쪽 (폰이 남쪽을 바라본 상태에서 조정)</SM_ShieldSouth>
+  <SM_ShieldWest>서쪽 (폰이 서쪽을 바라본 상태에서 조정)</SM_ShieldWest>
+
+  <!-- Race settings tab -->
+  <SM_RaceSearch>종족 검색</SM_RaceSearch>
+  <SM_RaceHint>분류 버튼을 눌러 종족 목록을 펼치세요. 검색하면 일치하는 분류가 펼쳐집니다. 종족 세기 값은 전체 설정에 대한 비율이며 100%가 기본값이자 최댓값입니다. 인간 체형별 값은 해당 종족 설정에 곱해지는 70~130% 배율입니다.</SM_RaceHint>
+  <SM_RaceName>종족</SM_RaceName>
+  <SM_RaceAttack>공격 모션 세기</SM_RaceAttack>
+  <SM_RaceHit>피격 모션 세기</SM_RaceHit>
+  <SM_RaceEnabled>모션 적용</SM_RaceEnabled>
+	<SM_RaceWalk>걷기</SM_RaceWalk>
+  <SM_RaceNameTip>설정을 적용할 종족입니다. 종족 이름 또는 Def 이름으로 검색할 수 있습니다.</SM_RaceNameTip>
+  <SM_RaceAttackTip>이 종족이 공격 모션을 할 때 적용할 세기입니다. 100%는 전체 설정값 그대로이며 0%는 모션을 표시하지 않습니다.</SM_RaceAttackTip>
+  <SM_RaceHitTip>이 종족이 피격 모션을 할 때 적용할 세기입니다. 100%는 전체 설정값 그대로이며 0%는 모션을 표시하지 않습니다.</SM_RaceHitTip>
+  <SM_RaceEnabledTip>체크를 해제하면 이 종족의 근접 애니메이션을 적용하지 않습니다.</SM_RaceEnabledTip>
+	<SM_RaceWalkTip>이 종족에 걷기 모션을 적용합니다.</SM_RaceWalkTip>
+  <SM_RaceCategoryTip>눌러서 이 분류의 종족 목록을 접거나 펼칩니다. 검색 중에는 일치하는 종족이 보이도록 자동으로 펼쳐집니다.</SM_RaceCategoryTip>
+  <SM_RaceCategory_Humanoids>인간형</SM_RaceCategory_Humanoids>
+  <SM_RaceCategory_Mechanoids>메카노이드</SM_RaceCategory_Mechanoids>
+  <SM_RaceCategory_Animals>동물</SM_RaceCategory_Animals>
+  <SM_RaceCategory_Other>기타</SM_RaceCategory_Other>
+  <SM_RaceBodyTypeButton>체형별 설정</SM_RaceBodyTypeButton>
+  <SM_RaceBodyTypeButtonTip>인간의 공격 및 피격 모션 배율을 체형별로 조정합니다.</SM_RaceBodyTypeButtonTip>
+  <SM_RaceBodyTypeAttackTip>이 체형의 공격 모션 배율입니다. 종족 설정에 곱해지며 100%는 변경 없음입니다.</SM_RaceBodyTypeAttackTip>
+  <SM_RaceBodyTypeHitTip>이 체형의 피격 모션 배율입니다. 종족 설정에 곱해지며 100%는 변경 없음입니다.</SM_RaceBodyTypeHitTip>
+
+  <!-- SquishyRanged integration -->
+  <SM_RangedGlobalTitle>총기 근접 공격 전체 설정</SM_RangedGlobalTitle>
+  <SM_RangedGlobalTooltip>이 근접공격 전체 설정은 총기의 근접 공격만 해당됩니다.</SM_RangedGlobalTooltip>
+
+  <!-- Options-page-only and legacy labels retained for compatibility -->
+	<SM_SettingsHint>무기별 설정(휘두르기 방식, 세기, 공격 패턴)은 SQUISHY 창에서 근거리 무기를 선택하면 나오는 "근접 모션" 탭에 있습니다. 아래 항목은 각각 따로 끄고 켤 수 있고, 켜 둔 동작만 재생됩니다.</SM_SettingsHint>
+  <SM_SmearTrail>빠른 휘두르기 궤적 잔상</SM_SmearTrail>
+  <SM_SmearTrailTip>빠르게 휘두르는 순간, 무기가 지나간 자리에 흐릿한 궤적이 짧게 남습니다. 느린 동작에서는 나타나지 않습니다.</SM_SmearTrailTip>
+  <SM_ShiverMotion>대기 중 무기 부르르 떨기</SM_ShiverMotion>
+  <SM_ShiverMotionTip>다음 동작을 시작하기 전 기다리는 동안 무기와 몸이 부르르 떱니다. 숨쉬기 옵션과는 하나만 켤 수 있습니다.</SM_ShiverMotionTip>
+  <SM_ComboMotion>다단 타격 (한 번의 공격 안에서 여러 번 휘두르기)</SM_ComboMotion>
+  <SM_ComboMotionTip>게임의 피해는 공격당 한 번이지만, 모션은 그 시간 안에 두 번 연속으로 찌르거나 두 번 내려치거나 휘둘렀다 되돌아 벨 수 있습니다. 두 번째 타격도 첫 타격과 같은 주기 안에서 대시하며 이어집니다. 상대도 타격마다 조금씩 휘청입니다. 끄면 항상 한 번만 때립니다.</SM_ComboMotionTip>
+  <SM_RecoilStrengthTip>0은 잔반동 없음, 1.00은 XML 기본 기준 세기, 2.00은 그 두 배입니다. 공격 자체의 타격 모션 세기는 바뀌지 않습니다.</SM_RecoilStrengthTip>
+  <SM_PreviewSection>미리보기</SM_PreviewSection>
+  <SM_PreviewHint>미리보기: 지도에서 정착민 한 명을 선택하고 누르세요. 게임이 멈춘 상태(큰 창)에서는 재생되지 않으니 도킹 화면을 쓰세요. 공격 버튼을 연속으로 누르면 이어치기가 나옵니다.</SM_PreviewHint>
+  <SM_PreviewSwing>공격</SM_PreviewSwing>
+  <SM_PreviewMiss>빗맞음</SM_PreviewMiss>
+  <SM_PreviewHit>피격</SM_PreviewHit>
+  <SM_PreviewDodge>회피</SM_PreviewDodge>
+  <SM_PreviewNoPawn>지도에서 정착민 한 명을 먼저 선택하세요.</SM_PreviewNoPawn>
+  <SM_MeleeKindManual>휘두르기 방식 직접 선택 (꺼짐: 공격에 쓰는 도구의 피해 유형에 따라 자동)</SM_MeleeKindManual>
+  <SM_MeleeKind0>베기</SM_MeleeKind0>
+  <SM_MeleeKind1>찌르기</SM_MeleeKind1>
+  <SM_MeleeKind2>내려치기</SM_MeleeKind2>
+  <SM_MeleeKind3>물기</SM_MeleeKind3>
+  <SM_PatternManual>공격 패턴 고정 (꺼짐: 공격마다 한 번 / 여러 번 중 자동으로 고름)</SM_PatternManual>
+  <SM_PatternHint>쿨다운이 짧아 모션이 다 들어가지 않으면 한 번 치기로 바뀝니다. 다단 타격이 꺼져 있으면 적용되지 않습니다.</SM_PatternHint>
+  <SM_Pat0_0>한 번 베기</SM_Pat0_0>
+  <SM_Pat0_1>연속 베기 (내려베고 올려베기)</SM_Pat0_1>
+  <SM_Pat0_2>휘둘렀다 되돌아 베기</SM_Pat0_2>
+  <SM_Pat0_3>빠른 연속 베기 (같은 방향 두 번)</SM_Pat0_3>
+  <SM_Pat0_4>치켜 베기 (낮게 뒤에서 위로)</SM_Pat0_4>
+  <SM_Pat0_5>도약 베기</SM_Pat0_5>
+  <SM_Pat1_0>한 번 찌르기</SM_Pat1_0>
+  <SM_Pat1_1>2연속 찌르기</SM_Pat1_1>
+  <SM_Pat1_2>빠른 2연속 찌르기</SM_Pat1_2>
+  <SM_Pat1_3>찌르고 돌진 (두 번째가 더 깊게)</SM_Pat1_3>
+  <SM_Pat1_4>낮은 돌진 찌르기</SM_Pat1_4>
+  <SM_Pat1_5>도약 찌르기</SM_Pat1_5>
+  <SM_Pat2_0>한 번 내려치기</SM_Pat2_0>
+  <SM_Pat2_1>두 번 내려치기</SM_Pat2_1>
+  <SM_Pat2_2>내려치고 쓸어치기</SM_Pat2_2>
+  <SM_Pat2_3>도약 내려치기</SM_Pat2_3>
+  <SM_Pat3_0>한 번 물기</SM_Pat3_0>
+  <SM_Pat3_1>두 번 물기</SM_Pat3_1>
+  <SM_Pat3_2>물고 흔들기</SM_Pat3_2>
+  <SM_Pat3_3>도약 덮치기</SM_Pat3_3>
+  <SM_FilterAll>전체</SM_FilterAll>
+  <SM_SwitchUnified>UI 전환 · 통합 화면</SM_SwitchUnified>
+  <SM_SwitchDocked>UI 전환 · 도킹 화면</SM_SwitchDocked>
+  <SM_SwitchTip>도킹 화면: 목록은 왼쪽, 상세는 오른쪽 가장자리에 붙고 가운데 맵이 비어 게임이 진행됩니다. 다시 누르면 하나의 큰 창으로 돌아갑니다.</SM_SwitchTip>
+  <SM_WeaponTitle>이 무기</SM_WeaponTitle>
+  <SM_RangedMeleeSettings>총기 근접 공격 모션</SM_RangedMeleeSettings>
+  <SM_RangedWeaponTitle>{0} 총기 근접공격 설정</SM_RangedWeaponTitle>
+</LanguageData>

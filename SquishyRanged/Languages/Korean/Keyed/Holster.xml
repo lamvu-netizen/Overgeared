@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- 홀스터: 탭과 미리보기 -->
+  <GR_TabHolster>홀스터</GR_TabHolster>
+	<GR_HolsterSelectItem>편집할 무기 또는 방패를 선택하세요.</GR_HolsterSelectItem>
+  <GR_HolsterSelectWeapon>편집할 무기를 선택하세요.</GR_HolsterSelectWeapon>
+  <GR_HolsterNoBodyType>체형 정보 없음</GR_HolsterNoBodyType>
+  <GR_HolsterBodyMale>남성</GR_HolsterBodyMale>
+  <GR_HolsterBodyFemale>여성</GR_HolsterBodyFemale>
+  <GR_HolsterBodyThin>마름</GR_HolsterBodyThin>
+  <GR_HolsterBodyHulk>근육</GR_HolsterBodyHulk>
+  <GR_HolsterBodyFat>비만</GR_HolsterBodyFat>
+  <GR_HolsterPortraitUnavailable>정착민 초상화를 불러올 수 없습니다.</GR_HolsterPortraitUnavailable>
+  <GR_HolsterArrowNorth>↑</GR_HolsterArrowNorth>
+  <GR_HolsterArrowEast>→</GR_HolsterArrowEast>
+  <GR_HolsterArrowSouth>↓</GR_HolsterArrowSouth>
+  <GR_HolsterArrowWest>←</GR_HolsterArrowWest>
+  <GR_HolsterSavedTag>저장</GR_HolsterSavedTag>
+  <GR_HolsterNoBodyTypePawns>해당 체형의 정착민이 없습니다.</GR_HolsterNoBodyTypePawns>
+  <GR_HolsterDummyBody>더미</GR_HolsterDummyBody>
+  <GR_HolsterUseDummyBody>더미 사용</GR_HolsterUseDummyBody>
+  <GR_HolsterSaveBodyType>저장</GR_HolsterSaveBodyType>
+  <GR_HolsterBodyTypesUpdated>해당 체형의 {0}의 홀스터 위치 값이 아직 저장되지 않은 다른 체형에 적용되었습니다.</GR_HolsterBodyTypesUpdated>
+  <GR_HolsterClassPresetUpdated>{0}의 5개 체형 홀스터 위치가 해당 무기 클래스의 최신 기본값으로 저장되었습니다.</GR_HolsterClassPresetUpdated>
+
+  <!-- 홀스터: 무기 설정 -->
+  <GR_HolsterSettingsTitle>홀스터 설정</GR_HolsterSettingsTitle>
+  <GR_HolsterWeaponEnabled>{0} 사용</GR_HolsterWeaponEnabled>
+  <GR_HolsterTargetColonists>정착민만</GR_HolsterTargetColonists>
+  <GR_HolsterTargetAllPawns>모든 폰</GR_HolsterTargetAllPawns>
+	<GR_HolsterWeaponInertia>홀스터 아이템 관성 적용 (걸을 때 함께 흔들립니다)</GR_HolsterWeaponInertia>
+  <GR_HolsterIndoors>실내에서도 표시</GR_HolsterIndoors>
+  <GR_HolsterFlipTexture>좌우 반전</GR_HolsterFlipTexture>
+  <GR_HolsterLayerFront>앞뒤 전환: 폰 앞</GR_HolsterLayerFront>
+  <GR_HolsterLayerBack>앞뒤 전환: 폰 뒤</GR_HolsterLayerBack>
+  <GR_HolsterResetPose>배치 초기화</GR_HolsterResetPose>
+
+  <!-- 홀스터: 커스텀 프리셋 -->
+  <GR_HolsterPresetsHeader>커스텀 프리셋</GR_HolsterPresetsHeader>
+  <GR_HolsterSavePreset>저장</GR_HolsterSavePreset>
+	<GR_HolsterSavePresetHeading>홀스터 프리셋 저장</GR_HolsterSavePresetHeading>
+  <GR_HolsterManagePresets>관리</GR_HolsterManagePresets>
+  <GR_HolsterApplyPresetLabel>적용 ▼</GR_HolsterApplyPresetLabel>
+  <GR_HolsterPresetSaved>홀스터 프리셋을 저장했습니다.</GR_HolsterPresetSaved>
+  <GR_HolsterSelectPreset>프리셋 선택</GR_HolsterSelectPreset>
+  <GR_HolsterApplyPreset>적용</GR_HolsterApplyPreset>
+  <GR_HolsterRenamePreset>이름 변경</GR_HolsterRenamePreset>
+  <GR_HolsterRenameConfirm>변경 확인</GR_HolsterRenameConfirm>
+  <GR_HolsterDeletePreset>삭제</GR_HolsterDeletePreset>
+  <GR_HolsterCancel>취소</GR_HolsterCancel>
+  <GR_HolsterDeletePresetConfirm>‘{0}’ 프리셋을 삭제할까요?</GR_HolsterDeletePresetConfirm>
+  <GR_HolsterNoPresets>저장된 프리셋이 없습니다.</GR_HolsterNoPresets>
+  <GR_HolsterPresetNameEmpty>프리셋 이름을 입력하세요.</GR_HolsterPresetNameEmpty>
+  <GR_HolsterPresetNameExists>같은 이름의 프리셋이 이미 있습니다.</GR_HolsterPresetNameExists>
+</LanguageData>

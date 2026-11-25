@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- OvergearedCore Multi-Frame SkillFx Definitions (Fairycore-architecture compatible) -->
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_PhongLongTram</defName>
+    <label>Phong Long Trảm</label>
+    <texFolder>OvergearedCore/SkillFx/PhongLongTram</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/PhongLongTramHit</hitFolder>
+    <frameCount>16</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>55</frameDelayMs>
+    <size>(4.8, 3.6)</size>
+    <hitSize>(2.2, 2.2)</hitSize>
+    <anchor>(0.42, 0.54)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.42</screenDarken>
+    <cameraShake>0.38</cameraShake>
+    <hitStopTicks>10</hitStopTicks>
+    <hitFrames><li>6</li></hitFrames>
+    <damageMultipliers><li>1.45</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_BaoTocAnhBo</defName>
+    <label>Bạo Tốc Ảnh Bộ</label>
+    <texFolder>OvergearedCore/SkillFx/BaoTocAnhBo</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/BaoTocAnhBoHit</hitFolder>
+    <frameCount>16</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>48</frameDelayMs>
+    <size>(5.2, 3.0)</size>
+    <hitSize>(2.4, 2.0)</hitSize>
+    <anchor>(0.46, 0.52)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.48</screenDarken>
+    <cameraShake>0.35</cameraShake>
+    <hitStopTicks>8</hitStopTicks>
+    <spawnAfterimages>true</spawnAfterimages>
+    <hitFrames><li>4</li><li>9</li></hitFrames>
+    <damageMultipliers><li>0.90</li><li>1.30</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_LongQuyenTanAnh</defName>
+    <label>Long Quyển Tàn Ảnh</label>
+    <texFolder>OvergearedCore/SkillFx/LongQuyenTanAnh</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/LongQuyenTanAnhHit</hitFolder>
+    <frameCount>18</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>52</frameDelayMs>
+    <size>(4.4, 4.2)</size>
+    <hitSize>(2.3, 2.3)</hitSize>
+    <anchor>(0.50, 0.68)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.45</screenDarken>
+    <cameraShake>0.32</cameraShake>
+    <hitStopTicks>7</hitStopTicks>
+    <hitFrames><li>4</li><li>9</li><li>13</li></hitFrames>
+    <damageMultipliers><li>0.80</li><li>0.95</li><li>1.35</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_LongPhongPhaKich</defName>
+    <label>Long Phong Phá Kích</label>
+    <texFolder>OvergearedCore/SkillFx/LongPhongPhaKich</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/LongPhongPhaKichHit</hitFolder>
+    <frameCount>16</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>54</frameDelayMs>
+    <size>(5.0, 3.8)</size>
+    <hitSize>(2.4, 2.4)</hitSize>
+    <anchor>(0.42, 0.66)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.44</screenDarken>
+    <cameraShake>0.42</cameraShake>
+    <hitStopTicks>11</hitStopTicks>
+    <hitFrames><li>4</li><li>10</li></hitFrames>
+    <damageMultipliers><li>0.95</li><li>1.50</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_NguMangTinhTran</defName>
+    <label>Ngũ Mang Hắc Tinh Trận</label>
+    <texFolder>OvergearedCore/SkillFx/NguMangTinhTran</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/NguMangTinhTranHit</hitFolder>
+    <frameCount>20</frameCount>
+    <hitFrameCount>10</hitFrameCount>
+    <frameDelayMs>55</frameDelayMs>
+    <size>(4.8, 4.4)</size>
+    <hitSize>(3.0, 3.0)</hitSize>
+    <anchor>(0.50, 0.56)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.62</screenDarken>
+    <cameraShake>0.55</cameraShake>
+    <hitStopTicks>14</hitStopTicks>
+    <spawnAfterimages>true</spawnAfterimages>
+    <hitFrames><li>2</li><li>4</li><li>6</li><li>8</li><li>13</li></hitFrames>
+    <damageMultipliers><li>0.72</li><li>0.78</li><li>0.85</li><li>0.95</li><li>1.75</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <!-- ===== TRAN AC (VOID INKBLADE) 5 BLACK-INK SKILLFX DEFINITIONS ===== -->
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_HacNhatTram</defName>
+    <label>Hắc Nhật Trảm</label>
+    <texFolder>OvergearedCore/SkillFx/HacNhatTram</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/HacNhatTramHit</hitFolder>
+    <frameCount>16</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>54</frameDelayMs>
+    <size>(4.4, 3.0)</size>
+    <hitSize>(1.9, 1.9)</hitSize>
+    <anchor>(0.48, 0.54)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.44</screenDarken>
+    <cameraShake>0.38</cameraShake>
+    <hitStopTicks>10</hitStopTicks>
+    <hitFrames><li>6</li></hitFrames>
+    <damageMultipliers><li>1.45</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_ThaiHuTramBa</defName>
+    <label>Thái Hư Trảm Ba</label>
+    <texFolder>OvergearedCore/SkillFx/ThaiHuTramBa</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/ThaiHuTramBaHit</hitFolder>
+    <frameCount>16</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>48</frameDelayMs>
+    <size>(5.0, 2.7)</size>
+    <hitSize>(2.0, 2.0)</hitSize>
+    <anchor>(0.48, 0.54)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.44</screenDarken>
+    <cameraShake>0.36</cameraShake>
+    <hitStopTicks>8</hitStopTicks>
+    <hitFrames><li>9</li></hitFrames>
+    <damageMultipliers><li>1.55</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_HacGiapHoThe</defName>
+    <label>Hắc Giáp Hộ Thể</label>
+    <texFolder>OvergearedCore/SkillFx/HacGiapHoThe</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/HacGiapHoTheHit</hitFolder>
+    <frameCount>18</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>52</frameDelayMs>
+    <size>(3.6, 2.95)</size>
+    <hitSize>(1.7, 1.7)</hitSize>
+    <anchor>(0.50, 0.74)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.48</screenDarken>
+    <cameraShake>0.32</cameraShake>
+    <hitStopTicks>7</hitStopTicks>
+    <centeredOnCaster>true</centeredOnCaster>
+    <hitFrames><li>5</li><li>11</li></hitFrames>
+    <damageMultipliers><li>0.90</li><li>1.25</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_LeAnhPhaToai</defName>
+    <label>Lệ Ảnh Phá Toái</label>
+    <texFolder>OvergearedCore/SkillFx/LeAnhPhaToai</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/LeAnhPhaToaiHit</hitFolder>
+    <frameCount>16</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>52</frameDelayMs>
+    <size>(4.5, 3.1)</size>
+    <hitSize>(2.0, 2.0)</hitSize>
+    <anchor>(0.46, 0.70)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.46</screenDarken>
+    <cameraShake>0.42</cameraShake>
+    <hitStopTicks>10</hitStopTicks>
+    <hitFrames><li>4</li><li>8</li><li>12</li></hitFrames>
+    <damageMultipliers><li>0.90</li><li>1.12</li><li>1.45</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_HuyetNguyetVoAnh</defName>
+    <label>Huyết Nguyệt Vô Ảnh</label>
+    <texFolder>OvergearedCore/SkillFx/HuyetNguyetVoAnh</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/HuyetNguyetVoAnhHit</hitFolder>
+    <frameCount>20</frameCount>
+    <hitFrameCount>10</hitFrameCount>
+    <frameDelayMs>54</frameDelayMs>
+    <size>(3.8, 3.0)</size>
+    <hitSize>(1.6, 1.6)</hitSize>
+    <anchor>(0.50, 0.62)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.60</screenDarken>
+    <cameraShake>0.55</cameraShake>
+    <hitStopTicks>14</hitStopTicks>
+    <hitFrames><li>3</li><li>6</li><li>9</li><li>13</li></hitFrames>
+    <damageMultipliers><li>0.82</li><li>0.92</li><li>1.08</li><li>1.68</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+</Defs>
