@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PF_FlameStrike.label>烈焰附魔</PF_FlameStrike.label>
+  <PF_FlameStrike.deathMessage>{0}被附魔烈焰灼伤致死。</PF_FlameStrike.deathMessage>
+  <PF_FrostStrike.label>寒霜附魔</PF_FrostStrike.label>
+  <PF_FrostStrike.deathMessage>{0}死于附魔寒霜。</PF_FrostStrike.deathMessage>
+  <PF_StormStrike.label>雷霆附魔</PF_StormStrike.label>
+  <PF_StormStrike.deathMessage>{0}被附魔电弧击倒。</PF_StormStrike.deathMessage>
+</LanguageData>

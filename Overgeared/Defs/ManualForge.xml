@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Defs>
+  <JobDef>
+    <defName>PF_ManualForge</defName>
+    <driverClass>PersonalForge.JobDriver_ManualForge</driverClass>
+    <reportString>Forging a weapon under your direction.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <suspendable>false</suspendable>
+  </JobDef>
+</Defs>

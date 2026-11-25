@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PF_ForgeWeapon.label>打造专属武器</PF_ForgeWeapon.label>
+  <PF_ForgeWeapon.description>打开铁匠台的定制界面，选择部件、材料与纹饰，设置委托量后点击“委托制作”添加订单。</PF_ForgeWeapon.description>
+  <PF_ForgeWeapon.jobString>正在锻造专属武器。</PF_ForgeWeapon.jobString>
+</LanguageData>

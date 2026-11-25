@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Defs>
+  <DamageDef Name="PF_ElementStrike" Abstract="True">
+    <workerClass>PersonalForge.DamageWorker_ForgeElement</workerClass>
+    <externalViolence>true</externalViolence>
+    <hasForcefulImpact>false</hasForcefulImpact>
+    <makesBlood>false</makesBlood>
+    <canInterruptJobs>false</canInterruptJobs>
+    <hediff>Burn</hediff>
+    <hediffSolid>Crack</hediffSolid>
+    <armorCategory>Heat</armorCategory>
+    <combatLogRules>Damage_Flame</combatLogRules>
+    <canUseDeflectMetalEffect>false</canUseDeflectMetalEffect>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_FlameStrike</defName>
+    <label>flame enchantment</label>
+    <defaultDamage>4</defaultDamage>
+    <deathMessage>{0} was burned to death by enchanted flame.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_FrostStrike</defName>
+    <label>frost enchantment</label>
+    <hediff>Frostbite</hediff>
+    <armorCategory>Blunt</armorCategory>
+    <defaultDamage>3</defaultDamage>
+    <deathMessage>{0} died from enchanted frost.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_StormStrike</defName>
+    <label>thunder enchantment</label>
+    <defaultDamage>3</defaultDamage>
+    <deathMessage>{0} was killed by enchanted lightning.</deathMessage>
+  </DamageDef>
+  <FleckDef ParentName="MicroSparks">
+    <defName>PF_Ember</defName>
+    <fadeInTime>0.02</fadeInTime>
+    <solidTime>0.08</solidTime>
+    <fadeOutTime>0.35</fadeOutTime>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>PF_FrostMote</defName>
+    <graphicData>
+      <texPath>Things/Mote/DustPuff</texPath>
+      <renderInstanced>true</renderInstanced>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.02</fadeInTime>
+    <solidTime>0.08</solidTime>
+    <fadeOutTime>0.45</fadeOutTime>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>PF_Arc</defName>
+    <graphicData>
+      <texPath>Things/Mote/LightningGlow</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.02</fadeInTime>
+    <solidTime>0.05</solidTime>
+    <fadeOutTime>0.2</fadeOutTime>
+  </FleckDef>
+  <HediffDef>
+    <defName>PF_FrostChill</defName>
+    <label>frost chill</label>
+    <description>Enchanted frost temporarily slows movement. Repeated hits only refresh the duration.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>120</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>0.85</MoveSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_VenomStrike</defName>
+    <label>venom enchantment</label>
+    <defaultDamage>2</defaultDamage>
+    <deathMessage>{0} died from enchanted venom.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_ConcussionStrike</defName>
+    <label>concussion enchantment</label>
+    <hediff>Bruise</hediff>
+    <armorCategory>Blunt</armorCategory>
+    <combatLogRules IsNull="True" />
+    <defaultDamage>2</defaultDamage>
+    <deathMessage>{0} was killed by an enchanted shockwave.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_SiphonStrike</defName>
+    <label>blood siphon enchantment</label>
+    <hediff>Cut</hediff>
+    <armorCategory>Sharp</armorCategory>
+    <combatLogRules IsNull="True" />
+    <defaultDamage>2</defaultDamage>
+    <deathMessage>{0} died from an enchanted blood siphon.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_VenomTick</defName>
+    <label>lingering venom</label>
+    <workerClass>DamageWorker_AddInjury</workerClass>
+    <defaultDamage>1</defaultDamage>
+    <deathMessage>{0} died from lingering enchanted venom.</deathMessage>
+  </DamageDef>
+  <HediffDef>
+    <defName>PF_Venom</defName>
+    <label>enchanted venom</label>
+    <description>Deals up to 1 damage per second for 3 seconds. Toxic resistance reduces damage. Further hits refresh the duration without stacking.</description>
+    <hediffClass>PersonalForge.Hediff_ForgeVenom</hediffClass>
+    <isBad>true</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+  </HediffDef>
+  <HediffDef>
+    <defName>PF_ConcussionRecovery</defName>
+    <label>concussion recovery</label>
+    <description>Cannot be staggered again by the concussion enchantment for 4 seconds.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>240</disappearsAfterTicks>
+      </li>
+    </comps>
+  </HediffDef>
+  <HediffDef>
+    <defName>PF_SiphonRecovery</defName>
+    <label>blood siphon recovery</label>
+    <description>Blood siphon healing is recharging for 4 seconds.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>240</disappearsAfterTicks>
+      </li>
+    </comps>
+  </HediffDef>
+</Defs>

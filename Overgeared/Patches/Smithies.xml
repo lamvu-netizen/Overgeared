@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="FueledSmithy" or defName="ElectricSmithy"]/comps</xpath>
+    <value><li Class="PersonalForge.CompProperties_Forge" /></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/WorkGiverDef[defName="DoBillsMakeWeapons"]/fixedBillGiverDefs</xpath>
+    <value><li>PF_MasterForge</li></value>
+  </Operation>
+</Patch>

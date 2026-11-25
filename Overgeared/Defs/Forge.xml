@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Defs>
+  <ThingDef ParentName="BenchBase">
+    <defName>PF_MasterForge</defName>
+    <label>master forge</label>
+    <description>A dedicated forge with a hearth, anvil, bellows and tool rack. Fueled with wood, it lets you design and craft custom weapons, save plans, and adjust parts, size and patterns.
+
+Its plans came from a scorched workshop manual. A traveling smith once repaired tools, armor and broken swords at caravan stops before passing the craft to four apprentices. The last page shows four prototypes, alongside notes on reworking, broken blades and repeated quenching.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>PersonalForge/Building/MasterForge</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(4,4)</drawSize>
+    </graphicData>
+    <uiIconPath>PersonalForge/Building/MasterForge_icon</uiIconPath>
+    <stuffCategories><li>Stony</li></stuffCategories>
+    <defaultStuff>BlocksGranite</defaultStuff>
+    <costStuffCount>20</costStuffCount>
+    <costList><Steel>30</Steel><WoodLog>15</WoodLog></costList>
+    <constructEffect>ConstructMetal</constructEffect>
+    <altitudeLayer>Building</altitudeLayer>
+    <fillPercent>0.5</fillPercent>
+    <useHitPoints>true</useHitPoints>
+    <statBases><WorkToBuild>6000</WorkToBuild><MaxHitPoints>400</MaxHitPoints><Flammability>0.2</Flammability><Cleanliness>-3</Cleanliness></statBases>
+    <size>(3,2)</size>
+    <designationCategory>Production</designationCategory>
+    <uiOrder>2510</uiOrder>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <surfaceType>Item</surfaceType>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+    <inspectorTabs><li>PersonalForge.ITab_Forge</li><li>ITab_Bills</li></inspectorTabs>
+    <recipes><li>PF_ForgeWeapon</li></recipes>
+    <building><workTableRoomRole>Workshop</workTableRoomRole><workTableNotInRoomRoleFactor>0.8</workTableNotInRoomRoleFactor></building>
+    <comps>
+      <li Class="PersonalForge.CompProperties_Forge" />
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>80</fuelConsumptionRate><fuelCapacity>60</fuelCapacity>
+        <fuelFilter><thingDefs><li>WoodLog</li></thingDefs></fuelFilter>
+        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <canEjectFuel>true</canEjectFuel>
+      </li>
+      <li Class="CompProperties_AffectedByFacilities"><linkableFacilities><li>ToolCabinet</li></linkableFacilities></li>
+    </comps>
+    <placeWorkers><li>PlaceWorker_ShowFacilitiesConnections</li><li>PlaceWorker_PreventInteractionSpotOverlap</li></placeWorkers>
+    <researchPrerequisites><li>Smithing</li></researchPrerequisites>
+  </ThingDef>
+</Defs>

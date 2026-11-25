@@ -1,0 +1,389 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PF_Text_001>Armor penetration +</PF_Text_001>
+  <PF_Text_002> pp</PF_Text_002>
+  <PF_Text_003>Damage </PF_Text_003>
+  <PF_Text_004>Interval </PF_Text_004>
+  <PF_Text_005>Mass </PF_Text_005>
+  <PF_Text_006>Balanced</PF_Text_006>
+  <PF_Text_007>Sword</PF_Text_007>
+  <PF_Text_008>Axe</PF_Text_008>
+  <PF_Text_009>Hammer</PF_Text_009>
+  <PF_Text_010>Spear</PF_Text_010>
+  <PF_Text_011>Narrow blade</PF_Text_011>
+  <PF_Text_012>Broad blade</PF_Text_012>
+  <PF_Text_013>Heavy blade</PF_Text_013>
+  <PF_Text_014>Flameblade</PF_Text_014>
+  <PF_Text_015>Curved blade</PF_Text_015>
+  <PF_Text_016>Cleaver blade</PF_Text_016>
+  <PF_Text_017>Hatchet</PF_Text_017>
+  <PF_Text_018>Broad axe</PF_Text_018>
+  <PF_Text_019>Double axe</PF_Text_019>
+  <PF_Text_020>Raven beak</PF_Text_020>
+  <PF_Text_021>Bearded axe</PF_Text_021>
+  <PF_Text_022>Crescent axe</PF_Text_022>
+  <PF_Text_023>Square hammer</PF_Text_023>
+  <PF_Text_024>Heavy hammer</PF_Text_024>
+  <PF_Text_025>Flanged hammer</PF_Text_025>
+  <PF_Text_026>Armor pick</PF_Text_026>
+  <PF_Text_027>Hex hammer</PF_Text_027>
+  <PF_Text_028>Morning star</PF_Text_028>
+  <PF_Text_029>Pointed spear</PF_Text_029>
+  <PF_Text_030>Leaf spear</PF_Text_030>
+  <PF_Text_031>Winged spear</PF_Text_031>
+  <PF_Text_032>Master's spear</PF_Text_032>
+  <PF_Text_033>Hooked spear</PF_Text_033>
+  <PF_Text_034>Trident</PF_Text_034>
+  <PF_Text_035>Crossguard</PF_Text_035>
+  <PF_Text_036>Curved guard</PF_Text_036>
+  <PF_Text_037>Metal collar</PF_Text_037>
+  <PF_Text_038>Master's guard</PF_Text_038>
+  <PF_Text_039>Double rings</PF_Text_039>
+  <PF_Text_040>Winged guard</PF_Text_040>
+  <PF_Text_041>Crescent guard</PF_Text_041>
+  <PF_Text_042>Leather wrap</PF_Text_042>
+  <PF_Text_043>Wooden grip</PF_Text_043>
+  <PF_Text_044>Cloth wrap</PF_Text_044>
+  <PF_Text_045>Braided grip</PF_Text_045>
+  <PF_Text_046>Riveted grip</PF_Text_046>
+  <PF_Text_047>Spiral grip</PF_Text_047>
+  <PF_Text_048>Round pommel</PF_Text_048>
+  <PF_Text_049>Faceted pommel</PF_Text_049>
+  <PF_Text_050>Master's pommel</PF_Text_050>
+  <PF_Text_051>Ring pommel</PF_Text_051>
+  <PF_Text_052>Hex pommel</PF_Text_052>
+  <PF_Text_053>Pointed pommel</PF_Text_053>
+  <PF_Text_054>Plain</PF_Text_054>
+  <PF_Text_055>Fluting</PF_Text_055>
+  <PF_Text_056>Diamonds</PF_Text_056>
+  <PF_Text_057>Scrollwork</PF_Text_057>
+  <PF_Text_058>Geometric</PF_Text_058>
+  <PF_Text_059>Balanced forging</PF_Text_059>
+  <PF_Text_060>Light forging</PF_Text_060>
+  <PF_Text_061>Forward balance</PF_Text_061>
+  <PF_Text_062>Precision quench</PF_Text_062>
+  <PF_Text_063>No extra modifiers</PF_Text_063>
+  <PF_Text_064>Interval -14% · Mass -15% · Damage -10%\nWork +20% · Crafting 8</PF_Text_064>
+  <PF_Text_065>Damage +18% · Interval +18% · Mass +12%\nBlade material +6 · Work +20% · Crafting 8</PF_Text_065>
+  <PF_Text_066>Damage +4% · Armor penetration +4 pp\nPlasteel +8 · Work +40% · Crafting 10</PF_Text_066>
+  <PF_Text_067>Flameblade: faster cuts, +3.5% armor penetration.</PF_Text_067>
+  <PF_Text_068>Raven beak: building damage x1.75 and heavier axe blows.</PF_Text_068>
+  <PF_Text_069>Armor pick: +12% armor penetration, with slower swings.</PF_Text_069>
+  <PF_Text_070>Master's spear: faster thrusts, +8% armor penetration.</PF_Text_070>
+  <PF_Text_071>The first apprentice practiced sharpening long after the forge went dark. The ripples left on the blade resembled dying flames. Each successor would later carve a personal mark at its base.</PF_Text_071>
+  <PF_Text_072>This axe was first made to break open the damaged gate of a caravan stop. Its short rear beak reached the jammed bolt, giving the smith a tool that would later prove useful against walls.</PF_Text_072>
+  <PF_Text_073>After a mechanoid raid, the second apprentice filled the workshop manual with sketches of joints in broken armor. Notes on weak points led to this design, combining a broad hammer face with a long pick.</PF_Text_073>
+  <PF_Text_074>Caravan sentries asked for many revisions to their spearheads. The final winged design accompanied them through snow and wasteland; its pointed butt helped steady their footing on loose slopes.</PF_Text_074>
+  <PF_Text_075>Custom </PF_Text_075>
+  <PF_Text_076>Overall </PF_Text_076>
+  <PF_Text_077> · Blade </PF_Text_077>
+  <PF_Text_078> · Grip length </PF_Text_078>
+  <PF_Text_079>\nGuard </PF_Text_079>
+  <PF_Text_080> · Pommel </PF_Text_080>
+  <PF_Text_081> · Density </PF_Text_081>
+  <PF_Text_082>Blade</PF_Text_082>
+  <PF_Text_083>Guard</PF_Text_083>
+  <PF_Text_084>Pommel</PF_Text_084>
+  <PF_Text_085>Grip</PF_Text_085>
+  <PF_Text_086>All over</PF_Text_086>
+  <PF_Text_087>Center motif</PF_Text_087>
+  <PF_Text_088>Edge bands</PF_Text_088>
+  <PF_Text_089>Natural</PF_Text_089>
+  <PF_Text_090>Matte polish</PF_Text_090>
+  <PF_Text_091>Blackened</PF_Text_091>
+  <PF_Text_092>Antique bronze</PF_Text_092>
+  <PF_Text_093>Retain the original shading of the materials and parts.</PF_Text_093>
+  <PF_Text_094>Soften metallic highlights for a matte finish.</PF_Text_094>
+  <PF_Text_095>Darken metal surfaces while preserving their structure and outline.</PF_Text_095>
+  <PF_Text_096>Apply a warm, aged bronze tone.</PF_Text_096>
+  <PF_Text_097>None</PF_Text_097>
+  <PF_Text_098>Flame</PF_Text_098>
+  <PF_Text_099>Frost</PF_Text_099>
+  <PF_Text_100>Thunder</PF_Text_100>
+  <PF_Text_101>No elemental damage</PF_Text_101>
+  <PF_Text_102>On hit: +4 fire damage</PF_Text_102>
+  <PF_Text_103>On hit: +3 frost damage\nIf damage is dealt: slow 15% for 2 s</PF_Text_103>
+  <PF_Text_104>On hit: +3 shock damage; +5 vs. mechanoids</PF_Text_104>
+  <PF_Text_105>Chemfuel 20 · Gold 6</PF_Text_105>
+  <PF_Text_106>Jade 12 · Gold 6</PF_Text_106>
+  <PF_Text_107>Components 2 · Gold 6</PF_Text_107>
+  <PF_Text_108>No extra materials</PF_Text_108>
+  <PF_Text_109>Plans</PF_Text_109>
+  <PF_Text_110>Search</PF_Text_110>
+  <PF_Text_111>No matching plans</PF_Text_111>
+  <PF_Text_112>Weapon archive</PF_Text_112>
+  <PF_Text_113> · Crafting </PF_Text_113>
+  <PF_Text_114>{empty}</PF_Text_114>
+  <PF_Text_115>Archive</PF_Text_115>
+  <PF_Text_116>Load</PF_Text_116>
+  <PF_Text_117>Delete</PF_Text_117>
+  <PF_Text_118>Delete plan “</PF_Text_118>
+  <PF_Text_119>Personal Forge</PF_Text_119>
+  <PF_Text_120>Weapon design</PF_Text_120>
+  <PF_Text_121>Save plan</PF_Text_121>
+  <PF_Text_122>Update plan</PF_Text_122>
+  <PF_Text_123>More</PF_Text_123>
+  <PF_Text_124>Normal quality estimate</PF_Text_124>
+  <PF_Text_125>Damage</PF_Text_125>
+  <PF_Text_126>Armor penetration</PF_Text_126>
+  <PF_Text_127>Attack interval</PF_Text_127>
+  <PF_Text_128> s</PF_Text_128>
+  <PF_Text_129>Physical DPS</PF_Text_129>
+  <PF_Text_130>Physical damage divided by attack interval</PF_Text_130>
+  <PF_Text_131>Mass</PF_Text_131>
+  <PF_Text_132> kg</PF_Text_132>
+  <PF_Text_133>Material weighting: blade 75% · guard/pommel 15% · grip 10%</PF_Text_133>
+  <PF_Text_134>Crafting level</PF_Text_134>
+  <PF_Text_135>Enchant</PF_Text_135>
+  <PF_Text_136>On-hit bonus</PF_Text_136>
+  <PF_Text_137> damage</PF_Text_137>
+  <PF_Text_138>\nNot included in physical DPS; unaffected by quality</PF_Text_138>
+  <PF_Text_139>Master's guard: armor penetration +2 pp</PF_Text_139>
+  <PF_Text_140>Master's pommel: damage +10%, interval -3%, mass +5%</PF_Text_140>
+  <PF_Text_141>Compared with the base weapon of the same material: </PF_Text_141>
+  <PF_Text_142>Plan saved: </PF_Text_142>
+  <PF_Text_143>Saved plan “</PF_Text_143>
+  <PF_Text_144>Plan copied: </PF_Text_144>
+  <PF_Text_145>Copied plan “</PF_Text_145>
+  <PF_Text_146>Apply to · select multiple</PF_Text_146>
+  <PF_Text_147>Pattern layout</PF_Text_147>
+  <PF_Text_148>Horizontal offset</PF_Text_148>
+  <PF_Text_149>Vertical offset</PF_Text_149>
+  <PF_Text_150>No pattern selected</PF_Text_150>
+  <PF_Text_151>No surface selected</PF_Text_151>
+  <PF_Text_152>Metal finish</PF_Text_152>
+  <PF_Text_153>Crafting 10 · Work +4,500\nFixed damage; unaffected by quality\n</PF_Text_153>
+  <PF_Text_154>Blunt armor; slowing does not stack</PF_Text_154>
+  <PF_Text_155>Heat armor</PF_Text_155>
+  <PF_Text_156>Parts</PF_Text_156>
+  <PF_Text_157>Look</PF_Text_157>
+  <PF_Text_158>Craft</PF_Text_158>
+  <PF_Text_159>Story</PF_Text_159>
+  <PF_Text_160>Pommel</PF_Text_160>
+  <PF_Text_161>Size</PF_Text_161>
+  <PF_Text_162>Pattern</PF_Text_162>
+  <PF_Text_163>Color</PF_Text_163>
+  <PF_Text_164>Place</PF_Text_164>
+  <PF_Text_165>Finish</PF_Text_165>
+  <PF_Text_166>Materials</PF_Text_166>
+  <PF_Text_167>Guard/pommel</PF_Text_167>
+  <PF_Text_168>Overall size</PF_Text_168>
+  <PF_Text_169>Blade size</PF_Text_169>
+  <PF_Text_170>Grip length</PF_Text_170>
+  <PF_Text_171>Guard size</PF_Text_171>
+  <PF_Text_172>Pommel size</PF_Text_172>
+  <PF_Text_173>Pattern strength</PF_Text_173>
+  <PF_Text_174>Pattern density</PF_Text_174>
+  <PF_Text_175>Pattern rotation</PF_Text_175>
+  <PF_Text_176>Match pommel to guard color</PF_Text_176>
+  <PF_Text_177>Natural</PF_Text_177>
+  <PF_Text_178>Cold iron</PF_Text_178>
+  <PF_Text_179>Brass</PF_Text_179>
+  <PF_Text_180>Copper</PF_Text_180>
+  <PF_Text_181>Blue steel</PF_Text_181>
+  <PF_Text_182>Ink</PF_Text_182>
+  <PF_Text_183>Crimson</PF_Text_183>
+  <PF_Text_184>Pine</PF_Text_184>
+  <PF_Text_185>Amethyst</PF_Text_185>
+  <PF_Text_186>Ivory</PF_Text_186>
+  <PF_Text_187>Teal</PF_Text_187>
+  <PF_Text_188>Leather</PF_Text_188>
+  <PF_Text_189>Red R</PF_Text_189>
+  <PF_Text_190>Green G</PF_Text_190>
+  <PF_Text_191>Blue B</PF_Text_191>
+  <PF_Text_192>Reset appearance</PF_Text_192>
+  <PF_Text_193>Reset</PF_Text_193>
+  <PF_Text_194>Weapon name</PF_Text_194>
+  <PF_Text_195>Inscription</PF_Text_195>
+  <PF_Text_196>Background story</PF_Text_196>
+  <PF_Text_197>Drag to rotate the preview; double-click to reset.</PF_Text_197>
+  <PF_Text_198>Held preview</PF_Text_198>
+  <PF_Text_199>Damage x</PF_Text_199>
+  <PF_Text_200> · Interval x</PF_Text_200>
+  <PF_Text_201>\nMass </PF_Text_201>
+  <PF_Text_202> / Interval x</PF_Text_202>
+  <PF_Text_203>This material is no longer available.</PF_Text_203>
+  <PF_Text_204>\nCompared with current selection: damage </PF_Text_204>
+  <PF_Text_205>, interval </PF_Text_205>
+  <PF_Text_206>, mass </PF_Text_206>
+  <PF_Text_207> kg.</PF_Text_207>
+  <PF_Text_208>No available materials</PF_Text_208>
+  <PF_Text_209>This design is already queued</PF_Text_209>
+  <PF_Text_210>Queued: </PF_Text_210>
+  <PF_Text_211>{empty}</PF_Text_211>
+  <PF_Text_212>Not queued</PF_Text_212>
+  <PF_Text_213>Orders</PF_Text_213>
+  <PF_Text_214>Save as copy</PF_Text_214>
+  <PF_Text_215>New design</PF_Text_215>
+  <PF_Text_216>Undo last order</PF_Text_216>
+  <PF_Text_217>Quantity</PF_Text_217>
+  <PF_Text_218>Order x</PF_Text_218>
+  <PF_Text_219>Queued</PF_Text_219>
+  <PF_Text_220>Add x</PF_Text_220>
+  <PF_Text_221>Cannot order: the workbench is unavailable or is not owned by the colony.</PF_Text_221>
+  <PF_Text_222>Cannot order: research Smithing first.</PF_Text_222>
+  <PF_Text_223>Already queued; use Add to order more.</PF_Text_223>
+  <PF_Text_224>Cannot order: the queue is full (15 bills). Manage existing orders first.</PF_Text_224>
+  <PF_Text_225>Ordered “</PF_Text_225>
+  <PF_Text_226>This design is already queued. Add “</PF_Text_226>
+  <PF_Text_227>? This will create a new crafting bill.</PF_Text_227>
+  <PF_Text_228>Work has begun. Manage the bill in Orders.</PF_Text_228>
+  <PF_Text_229>Order canceled. No materials were consumed.</PF_Text_229>
+  <PF_Text_230>Materials x</PF_Text_230>
+  <PF_Text_231> / On map</PF_Text_231>
+  <PF_Text_232>Each: </PF_Text_232>
+  <PF_Text_233> · Forbidden materials excluded\nHauling depends on paths, reservations and bill radius</PF_Text_233>
+  <PF_Text_234>Missing </PF_Text_234>
+  <PF_Text_235>Available crafters</PF_Text_235>
+  <PF_Text_236>{empty}</PF_Text_236>
+  <PF_Text_237>Undrafted crafters with sufficient skill, assigned work and a path to the forge</PF_Text_237>
+  <PF_Text_238>Work per weapon</PF_Text_238>
+  <PF_Text_239>Est. total time</PF_Text_239>
+  <PF_Text_240> h</PF_Text_240>
+  <PF_Text_241>Based on the fastest crafter; excludes hauling and rest</PF_Text_241>
+  <PF_Text_242>Component modifiers\n</PF_Text_242>
+  <PF_Text_243>Compared with current part\nDamage </PF_Text_243>
+  <PF_Text_244>\nAttack interval </PF_Text_244>
+  <PF_Text_245>\nPhysical DPS </PF_Text_245>
+  <PF_Text_246>\nExtra armor penetration </PF_Text_246>
+  <PF_Text_247> pp</PF_Text_247>
+  <PF_Text_248>\nCrafting level </PF_Text_248>
+  <PF_Text_249>\nWork </PF_Text_249>
+  <PF_Text_250>\nMaterials per weapon </PF_Text_250>
+  <PF_Text_251>Inscription\n</PF_Text_251>
+  <PF_Text_252>\n\nBackground story\n</PF_Text_252>
+  <PF_Text_253>\n\nDesign origins\n</PF_Text_253>
+  <PF_Text_254>\n\nParts and craft\n</PF_Text_254>
+  <PF_Text_255>\n\nEnchantment · </PF_Text_255>
+  <PF_Text_256>Weapon archive · </PF_Text_256>
+  <PF_Text_257>Saved design</PF_Text_257>
+  <PF_Text_258>\nCrafter: </PF_Text_258>
+  <PF_Text_259>Not recorded</PF_Text_259>
+  <PF_Text_260>\n\nBlade: </PF_Text_260>
+  <PF_Text_261>\nGuard/pommel: </PF_Text_261>
+  <PF_Text_262>\nGrip: </PF_Text_262>
+  <PF_Text_263>Close archive</PF_Text_263>
+  <PF_Text_264>Custom weapon · </PF_Text_264>
+  <PF_Text_265>Crafter: </PF_Text_265>
+  <PF_Text_266>View weapon archive</PF_Text_266>
+  <PF_Text_267>Weapon background story</PF_Text_267>
+  <PF_Text_268> characters</PF_Text_268>
+  <PF_Text_269>Cancel</PF_Text_269>
+  <PF_Text_270>Save story</PF_Text_270>
+  <PF_Text_271>Heat</PF_Text_271>
+  <PF_Text_272>Hammer</PF_Text_272>
+  <PF_Text_273>Quench</PF_Text_273>
+  <PF_Text_274>Assemble</PF_Text_274>
+  <PF_Text_275>Complete</PF_Text_275>
+  <PF_Text_276>Requires a colonist with Crafting </PF_Text_276>
+  <PF_Text_277> or higher who can use this forge.</PF_Text_277>
+  <PF_Text_278>Manual forging is currently hidden. Submit an order in the customization window.</PF_Text_278>
+  <PF_Text_279>Continue the current project, or retrieve its stored materials and finished weapon first.</PF_Text_279>
+  <PF_Text_280>The forge is unavailable.</PF_Text_280>
+  <PF_Text_281>Research Smithing first.</PF_Text_281>
+  <PF_Text_282>The crafter lacks the required skill, is unavailable or cannot reach the forge.</PF_Text_282>
+  <PF_Text_283>Another colonist is using this forge.</PF_Text_283>
+  <PF_Text_284>Manual forging requires at least 2 fuel in the forge.</PF_Text_284>
+  <PF_Text_285>Not enough accessible materials. Still missing: </PF_Text_285>
+  <PF_Text_286>Failed to move materials. Collected materials have been returned.</PF_Text_286>
+  <PF_Text_287>has finished forging “</PF_Text_287>
+  <PF_Text_288>Stored forging materials: </PF_Text_288>
+  <PF_Text_289> (retrievable)</PF_Text_289>
+  <PF_Text_290>Customize weapon</PF_Text_290>
+  <PF_Text_291>Trough · Cooling</PF_Text_291>
+  <PF_Text_292>Steam rises as the blade cools and sets</PF_Text_292>
+  <PF_Text_293>Click the work area / press Space to strike</PF_Text_293>
+  <PF_Text_294>Wait a moment while your weapon takes shape</PF_Text_294>
+  <PF_Text_295>Choose parts on the right to assemble</PF_Text_295>
+  <PF_Text_296>Your weapon is complete</PF_Text_296>
+  <PF_Text_297>E: heat · Q: cool · Space: continue</PF_Text_297>
+  <PF_Text_298>Control the fire to heat the metal evenly</PF_Text_298>
+  <PF_Text_299>Strike near the center and watch the metal's temperature</PF_Text_299>
+  <PF_Text_300>Choose the right temperature to set the blade</PF_Text_300>
+  <PF_Text_301>Fit the parts to complete your weapon</PF_Text_301>
+  <PF_Text_302>Leave your mark in fire and steel</PF_Text_302>
+  <PF_Text_303>Forge · Heating</PF_Text_303>
+  <PF_Text_304>Anvil · Hammering</PF_Text_304>
+  <PF_Text_305>Trough · Quenching</PF_Text_305>
+  <PF_Text_306>Bench · Assembly</PF_Text_306>
+  <PF_Text_307>Weapon · Complete</PF_Text_307>
+  <PF_Text_308>Materials collected. Waiting for the crafter.</PF_Text_308>
+  <PF_Text_309>The workpiece is out of the fire and cooling.</PF_Text_309>
+  <PF_Text_310>The bellows feed the fire. Watch the temperature.</PF_Text_310>
+  <PF_Text_311>The metal is too cold or the crafter is not ready. Check the status on the right.</PF_Text_311>
+  <PF_Text_312>Strike complete · Poor temperature</PF_Text_312>
+  <PF_Text_313>Precise strike · Just the right force</PF_Text_313>
+  <PF_Text_314>Steady strike · Keep it up</PF_Text_314>
+  <PF_Text_315>Off-center strike · Watch your timing</PF_Text_315>
+  <PF_Text_316>Quenching in water. Wait for the workpiece to cool.</PF_Text_316>
+  <PF_Text_317>Part fitted and joint secured.</PF_Text_317>
+  <PF_Text_318>The forge needs power</PF_Text_318>
+  <PF_Text_319>Waiting for the crafter; assign one or continue above</PF_Text_319>
+  <PF_Text_320>Cooling in the trough…</PF_Text_320>
+  <PF_Text_321>Fitting the part…</PF_Text_321>
+  <PF_Text_322>Heat to 45%–90%, then move to the anvil</PF_Text_322>
+  <PF_Text_323>The workpiece is cold. Use the bellows first</PF_Text_323>
+  <PF_Text_324>The hammer is rebounding…</PF_Text_324>
+  <PF_Text_325>Too cold to quench. Heat the workpiece first</PF_Text_325>
+  <PF_Text_326>Workpiece moved to the anvil. Time your strikes.</PF_Text_326>
+  <PF_Text_327>Forging complete. Collect your weapon.</PF_Text_327>
+  <PF_Text_328>Manual forging / Master workshop</PF_Text_328>
+  <PF_Text_329>Motion: reduced</PF_Text_329>
+  <PF_Text_330>Motion: full</PF_Text_330>
+  <PF_Text_331>Reduced motion disables sparks, steam and movement effects, while keeping temperature, timing and all controls.</PF_Text_331>
+  <PF_Text_332>Back to design</PF_Text_332>
+  <PF_Text_333>Store and leave</PF_Text_333>
+  <PF_Text_334>Cancel and refund</PF_Text_334>
+  <PF_Text_335>Cancel this project and return its materials? Burned fuel is not refunded.</PF_Text_335>
+  <PF_Text_336>Weapon complete</PF_Text_336>
+  <PF_Text_337>Craft rating   </PF_Text_337>
+  <PF_Text_338>\nCrafter   </PF_Text_338>
+  <PF_Text_339>The weapon is beside the forge.\nSelect, equip or store it now.</PF_Text_339>
+  <PF_Text_340>The weapon is stored inside the forge. Retrieve it to equip it.</PF_Text_340>
+  <PF_Text_341> · Ready</PF_Text_341>
+  <PF_Text_342>Waiting for power</PF_Text_342>
+  <PF_Text_343>Waiting for crafter</PF_Text_343>
+  <PF_Text_344>Assign / continue</PF_Text_344>
+  <PF_Text_345>Progress is saved with the game. You can leave at any time.</PF_Text_345>
+  <PF_Text_346>Workpiece temperature</PF_Text_346>
+  <PF_Text_347>Heat [E]</PF_Text_347>
+  <PF_Text_348>Cool [Q]</PF_Text_348>
+  <PF_Text_349>Hold E to use the bellows or Q to cool; release to stop.</PF_Text_349>
+  <PF_Text_350>Strike timing   </PF_Text_350>
+  <PF_Text_351>Recommended heat: 50%–82%.\nThen move to the anvil to start hammering.</PF_Text_351>
+  <PF_Text_352>Strike as the marker approaches the center.\nReheat below 32%.</PF_Text_352>
+  <PF_Text_353>Ideal quenching temperature: 58%.\nImmerse once at the right temperature.</PF_Text_353>
+  <PF_Text_354>Parts assembled   </PF_Text_354>
+  <PF_Text_355>Choose the assembly order by clicking parts,\nor press Space to fit the next one.</PF_Text_355>
+  <PF_Text_356>Name, story and crafter saved</PF_Text_356>
+  <PF_Text_357>Space · Current action</PF_Text_357>
+  <PF_Text_358>Move to anvil</PF_Text_358>
+  <PF_Text_359>Strike</PF_Text_359>
+  <PF_Text_360>Quench in water</PF_Text_360>
+  <PF_Text_361>Polish and finish weapon</PF_Text_361>
+  <PF_Text_362>Fit next part</PF_Text_362>
+  <PF_Text_363>Retrieve and select</PF_Text_363>
+  <PF_Text_364>No colonist can reach the forge and meet the Crafting requirement. Materials and progress are stored.</PF_Text_364>
+  <PF_Text_365>Forging a custom weapon.</PF_Text_365>
+  <PF_Text_366>\nMaterials  </PF_Text_366>
+  <PF_Text_367>\nMaster's guard: armor penetration +2 pp</PF_Text_367>
+  <PF_Text_368>\nMaster's pommel: damage +10%, attack interval -3%</PF_Text_368>
+  <PF_Text_369>\nForging technique  </PF_Text_369>
+  <PF_Text_370>\nEnchantment: </PF_Text_370>
+  <PF_Text_371>\n\nWeapon story\n</PF_Text_371>
+  <PF_Text_372>\nCrafter  </PF_Text_372>
+  <PF_Text_373>\nInscription  </PF_Text_373>
+  <PF_Text_374>Open forge</PF_Text_374>
+  <PF_Text_375>Customize parts, colors and patterns; save plans and commission your colonists to craft them.</PF_Text_375>
+  <PF_Text_376>Retrieve materials</PF_Text_376>
+  <PF_Text_377>Retrieve weapon</PF_Text_377>
+  <PF_Text_378>Manual forging is hidden. Cancel a stored project to recover its materials; burned fuel is not refunded.</PF_Text_378>
+  <PF_Text_379>Retrieve the finished weapon stored in the forge.</PF_Text_379>
+  <PF_Text_380>Cancel the stored project and recover its materials? Burned fuel is not refunded.</PF_Text_380>
+  <PF_Text_381>Unfinished </PF_Text_381>
+  <PF_Text_382>custom weapon</PF_Text_382>
+  <PF_Text_383>Change crafter</PF_Text_383>
+  <PF_Text_384>Stop work, then pass the existing materials and progress to another qualified crafter.</PF_Text_384>
+  <PF_Text_385>Stop work first, then ensure the bill and a crafter are available.</PF_Text_385>
+  <PF_Text_386>The original bill was deleted. Cancel the workpiece to recover some materials.</PF_Text_386>
+</LanguageData>

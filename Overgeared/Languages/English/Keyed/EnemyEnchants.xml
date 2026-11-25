@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PF_Venom>Venom</PF_Venom>
+  <PF_Concussion>Concussion</PF_Concussion>
+  <PF_Siphon>Siphon</PF_Siphon>
+  <PF_VenomDesc>Hit: +2 venom; 1/s for 3s\nNo stacks; resisted; mechs immune</PF_VenomDesc>
+  <PF_ConcussionDesc>Hit: +2 blunt; 0.5s stun\n4s cooldown per target</PF_ConcussionDesc>
+  <PF_SiphonDesc>Hit: +2 cut; heals up to 1 HP\nLiving enemies only; 4s cooldown</PF_SiphonDesc>
+  <PF_VenomCost>Herbal medicine 12 · Gold 6</PF_VenomCost>
+  <PF_ConcussionCost>Uranium 10 · Gold 6</PF_ConcussionCost>
+  <PF_SiphonCost>Medicine 6 · Gold 6</PF_SiphonCost>
+  <PF_ConcussionDefense>Blunt armor; triggers after damage</PF_ConcussionDefense>
+  <PF_SiphonDefense>Sharp armor; heals 50% of actual enchantment damage, capped at 1\nNo permanent injury healing; excludes downed targets, allies and buildings</PF_SiphonDefense>
+  <PF_SettingsTitle>Personal Forge</PF_SettingsTitle>
+  <PF_EnemyChance>Enemy melee weapon replacement chance: {0}</PF_EnemyChance>
+  <PF_EnemyEnchantChance>Enchanted share of custom weapons: {0}</PF_EnemyEnchantChance>
+  <PF_EnemyScope>New hostile adult humanlikes only. Ranged, bonded and special weapons are preserved; 0% disables replacement.</PF_EnemyScope>
+  <PF_ResetEnemySettings>Reset chances</PF_ResetEnemySettings>
+</LanguageData>

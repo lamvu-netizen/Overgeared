@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PF_Venom.label>附魔剧毒</PF_Venom.label>
+  <PF_Venom.description>每秒最多受到 1 点伤害，持续 3 秒。毒素抗性减少伤害，重复命中只刷新持续时间。</PF_Venom.description>
+  <PF_ConcussionRecovery.label>震荡恢复</PF_ConcussionRecovery.label>
+  <PF_ConcussionRecovery.description>4 秒内不会再次被震荡附魔眩晕。</PF_ConcussionRecovery.description>
+  <PF_SiphonRecovery.label>汲血恢复</PF_SiphonRecovery.label>
+  <PF_SiphonRecovery.description>汲血治疗冷却 4 秒。</PF_SiphonRecovery.description>
+</LanguageData>

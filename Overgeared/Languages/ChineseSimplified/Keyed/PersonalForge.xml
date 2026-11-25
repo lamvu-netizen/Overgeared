@@ -1,0 +1,389 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PF_Text_001>穿甲 +</PF_Text_001>
+  <PF_Text_002> 百分点</PF_Text_002>
+  <PF_Text_003>伤害 </PF_Text_003>
+  <PF_Text_004>间隔 </PF_Text_004>
+  <PF_Text_005>重量 </PF_Text_005>
+  <PF_Text_006>均衡</PF_Text_006>
+  <PF_Text_007>剑</PF_Text_007>
+  <PF_Text_008>斧</PF_Text_008>
+  <PF_Text_009>锤</PF_Text_009>
+  <PF_Text_010>长枪</PF_Text_010>
+  <PF_Text_011>窄刃</PF_Text_011>
+  <PF_Text_012>宽刃</PF_Text_012>
+  <PF_Text_013>重刃</PF_Text_013>
+  <PF_Text_014>名匠·焰纹刃</PF_Text_014>
+  <PF_Text_015>弯锋刃</PF_Text_015>
+  <PF_Text_016>斩铁刃</PF_Text_016>
+  <PF_Text_017>手斧</PF_Text_017>
+  <PF_Text_018>阔斧</PF_Text_018>
+  <PF_Text_019>双刃斧</PF_Text_019>
+  <PF_Text_020>名匠·鸦喙斧</PF_Text_020>
+  <PF_Text_021>垂刃斧</PF_Text_021>
+  <PF_Text_022>新月双斧</PF_Text_022>
+  <PF_Text_023>方锤</PF_Text_023>
+  <PF_Text_024>重锤</PF_Text_024>
+  <PF_Text_025>棱锤</PF_Text_025>
+  <PF_Text_026>名匠·破甲镐</PF_Text_026>
+  <PF_Text_027>六棱锤</PF_Text_027>
+  <PF_Text_028>棘星锤</PF_Text_028>
+  <PF_Text_029>尖枪头</PF_Text_029>
+  <PF_Text_030>叶形枪头</PF_Text_030>
+  <PF_Text_031>翼形枪头</PF_Text_031>
+  <PF_Text_032>名匠·双翼枪</PF_Text_032>
+  <PF_Text_033>钩镰枪</PF_Text_033>
+  <PF_Text_034>三叉枪</PF_Text_034>
+  <PF_Text_035>十字护手</PF_Text_035>
+  <PF_Text_036>弧形护手</PF_Text_036>
+  <PF_Text_037>金属箍</PF_Text_037>
+  <PF_Text_038>名匠护手</PF_Text_038>
+  <PF_Text_039>双环护手</PF_Text_039>
+  <PF_Text_040>翼形护手</PF_Text_040>
+  <PF_Text_041>月牙护手</PF_Text_041>
+  <PF_Text_042>皮革缠柄</PF_Text_042>
+  <PF_Text_043>木质握柄</PF_Text_043>
+  <PF_Text_044>布带缠柄</PF_Text_044>
+  <PF_Text_045>编织握柄</PF_Text_045>
+  <PF_Text_046>铆钉握柄</PF_Text_046>
+  <PF_Text_047>螺纹缠柄</PF_Text_047>
+  <PF_Text_048>圆形配重</PF_Text_048>
+  <PF_Text_049>棱形配重</PF_Text_049>
+  <PF_Text_050>名匠柄尾</PF_Text_050>
+  <PF_Text_051>圆环柄尾</PF_Text_051>
+  <PF_Text_052>六角柄尾</PF_Text_052>
+  <PF_Text_053>尖坠柄尾</PF_Text_053>
+  <PF_Text_054>素面</PF_Text_054>
+  <PF_Text_055>纵向刻槽</PF_Text_055>
+  <PF_Text_056>菱形交错</PF_Text_056>
+  <PF_Text_057>卷草纹</PF_Text_057>
+  <PF_Text_058>几何刻纹</PF_Text_058>
+  <PF_Text_059>均衡锻造</PF_Text_059>
+  <PF_Text_060>轻量锻打</PF_Text_060>
+  <PF_Text_061>重心前置</PF_Text_061>
+  <PF_Text_062>精密淬火</PF_Text_062>
+  <PF_Text_063>无额外加成</PF_Text_063>
+  <PF_Text_064>间隔 −14% · 重量 −15% · 伤害 −10%\n工时 +20% · 工艺 8</PF_Text_064>
+  <PF_Text_065>伤害 +18% · 间隔 +18% · 重量 +12%\n刃头材料 +6 · 工时 +20% · 工艺 8</PF_Text_065>
+  <PF_Text_066>伤害 +4% · 穿甲 +4 个百分点\n塑钢 +8 · 工时 +40% · 工艺 10</PF_Text_066>
+  <PF_Text_067>焰纹锋刃：更快的斩击，穿甲额外 +3.5%。</PF_Text_067>
+  <PF_Text_068>鸦喙破拆：对建筑伤害 ×1.75，斧击更重。</PF_Text_068>
+  <PF_Text_069>破甲尖喙：穿甲额外 +12%，挥击较慢。</PF_Text_069>
+  <PF_Text_070>双翼贯刺：更快的刺击，穿甲额外 +8%。</PF_Text_070>
+  <PF_Text_071>工坊里的第一位徒弟总在熄炉后练习磨刃。他留下的波纹像将尽的火焰，后来每位继承者都会在刃根刻下自己的记号。</PF_Text_071>
+  <PF_Text_072>这副斧头最初用来拆开损坏的驿站大门。斧背上的短喙替铁匠找到了卡死的门闩，也让它在围墙前有了新的用途。</PF_Text_072>
+  <PF_Text_073>一场机械袭击后，第二位徒弟把废甲的接缝画满了手册。他在草图旁标出装甲的薄弱处，留下了这副宽锤面与长尖喙并用的形制。</PF_Text_073>
+  <PF_Text_074>商队的守夜人请铁匠改过许多次枪头。最后留下的双翼形制陪他们走过风雪和荒原，柄尾的尖锋则用来在碎石坡上撑稳脚步。</PF_Text_074>
+  <PF_Text_075>定制</PF_Text_075>
+  <PF_Text_076>整体 </PF_Text_076>
+  <PF_Text_077> · 刃头 </PF_Text_077>
+  <PF_Text_078> · 柄长 </PF_Text_078>
+  <PF_Text_079>\n护手 </PF_Text_079>
+  <PF_Text_080> · 配重 </PF_Text_080>
+  <PF_Text_081> · 密度 </PF_Text_081>
+  <PF_Text_082>刃头</PF_Text_082>
+  <PF_Text_083>护手</PF_Text_083>
+  <PF_Text_084>柄尾</PF_Text_084>
+  <PF_Text_085>握柄</PF_Text_085>
+  <PF_Text_086>满铺</PF_Text_086>
+  <PF_Text_087>中央纹饰</PF_Text_087>
+  <PF_Text_088>边缘纹带</PF_Text_088>
+  <PF_Text_089>原材</PF_Text_089>
+  <PF_Text_090>细磨哑光</PF_Text_090>
+  <PF_Text_091>熏黑处理</PF_Text_091>
+  <PF_Text_092>古铜做旧</PF_Text_092>
+  <PF_Text_093>呈现材料与部件的原有明暗。</PF_Text_093>
+  <PF_Text_094>压低金属高光，呈现柔和哑光。</PF_Text_094>
+  <PF_Text_095>压暗金属面，保留结构与轮廓。</PF_Text_095>
+  <PF_Text_096>叠加暖褐色旧铜色调。</PF_Text_096>
+  <PF_Text_097>无附魔</PF_Text_097>
+  <PF_Text_098>烈焰</PF_Text_098>
+  <PF_Text_099>寒霜</PF_Text_099>
+  <PF_Text_100>雷霆</PF_Text_100>
+  <PF_Text_101>无属性伤害</PF_Text_101>
+  <PF_Text_102>命中 +4 火焰伤害</PF_Text_102>
+  <PF_Text_103>命中 +3 寒霜伤害\n伤害生效后减速 15% · 2 秒</PF_Text_103>
+  <PF_Text_104>命中 +3 电击伤害 · 对机械族 +5</PF_Text_104>
+  <PF_Text_105>化合燃料 20 · 黄金 6</PF_Text_105>
+  <PF_Text_106>翡翠 12 · 黄金 6</PF_Text_106>
+  <PF_Text_107>零部件 2 · 黄金 6</PF_Text_107>
+  <PF_Text_108>无额外材料</PF_Text_108>
+  <PF_Text_109>图样库</PF_Text_109>
+  <PF_Text_110>搜索</PF_Text_110>
+  <PF_Text_111>无匹配图样</PF_Text_111>
+  <PF_Text_112>武器档案</PF_Text_112>
+  <PF_Text_113> · 工艺 </PF_Text_113>
+  <PF_Text_114> 级</PF_Text_114>
+  <PF_Text_115>档案</PF_Text_115>
+  <PF_Text_116>载入</PF_Text_116>
+  <PF_Text_117>删除</PF_Text_117>
+  <PF_Text_118>删除图样“</PF_Text_118>
+  <PF_Text_119>专属锻造</PF_Text_119>
+  <PF_Text_120>武器设计</PF_Text_120>
+  <PF_Text_121>保存图样</PF_Text_121>
+  <PF_Text_122>更新图样</PF_Text_122>
+  <PF_Text_123>更多</PF_Text_123>
+  <PF_Text_124>标准品质预估</PF_Text_124>
+  <PF_Text_125>伤害</PF_Text_125>
+  <PF_Text_126>穿甲</PF_Text_126>
+  <PF_Text_127>攻击间隔</PF_Text_127>
+  <PF_Text_128> 秒</PF_Text_128>
+  <PF_Text_129>理论伤害/秒</PF_Text_129>
+  <PF_Text_130>物理伤害 ÷ 攻击间隔</PF_Text_130>
+  <PF_Text_131>重量</PF_Text_131>
+  <PF_Text_132> 千克</PF_Text_132>
+  <PF_Text_133>材料权重：刃头 75% · 护手/配重 15% · 握柄 10%</PF_Text_133>
+  <PF_Text_134>工艺要求</PF_Text_134>
+  <PF_Text_135>附魔</PF_Text_135>
+  <PF_Text_136>命中追加</PF_Text_136>
+  <PF_Text_137> 伤害</PF_Text_137>
+  <PF_Text_138>\n不计入物理伤害/秒 · 不随品质变化</PF_Text_138>
+  <PF_Text_139>名匠护手  穿甲额外 +2 个百分点</PF_Text_139>
+  <PF_Text_140>名匠配重  伤害 +10%，间隔 −3%，重量 +5%</PF_Text_140>
+  <PF_Text_141>相较同材料基础值：</PF_Text_141>
+  <PF_Text_142>已保存图样：</PF_Text_142>
+  <PF_Text_143>已保存图样 “</PF_Text_143>
+  <PF_Text_144>已另存图样副本：</PF_Text_144>
+  <PF_Text_145>已另存图样副本 “</PF_Text_145>
+  <PF_Text_146>应用部位 · 可多选</PF_Text_146>
+  <PF_Text_147>花纹布局</PF_Text_147>
+  <PF_Text_148>左右位置</PF_Text_148>
+  <PF_Text_149>上下位置</PF_Text_149>
+  <PF_Text_150>未选择花纹</PF_Text_150>
+  <PF_Text_151>未选择部位</PF_Text_151>
+  <PF_Text_152>金属表面</PF_Text_152>
+  <PF_Text_153>工艺 10 · 工作量 +4,500\n固定伤害 · 不随品质变化\n</PF_Text_153>
+  <PF_Text_154>钝器护甲 · 减速不叠加</PF_Text_154>
+  <PF_Text_155>热防护</PF_Text_155>
+  <PF_Text_156>部件</PF_Text_156>
+  <PF_Text_157>外观</PF_Text_157>
+  <PF_Text_158>工艺</PF_Text_158>
+  <PF_Text_159>铭记</PF_Text_159>
+  <PF_Text_160>配重</PF_Text_160>
+  <PF_Text_161>比例</PF_Text_161>
+  <PF_Text_162>花纹</PF_Text_162>
+  <PF_Text_163>配色</PF_Text_163>
+  <PF_Text_164>纹位</PF_Text_164>
+  <PF_Text_165>表面</PF_Text_165>
+  <PF_Text_166>选用材料</PF_Text_166>
+  <PF_Text_167>护手 / 配重</PF_Text_167>
+  <PF_Text_168>整体尺寸</PF_Text_168>
+  <PF_Text_169>刃头大小</PF_Text_169>
+  <PF_Text_170>柄长</PF_Text_170>
+  <PF_Text_171>护手大小</PF_Text_171>
+  <PF_Text_172>配重大小</PF_Text_172>
+  <PF_Text_173>花纹深浅</PF_Text_173>
+  <PF_Text_174>花纹密度</PF_Text_174>
+  <PF_Text_175>花纹方向</PF_Text_175>
+  <PF_Text_176>柄尾配色跟随护手</PF_Text_176>
+  <PF_Text_177>原色</PF_Text_177>
+  <PF_Text_178>冷铁</PF_Text_178>
+  <PF_Text_179>黄铜</PF_Text_179>
+  <PF_Text_180>赤铜</PF_Text_180>
+  <PF_Text_181>蓝钢</PF_Text_181>
+  <PF_Text_182>墨色</PF_Text_182>
+  <PF_Text_183>绯红</PF_Text_183>
+  <PF_Text_184>松绿</PF_Text_184>
+  <PF_Text_185>紫晶</PF_Text_185>
+  <PF_Text_186>象牙</PF_Text_186>
+  <PF_Text_187>青碧</PF_Text_187>
+  <PF_Text_188>褐皮</PF_Text_188>
+  <PF_Text_189>红色 R</PF_Text_189>
+  <PF_Text_190>绿色 G</PF_Text_190>
+  <PF_Text_191>蓝色 B</PF_Text_191>
+  <PF_Text_192>恢复默认外观</PF_Text_192>
+  <PF_Text_193>重置</PF_Text_193>
+  <PF_Text_194>武器名称</PF_Text_194>
+  <PF_Text_195>刻字</PF_Text_195>
+  <PF_Text_196>背景故事</PF_Text_196>
+  <PF_Text_197>拖动旋转预览，双击恢复正视。</PF_Text_197>
+  <PF_Text_198>持用预览</PF_Text_198>
+  <PF_Text_199>伤害 ×</PF_Text_199>
+  <PF_Text_200> · 间隔 ×</PF_Text_200>
+  <PF_Text_201>\n重量 </PF_Text_201>
+  <PF_Text_202> / 间隔 ×</PF_Text_202>
+  <PF_Text_203>该材料已无可用库存。</PF_Text_203>
+  <PF_Text_204>\n相较当前选择：伤害 </PF_Text_204>
+  <PF_Text_205>，间隔 </PF_Text_205>
+  <PF_Text_206>，重量 </PF_Text_206>
+  <PF_Text_207> 千克。</PF_Text_207>
+  <PF_Text_208>暂无可用材料</PF_Text_208>
+  <PF_Text_209>同款已在制作清单</PF_Text_209>
+  <PF_Text_210>同款待制 </PF_Text_210>
+  <PF_Text_211> 把</PF_Text_211>
+  <PF_Text_212>待委托</PF_Text_212>
+  <PF_Text_213>制作清单</PF_Text_213>
+  <PF_Text_214>另存图样副本</PF_Text_214>
+  <PF_Text_215>新建设计</PF_Text_215>
+  <PF_Text_216>撤销刚提交</PF_Text_216>
+  <PF_Text_217>本次数量</PF_Text_217>
+  <PF_Text_218>委托制作 ×</PF_Text_218>
+  <PF_Text_219>已在清单</PF_Text_219>
+  <PF_Text_220>追加 ×</PF_Text_220>
+  <PF_Text_221>无法委托：工作台已失效或不属于殖民地。</PF_Text_221>
+  <PF_Text_222>无法委托：请先完成“锻造”研究。</PF_Text_222>
+  <PF_Text_223>已在清单中；增加数量请点“追加”。</PF_Text_223>
+  <PF_Text_224>无法委托：清单已满（15 条），请先在清单中整理订单。</PF_Text_224>
+  <PF_Text_225>已委托 “</PF_Text_225>
+  <PF_Text_226>已有同款委托。再追加 “</PF_Text_226>
+  <PF_Text_227>？这会新增一条制作订单。</PF_Text_227>
+  <PF_Text_228>订单已开工，请在制作清单中管理。</PF_Text_228>
+  <PF_Text_229>订单已撤销，未消耗材料。</PF_Text_229>
+  <PF_Text_230>总用料 ×</PF_Text_230>
+  <PF_Text_231> / 地图存量</PF_Text_231>
+  <PF_Text_232>每把 </PF_Text_232>
+  <PF_Text_233> · 存量不含禁用材料\n取料受路径、预留及订单范围限制</PF_Text_233>
+  <PF_Text_234>缺少 </PF_Text_234>
+  <PF_Text_235>可用工匠</PF_Text_235>
+  <PF_Text_236> 人</PF_Text_236>
+  <PF_Text_237>满足技能、工作与通行条件的未征召工匠</PF_Text_237>
+  <PF_Text_238>每把工作量</PF_Text_238>
+  <PF_Text_239>预计总工时</PF_Text_239>
+  <PF_Text_240> 小时</PF_Text_240>
+  <PF_Text_241>按最快工匠估算 · 不含取料与休息</PF_Text_241>
+  <PF_Text_242>部件系数\n</PF_Text_242>
+  <PF_Text_243>相较当前部件\n伤害 </PF_Text_243>
+  <PF_Text_244>\n攻击间隔 </PF_Text_244>
+  <PF_Text_245>\n理论每秒伤害 </PF_Text_245>
+  <PF_Text_246>\n附加穿甲 </PF_Text_246>
+  <PF_Text_247> 个百分点</PF_Text_247>
+  <PF_Text_248>\n工艺要求 </PF_Text_248>
+  <PF_Text_249> 级\n工作量 </PF_Text_249>
+  <PF_Text_250>\n每把材料 </PF_Text_250>
+  <PF_Text_251>刻字\n</PF_Text_251>
+  <PF_Text_252>\n\n背景故事\n</PF_Text_252>
+  <PF_Text_253>\n\n形制来历\n</PF_Text_253>
+  <PF_Text_254>\n\n部件与工艺\n</PF_Text_254>
+  <PF_Text_255>\n\n附魔 · </PF_Text_255>
+  <PF_Text_256>武器档案 · </PF_Text_256>
+  <PF_Text_257>保存的设计</PF_Text_257>
+  <PF_Text_258>\n打造者：</PF_Text_258>
+  <PF_Text_259>未记录</PF_Text_259>
+  <PF_Text_260>\n\n刃头：</PF_Text_260>
+  <PF_Text_261>\n护手 / 配重：</PF_Text_261>
+  <PF_Text_262>\n握柄：</PF_Text_262>
+  <PF_Text_263>关闭档案</PF_Text_263>
+  <PF_Text_264>专属武器 · </PF_Text_264>
+  <PF_Text_265>打造者：</PF_Text_265>
+  <PF_Text_266>查看武器档案</PF_Text_266>
+  <PF_Text_267>武器背景故事</PF_Text_267>
+  <PF_Text_268> 字</PF_Text_268>
+  <PF_Text_269>取消</PF_Text_269>
+  <PF_Text_270>保存故事</PF_Text_270>
+  <PF_Text_271>加热</PF_Text_271>
+  <PF_Text_272>锻打</PF_Text_272>
+  <PF_Text_273>淬火</PF_Text_273>
+  <PF_Text_274>装配</PF_Text_274>
+  <PF_Text_275>完成</PF_Text_275>
+  <PF_Text_276>需要工艺达到 </PF_Text_276>
+  <PF_Text_277> 级、能够使用此铁匠台的殖民者。</PF_Text_277>
+  <PF_Text_278>亲手锻造玩法暂时隐藏，请在定制页面委托制作。</PF_Text_278>
+  <PF_Text_279>请先继续当前制作，或取回台内材料与成品。</PF_Text_279>
+  <PF_Text_280>铁匠台当前不可用。</PF_Text_280>
+  <PF_Text_281>需要先完成锻造研究。</PF_Text_281>
+  <PF_Text_282>工匠技能、状态或到达铁匠台的路径不符合要求。</PF_Text_282>
+  <PF_Text_283>另一位殖民者正在使用此铁匠台。</PF_Text_283>
+  <PF_Text_284>亲手锻造需要铁匠台至少有 2 份燃料。</PF_Text_284>
+  <PF_Text_285>可取用材料不足，还缺 </PF_Text_285>
+  <PF_Text_286>材料移入失败，已退回领用的材料。</PF_Text_286>
+  <PF_Text_287>亲手完成了 “</PF_Text_287>
+  <PF_Text_288>暂存的手作材料：</PF_Text_288>
+  <PF_Text_289>（可取回）</PF_Text_289>
+  <PF_Text_290>打开武器定制</PF_Text_290>
+  <PF_Text_291>水槽 · 冷却</PF_Text_291>
+  <PF_Text_292>热气升起，等待刃头冷却定型</PF_Text_292>
+  <PF_Text_293>点击工作区 / 空格落锤</PF_Text_293>
+  <PF_Text_294>耐心片刻，作品正在成形</PF_Text_294>
+  <PF_Text_295>选择右侧部件，亲手装配</PF_Text_295>
+  <PF_Text_296>你的作品已完成</PF_Text_296>
+  <PF_Text_297>E 加热  ·  Q 降温  ·  空格继续</PF_Text_297>
+  <PF_Text_298>控制火候，让金属均匀受热</PF_Text_298>
+  <PF_Text_299>看准中心落锤，留意坯料温度</PF_Text_299>
+  <PF_Text_300>看准火候，让刃头冷却定型</PF_Text_300>
+  <PF_Text_301>亲手装入部件，完成你的作品</PF_Text_301>
+  <PF_Text_302>火与锤的印记，由你留下</PF_Text_302>
+  <PF_Text_303>炉火 · 加热</PF_Text_303>
+  <PF_Text_304>铁砧 · 锻打</PF_Text_304>
+  <PF_Text_305>水槽 · 淬火</PF_Text_305>
+  <PF_Text_306>工作台 · 装配</PF_Text_306>
+  <PF_Text_307>作品 · 完成</PF_Text_307>
+  <PF_Text_308>材料已领用，等待工匠就位。</PF_Text_308>
+  <PF_Text_309>坯料离火，正在降温。</PF_Text_309>
+  <PF_Text_310>鼓风添热，留意温度区间。</PF_Text_310>
+  <PF_Text_311>温度不足或工匠尚未就位，请检查右侧提示。</PF_Text_311>
+  <PF_Text_312>落锤完成 · 火候欠佳</PF_Text_312>
+  <PF_Text_313>精准落锤 · 力道恰到好处</PF_Text_313>
+  <PF_Text_314>稳稳落锤 · 继续保持</PF_Text_314>
+  <PF_Text_315>落锤偏离中心 · 下次看准时机</PF_Text_315>
+  <PF_Text_316>浸水淬火，等待坯料冷却定型。</PF_Text_316>
+  <PF_Text_317>部件已就位，接合完成。</PF_Text_317>
+  <PF_Text_318>铁匠台需要供电</PF_Text_318>
+  <PF_Text_319>等待工匠就位，可在上方指派或继续</PF_Text_319>
+  <PF_Text_320>正在淬火冷却…</PF_Text_320>
+  <PF_Text_321>部件正在接合…</PF_Text_321>
+  <PF_Text_322>将温度调到 45%～90% 后移至铁砧</PF_Text_322>
+  <PF_Text_323>坯料偏冷，先鼓风加热</PF_Text_323>
+  <PF_Text_324>铁锤回弹中…</PF_Text_324>
+  <PF_Text_325>温度太低，先加热再淬火</PF_Text_325>
+  <PF_Text_326>坯料移至铁砧，看准时机落锤。</PF_Text_326>
+  <PF_Text_327>锻造完成，可以领取你的作品了。</PF_Text_327>
+  <PF_Text_328>手作锻造  /  名匠工坊</PF_Text_328>
+  <PF_Text_329>动效：简化</PF_Text_329>
+  <PF_Text_330>动效：完整</PF_Text_330>
+  <PF_Text_331>简化动效会关闭火星、蒸汽与位移动画，保留温度、时机条和所有操作。</PF_Text_331>
+  <PF_Text_332>返回定制</PF_Text_332>
+  <PF_Text_333>暂存并离开</PF_Text_333>
+  <PF_Text_334>取消并退料</PF_Text_334>
+  <PF_Text_335>取消这次手作并退回领用材料？已燃烧的炉料会计入消耗。</PF_Text_335>
+  <PF_Text_336>作品已完成</PF_Text_336>
+  <PF_Text_337>手作评价   </PF_Text_337>
+  <PF_Text_338>\n打造者   </PF_Text_338>
+  <PF_Text_339>成品已放在铁匠台旁。\n现在就能选中、装备或收纳。</PF_Text_339>
+  <PF_Text_340>成品保存在台内，取出后即可装备。</PF_Text_340>
+  <PF_Text_341> · 已就位</PF_Text_341>
+  <PF_Text_342>等待供电</PF_Text_342>
+  <PF_Text_343>等待工匠就位</PF_Text_343>
+  <PF_Text_344>指派 / 继续工作</PF_Text_344>
+  <PF_Text_345>进度随存档保存，随时可以离开。</PF_Text_345>
+  <PF_Text_346>坯料温度</PF_Text_346>
+  <PF_Text_347>加热  [E]</PF_Text_347>
+  <PF_Text_348>降温  [Q]</PF_Text_348>
+  <PF_Text_349>按住 E 持续鼓风，按住 Q 持续降温；松开即停止。</PF_Text_349>
+  <PF_Text_350>落锤时机   </PF_Text_350>
+  <PF_Text_351>推荐火候 50%～82%。\n合适后移至铁砧开始锻打。</PF_Text_351>
+  <PF_Text_352>指针接近中心时落锤。\n低于 32% 时需重新加热。</PF_Text_352>
+  <PF_Text_353>最佳淬火温度 58%。\n看准火候，一次浸水定型。</PF_Text_353>
+  <PF_Text_354>部件装配   </PF_Text_354>
+  <PF_Text_355>点击部件自由选择装配顺序，\n或按空格装入下一件。</PF_Text_355>
+  <PF_Text_356>名称、故事与打造者已保存</PF_Text_356>
+  <PF_Text_357>空格 · 当前操作</PF_Text_357>
+  <PF_Text_358>移到铁砧</PF_Text_358>
+  <PF_Text_359>落锤</PF_Text_359>
+  <PF_Text_360>浸水淬火</PF_Text_360>
+  <PF_Text_361>打磨收尾 · 完成武器</PF_Text_361>
+  <PF_Text_362>装入下一部件</PF_Text_362>
+  <PF_Text_363>取出并选中成品</PF_Text_363>
+  <PF_Text_364>当前没有能到达铁匠台且达到工艺要求的殖民者，材料与进度已保留。</PF_Text_364>
+  <PF_Text_365>正在锻造专属武器。</PF_Text_365>
+  <PF_Text_366>\n材料  </PF_Text_366>
+  <PF_Text_367>\n名匠护手  穿甲额外 +2 个百分点</PF_Text_367>
+  <PF_Text_368>\n名匠配重  伤害 +10%，攻击间隔 −3%</PF_Text_368>
+  <PF_Text_369>\n锻造工艺  </PF_Text_369>
+  <PF_Text_370>\n附魔：</PF_Text_370>
+  <PF_Text_371>\n\n武器故事\n</PF_Text_371>
+  <PF_Text_372>\n打造者  </PF_Text_372>
+  <PF_Text_373>\n刻字  </PF_Text_373>
+  <PF_Text_374>打开铁匠台</PF_Text_374>
+  <PF_Text_375>定制部件、调整配色与纹饰，保存图样并委托殖民者制作。</PF_Text_375>
+  <PF_Text_376>取回暂存材料</PF_Text_376>
+  <PF_Text_377>取出台内成品</PF_Text_377>
+  <PF_Text_378>手作玩法暂时隐藏。可取消旧的手作进度并退回材料；已燃烧的炉料不退还。</PF_Text_378>
+  <PF_Text_379>将保存在台内的已完成武器取出。</PF_Text_379>
+  <PF_Text_380>取消暂存的手作进度并取回材料？已燃烧的炉料不退还。</PF_Text_380>
+  <PF_Text_381>未完成的</PF_Text_381>
+  <PF_Text_382>专属武器</PF_Text_382>
+  <PF_Text_383>更换工匠</PF_Text_383>
+  <PF_Text_384>停止当前加工后，将已有材料和进度交给另一位达到工艺要求的殖民者。</PF_Text_384>
+  <PF_Text_385>请先停止当前加工，并确认订单与工匠可用。</PF_Text_385>
+  <PF_Text_386>原订单已删除，可取消坯料回收部分材料。</PF_Text_386>
+</LanguageData>

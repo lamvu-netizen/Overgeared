@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ModMetaData>
+  <name>专属锻造 · Personal Forge</name>
+  <author>Local Workshop</author>
+  <packageId>local.personalforge</packageId>
+  <modVersion>0.10.2</modVersion>
+  <supportedVersions>
+    <li>1.6</li><li>1.7</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>local.labormotion</li>
+  </loadAfter>
+  <description>Personal Forge / 专属锻造
+Design and craft swords, axes, hammers and spears. Customize parts, size, materials, patterns, colors and enchantments; save plans and write each weapon's story.
+English and Simplified Chinese. Follows the game language.
+RimWorld 1.6 / 1.7 · Requires Harmony · Optional: baolei's Animation Enhancement.
+
+自由组合剑、斧、锤与长枪，定制部件、尺寸、材料、花纹、配色与附魔，保存图样并编写武器故事。
+支持简体中文与英文，跟随游戏语言。
+RimWorld 1.6 / 1.7 · 需要 Harmony · 可选联动：baolei 的动画增强。
+1.6: compiled and API-checked; full in-game validation is pending.
+1.6：已完成编译和接口检查，尚未进行完整实机验证。</description>
+</ModMetaData>

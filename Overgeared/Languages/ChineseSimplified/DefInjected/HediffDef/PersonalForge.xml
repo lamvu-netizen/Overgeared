@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PF_FrostChill.label>霜寒</PF_FrostChill.label>
+  <PF_FrostChill.description>附魔寒霜暂时减缓动作。重复命中只刷新持续时间。</PF_FrostChill.description>
+</LanguageData>

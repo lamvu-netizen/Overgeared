@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PF_Venom>剧毒</PF_Venom>
+  <PF_Concussion>震荡</PF_Concussion>
+  <PF_Siphon>汲血</PF_Siphon>
+  <PF_VenomDesc>命中 +2 毒伤 · 3 秒持续伤害\n不叠层 · 毒抗有效 · 机械免疫</PF_VenomDesc>
+  <PF_ConcussionDesc>命中 +2 钝伤 · 眩晕 0.5 秒\n每个目标冷却 4 秒</PF_ConcussionDesc>
+  <PF_SiphonDesc>命中 +2 切伤 · 最多治疗 1 点\n仅活体敌人 · 冷却 4 秒</PF_SiphonDesc>
+  <PF_VenomCost>草药 12 · 黄金 6</PF_VenomCost>
+  <PF_ConcussionCost>铀 10 · 黄金 6</PF_ConcussionCost>
+  <PF_SiphonCost>医药 6 · 黄金 6</PF_SiphonCost>
+  <PF_ConcussionDefense>钝器护甲 · 伤害生效后触发</PF_ConcussionDefense>
+  <PF_SiphonDefense>利器护甲 · 治疗实际附魔伤害的 50%，上限 1\n不治疗永久伤，不从倒地目标、友军或建筑汲血</PF_SiphonDefense>
+  <PF_SettingsTitle>专属锻造</PF_SettingsTitle>
+  <PF_EnemyChance>敌方近战武器替换概率：{0}</PF_EnemyChance>
+  <PF_EnemyEnchantChance>其中附魔武器比例：{0}</PF_EnemyEnchantChance>
+  <PF_EnemyScope>仅新生成的敌对成年类人。保留远程、绑定和特殊武器；0% 关闭。</PF_EnemyScope>
+  <PF_ResetEnemySettings>恢复默认概率</PF_ResetEnemySettings>
+</LanguageData>

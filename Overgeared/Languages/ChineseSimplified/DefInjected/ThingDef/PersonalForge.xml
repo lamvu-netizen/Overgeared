@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PF_MasterForge.label>名匠锻炉</PF_MasterForge.label>
+  <PF_MasterForge.description>一座配有炉膛、铁砧、风箱和工具架的专用锻炉。使用木料燃料，可设计并打造专属武器，保存图样，调整部件、尺寸与花纹。\n\n这座炉子的图样来自一本焦黑的工坊手册。流浪铁匠曾在商路驿站替人修补农具、护甲和断剑，最后把手艺留给了四个徒弟。手册末页画着四种试作，旁边留下了返工、断刃和重新淬火的记录。</PF_MasterForge.description>
+  <PF_UnfinishedWeapon.label>未完成的专属武器</PF_UnfinishedWeapon.label>
+  <PF_UnfinishedWeapon.description>保留图样、已投入材料与加工进度的武器坯料。选中后可更换工匠。</PF_UnfinishedWeapon.description>
+  <PF_Sword.label>定制长剑</PF_Sword.label>
+  <PF_Sword.tools.0.label>剑刃</PF_Sword.tools.0.label>
+  <PF_Axe.label>定制战斧</PF_Axe.label>
+  <PF_Axe.tools.0.label>斧刃</PF_Axe.tools.0.label>
+  <PF_Hammer.label>定制战锤</PF_Hammer.label>
+  <PF_Hammer.tools.0.label>锤头</PF_Hammer.tools.0.label>
+  <PF_Spear.label>定制长枪</PF_Spear.label>
+  <PF_Spear.tools.0.label>枪头</PF_Spear.tools.0.label>
+  <PF_Sword.description>按专属图样锻造的武器。刃头、护手、握柄、配重和材料共同决定外观与性能。</PF_Sword.description>
+  <PF_Axe.description>按专属图样锻造的武器。刃头、护手、握柄、配重和材料共同决定外观与性能。</PF_Axe.description>
+  <PF_Hammer.description>按专属图样锻造的武器。刃头、护手、握柄、配重和材料共同决定外观与性能。</PF_Hammer.description>
+  <PF_Spear.description>按专属图样锻造的武器。刃头、护手、握柄、配重和材料共同决定外观与性能。</PF_Spear.description>
+</LanguageData>

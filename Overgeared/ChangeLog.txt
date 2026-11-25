@@ -1,0 +1,11 @@
+[h2]0.10.2 · 锻炉账单与武器预览[/h2]
+[list]
+[*]在名匠锻炉的「账单 → 添加账单」里选择「打开武器定制」，设计完成后可直接下单。尚未完成锻造研究时，页面会提示所需研究。
+[*]修复游戏贴图无法读取时部件和武器预览可能消失的问题。不同尺寸的花纹也能正常合成。
+[/list]
+
+[h2]0.10.2 · Forge bills and weapon previews[/h2]
+[list]
+[*]At the master forge, select Bills → Add bill → Customize weapon, then choose Order to queue your design. The designer now shows when Smithing research is required.
+[*]Fixed missing part and weapon previews when the game texture cannot be read. Patterns now also work at different texture sizes.
+[/list]

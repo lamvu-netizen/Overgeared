@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PF_VenomStrike.label>剧毒附魔</PF_VenomStrike.label>
+  <PF_VenomStrike.deathMessage>{0}死于附魔剧毒。</PF_VenomStrike.deathMessage>
+  <PF_ConcussionStrike.label>震荡附魔</PF_ConcussionStrike.label>
+  <PF_ConcussionStrike.deathMessage>{0}死于附魔震荡。</PF_ConcussionStrike.deathMessage>
+  <PF_SiphonStrike.label>汲血附魔</PF_SiphonStrike.label>
+  <PF_SiphonStrike.deathMessage>{0}死于附魔汲血。</PF_SiphonStrike.deathMessage>
+  <PF_VenomTick.label>残留剧毒</PF_VenomTick.label>
+  <PF_VenomTick.deathMessage>{0}死于残留的附魔剧毒。</PF_VenomTick.deathMessage>
+</LanguageData>

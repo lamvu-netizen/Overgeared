@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Defs>
+  <ThingDef ParentName="UnfinishedBase">
+    <defName>PF_UnfinishedWeapon</defName>
+    <thingClass>PersonalForge.UnfinishedForgeWeapon</thingClass>
+    <label>unfinished custom weapon</label>
+    <description>A weapon workpiece that retains its design, invested materials and crafting progress. Select it to assign a different crafter.</description>
+    <graphicData><texPath>Things/Item/Unfinished/UnfinishedWeapon</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <stuffCategories Inherit="false" />
+  </ThingDef>
+</Defs>
