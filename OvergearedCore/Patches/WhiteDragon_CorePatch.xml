@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Attach all 5 White-Black Twin-Dragon SkillFx movesets onto Bạch Long Vũ Kiếm if present -->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>专属锻造 · Personal Forge</li>
+    </mods>
+    <match Class="PatchOperationConditional">
+      <xpath>Defs/ThingDef[defName="PF_Special_WhiteDragonFeatherblade"]/comps</xpath>
+      <match Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="PF_Special_WhiteDragonFeatherblade"]/comps</xpath>
+        <value>
+          <li Class="OvergearedCore.CompProperties_OvergearedWeaponSkills">
+            <cooldownTicks>180</cooldownTicks>
+            <skills>
+              <li>OG_Fx_BachNguyetTramBa</li>
+              <li>OG_Fx_TinhCauBungNo</li>
+              <li>OG_Fx_SongLongHoGiap</li>
+              <li>OG_Fx_BachLongXungKich</li>
+              <li>OG_Fx_AmDuongDietGioi</li>
+            </skills>
+          </li>
+        </value>
+      </match>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="PF_Special_WhiteDragonFeatherblade"]</xpath>
+        <value>
+          <comps>
+            <li Class="OvergearedCore.CompProperties_OvergearedWeaponSkills">
+              <cooldownTicks>180</cooldownTicks>
+              <skills>
+                <li>OG_Fx_BachNguyetTramBa</li>
+                <li>OG_Fx_TinhCauBungNo</li>
+                <li>OG_Fx_SongLongHoGiap</li>
+                <li>OG_Fx_BachLongXungKich</li>
+                <li>OG_Fx_AmDuongDietGioi</li>
+              </skills>
+            </li>
+          </comps>
+        </value>
+      </nomatch>
+    </match>
+  </Operation>
+</Patch>

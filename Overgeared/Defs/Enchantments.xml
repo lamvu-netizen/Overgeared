@@ -224,6 +224,12 @@
     <deathMessage>{0} was severed by silent black-ink void slashes.</deathMessage>
   </DamageDef>
   <DamageDef ParentName="PF_ElementStrike">
+    <defName>PF_PearlDragonMistStrike</defName>
+    <label>pearl dragon yin-yang enchantment</label>
+    <defaultDamage>8</defaultDamage>
+    <deathMessage>{0} was obliterated by pale dragon feathers and yin-yang celestial bursts.</deathMessage>
+  </DamageDef>
+  <DamageDef ParentName="PF_ElementStrike">
     <defName>PF_VenomTick</defName>
     <label>lingering venom</label>
     <workerClass>DamageWorker_AddInjury</workerClass>

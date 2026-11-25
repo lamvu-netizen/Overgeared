@@ -288,7 +288,7 @@ class ForgePreviewCanvas(QWidget):
         pulse = 0.78 + 0.22 * math.sin(now * 3.1)
 
         # 1. Back Outer Contour Glow + Back-half 3D Ribbons / Lightning / Custom Layers (behind weapon)
-        custom_aura_handled = ("ice_armor", "sonic_slash", "eclipse_flare", "shadow_strife", "eternal_alpha", "nova_burn", "abyssal_miasma", "ink_void")
+        custom_aura_handled = ("ice_armor", "sonic_slash", "eclipse_flare", "shadow_strife", "eternal_alpha", "nova_burn", "abyssal_miasma", "ink_void", "pearl_dragon_mist")
         if elem.id > 0:
             if self._outer_aura_pix is not None and elem.vfx_style not in custom_aura_handled:
                 p.save()
@@ -314,7 +314,7 @@ class ForgePreviewCanvas(QWidget):
                 p.restore()
 
             # Inlaid Elemental Gem at guard/blade junction
-            if self._socket_gem and elem.vfx_style not in ("eclipse_flare", "ice_armor", "shadow_strife", "eternal_alpha", "nova_burn", "abyssal_miasma", "ink_void"):
+            if self._socket_gem and elem.vfx_style not in ("eclipse_flare", "ice_armor", "shadow_strife", "eternal_alpha", "nova_burn", "abyssal_miasma", "ink_void", "pearl_dragon_mist"):
                 gem_y = (0.5 - self._result.socket_gem_y_norm) * size
                 gem_r = max(6.0, size * 0.025)
                 _draw_faceted_gem(p, 0.0, gem_y, gem_r, elem.primary_rgb, elem.secondary_rgb, pulse)
@@ -323,7 +323,7 @@ class ForgePreviewCanvas(QWidget):
                 self._draw_custom_layers(p, elem, size, now, inten, back_pass=False)
             else:
                 self._dispatch_builtin_style(p, elem, size, now, inten, back_pass=False)
-                if elem.vfx_style not in ("azure_jet", "ember_tendrils", "sonic_slash", "ice_armor", "plasma_web", "water_sheath", "eclipse_flare", "shadow_strife", "eternal_alpha", "nova_burn", "abyssal_miasma", "ink_void"):
+                if elem.vfx_style not in ("azure_jet", "ember_tendrils", "sonic_slash", "ice_armor", "plasma_web", "water_sheath", "eclipse_flare", "shadow_strife", "eternal_alpha", "nova_burn", "abyssal_miasma", "ink_void", "pearl_dragon_mist"):
                     self._draw_element_vfx(p, elem, size, now, inten)
 
         p.restore()
@@ -935,6 +935,10 @@ class ForgePreviewCanvas(QWidget):
                 self._draw_ink_void(p, size, now * spd, op, sc, pr, sr, back_pass)
                 continue
 
+            if ltype == "pearl_dragon_mist":
+                self._draw_pearl_dragon_mist(p, size, now * spd, op, sc, pr, sr, back_pass)
+                continue
+
             if ltype == "rings":
                 # True 3D depth-split rings around the blade
                 p.save()
@@ -1302,6 +1306,8 @@ class ForgePreviewCanvas(QWidget):
             self._draw_abyssal_miasma(p, size, now, inten, 1.0, pr, sr, back_pass)
         elif st == "ink_void":
             self._draw_ink_void(p, size, now, inten, 1.0, pr, sr, back_pass)
+        elif st == "pearl_dragon_mist":
+            self._draw_pearl_dragon_mist(p, size, now, inten, 1.0, pr, sr, back_pass)
 
     def _draw_azure_jet(
         self,
@@ -2623,6 +2629,129 @@ class ForgePreviewCanvas(QWidget):
                 ey = gem_y + (y_top - gem_y) * (0.04 + 0.90 * age)
                 er = max(0.9, size * 0.0038 * (1.0 - 0.4 * age))
                 p.setBrush(QColor(*sr, int(min(255, 225 * fade * inten))))
+                p.drawEllipse(QPointF(ex, ey), er, er)
+        p.restore()
+
+    def _draw_pearl_dragon_mist(
+        self,
+        p: QPainter,
+        size: float,
+        now: float,
+        inten: float,
+        scale: float,
+        pr: Tuple[int, int, int],
+        sr: Tuple[int, int, int],
+        back_pass: bool,
+    ) -> None:
+        """Bạch Long Vũ Kiếm signature VFX: Pearlescent white-silver mist + ink-black calligraphy ribbons + drifting white feathers."""
+        assert self._result is not None
+        span_x, span_y = self._result.enchant_span
+        cx_b = self._result.enchant_center_x * size
+        hw_b = max(0.042, self._result.enchant_half_width)
+        gem_y = (0.5 - self._result.socket_gem_y_norm) * size
+        y_top = max(-size * 0.46, -span_y * size)
+
+        # 1) Pearlescent luminous white aura halo + subtle yin-yang ink wisps along the curved blade
+        res = 144
+        m_small = self._result.blade_mask_alpha.resize((res, res), Image.Resampling.BILINEAR)
+        m_arr = np.asarray(m_small, dtype=np.float32) / 255.0
+        ys = np.linspace(0.0, 1.0, res, dtype=np.float32)[:, None]
+        xs = np.linspace(0.0, 1.0, res, dtype=np.float32)[None, :]
+
+        guard_norm_y = 1.0 - self._result.socket_gem_y_norm + 0.06
+        blade_fade = np.clip((guard_norm_y - ys) / 0.10, 0.0, 1.0)
+        blur_rad = (5.8 if back_pass else 2.6) * scale
+        dil = np.asarray(m_small.filter(ImageFilter.GaussianBlur(radius=blur_rad)), dtype=np.float32) / 255.0
+        envelope = np.clip((dil - 0.06) / 0.26, 0.0, 1.0) * blade_fade
+
+        scroll = now * 1.75
+        w1 = np.sin(ys * 24.0 + scroll * 2.1 + np.sin(xs * 20.0 - scroll) * 1.8)
+        w2 = np.cos(ys * 42.0 - scroll * 1.4 + xs * 24.0)
+        turb = 0.50 + 0.34 * w1 + 0.16 * w2
+
+        white_mist = np.clip(envelope * np.clip((turb - 0.22) * 1.5, 0.0, 1.0), 0.0, 1.0)
+        ink_vein = np.clip(envelope * np.clip((0.46 - turb) * 2.2, 0.0, 1.0), 0.0, 1.0) * blade_fade
+
+        mist_rgba = np.zeros((res, res, 4), dtype=np.float32)
+        if back_pass:
+            dens = np.clip(white_mist * 0.72 + ink_vein * 0.62, 0.0, 0.90)
+            for ch in range(3):
+                mist_rgba[:, :, ch] = sr[ch] * white_mist * 0.95 + 16.0 * ink_vein
+        else:
+            edge_ring = np.clip((dil - m_arr * 0.88) * 2.6, 0.0, 1.0)
+            dens = np.clip((white_mist * edge_ring * 0.78 + ink_vein * edge_ring * 0.48), 0.0, 0.78)
+            for ch in range(3):
+                mist_rgba[:, :, ch] = sr[ch] * white_mist + 18.0 * ink_vein
+        mist_rgba[:, :, 3] = np.clip(dens * min(1.25, inten) * (0.85 if back_pass else 0.72), 0.0, 0.92) * 255.0
+        mist_pix = pil_to_qpixmap(Image.fromarray(np.clip(mist_rgba, 0, 255).astype(np.uint8), "RGBA"))
+
+        p.save()
+        p.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceOver)
+        p.drawPixmap(QRectF(-size * 0.5, -size * 0.5, size, size).toRect(), mist_pix)
+
+        # 2) Twin Yin-Yang Helical Ribbons (1 pure pearl-white ribbon + 1 crisp jet-black ink calligraphy ribbon)
+        for rb_i in range(2):
+            is_white_rb = (rb_i == 0)
+            if is_white_rb == back_pass:
+                continue
+            phase_r = rb_i * math.pi + now * 2.1
+            pts_l: list[QPointF] = []
+            pts_r: list[QPointF] = []
+            y0_f = gem_y + size * 0.02
+            for s_i in range(22):
+                u = s_i / 21.0
+                py_s = y0_f + (y_top - y0_f) * (0.04 + 0.88 * u)
+                # Follow subtle leftward curve of upper pearl blade
+                curve_off = -0.055 * size * (max(0.0, (u - 0.42) / 0.58) ** 1.5)
+                sway = math.sin(u * math.pi * 2.1 - phase_r) * (0.042 + 0.018 * (1.0 - u)) * size * scale
+                px_s = cx_b + curve_off + sway
+                hw_s = size * (0.0085 if is_white_rb else 0.0068) * scale * (math.sin(u * math.pi) ** 0.75)
+                pts_l.append(QPointF(px_s - hw_s, py_s))
+                pts_r.append(QPointF(px_s + hw_s, py_s))
+            poly_f = QPolygonF(pts_l + list(reversed(pts_r)))
+            if is_white_rb:
+                p.setPen(QPen(QColor(24, 26, 34, int(min(255, 130 * inten))), max(1.2, size * 0.0024)))
+                p.setBrush(QColor(250, 252, 255, int(min(255, 195 * inten))))
+            else:
+                p.setPen(QPen(QColor(242, 246, 255, int(min(255, 145 * inten))), max(1.2, size * 0.0024)))
+                p.setBrush(QColor(16, 18, 24, int(min(255, 185 * inten))))
+            p.drawPolygon(poly_f)
+
+        # 3) Floating Pearl-White Feathers & Delicate Silver Motes drifting upward off feather-guard & blade
+        if not back_pass:
+            p.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceOver)
+            for f_i in range(7):
+                age = (now * 0.42 + f_i / 7.0) % 1.0
+                fade = enchantment_fade(age)
+                side_f = -1.0 if (f_i % 2 == 0) else 1.0
+                fx = cx_b + side_f * (0.032 + 0.068 * age) * size * scale + math.sin(now * 2.2 + f_i * 1.9) * size * 0.014
+                fy = (gem_y + size * 0.06) + (y_top - gem_y - size * 0.06) * age
+                flen = size * (0.022 + 0.010 * (f_i % 3)) * scale
+                fw = flen * 0.24
+                ang_f = math.radians(side_f * 28.0 + math.sin(now * 2.6 + f_i) * 22.0)
+                p.save()
+                p.translate(fx, fy)
+                p.rotate(math.degrees(ang_f))
+                f_poly = QPolygonF([
+                    QPointF(-flen * 0.5, 0.0),
+                    QPointF(-flen * 0.1, -fw),
+                    QPointF(flen * 0.5, 0.0),
+                    QPointF(-flen * 0.1, fw),
+                ])
+                p.setPen(QPen(QColor(28, 30, 38, int(min(255, 115 * fade * inten))), max(0.8, size * 0.0014)))
+                p.setBrush(QColor(250, 252, 255, int(min(255, 225 * fade * inten))))
+                p.drawPolygon(f_poly)
+                p.restore()
+
+            p.setCompositionMode(QPainter.CompositionMode.CompositionMode_Plus)
+            p.setPen(Qt.PenStyle.NoPen)
+            for e_i in range(8):
+                age = (now * 0.85 + e_i / 8.0) % 1.0
+                fade = enchantment_fade(age)
+                ex = cx_b + math.sin(e_i * 2.3 + now * 2.4) * max(hw_b * 1.4, 0.062) * size * scale
+                ey = gem_y + (y_top - gem_y) * (0.05 + 0.90 * age)
+                er = max(1.0, size * 0.0038 * (1.0 - 0.35 * age))
+                p.setBrush(QColor(252, 254, 255, int(min(255, 220 * fade * inten))))
                 p.drawEllipse(QPointF(ex, ey), er, er)
         p.restore()
 

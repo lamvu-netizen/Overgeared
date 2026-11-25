@@ -57,6 +57,11 @@ SKILL_FX_DEF_MAP: Dict[str, str] = {
     "sk_ink_void_aegis": "OG_Fx_HacGiapHoThe",
     "sk_ink_shadow_spikes": "OG_Fx_LeAnhPhaToai",
     "sk_ink_blood_eclipse": "OG_Fx_HuyetNguyetVoAnh",
+    "sk_wdf_crescent_wave": "OG_Fx_BachNguyetTramBa",
+    "sk_wdf_planetary_cleave": "OG_Fx_TinhCauBungNo",
+    "sk_wdf_twin_dragon_aegis": "OG_Fx_SongLongHoGiap",
+    "sk_wdf_dragon_dash": "OG_Fx_BachLongXungKich",
+    "sk_wdf_cataclysm_5x5": "OG_Fx_AmDuongDietGioi",
 }
 
 

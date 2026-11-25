@@ -548,6 +548,383 @@ def _paint_tran_ac_inkblade(res: int = 1024) -> Tuple[Image.Image, Image.Image]:
     return w_pil, m_pil
 
 
+def _paint_white_dragon_featherblade(res: int = 1024) -> Tuple[Image.Image, Image.Image]:
+    """
+    Paints Bạch Long Vũ Kiếm (White Feather Dragonblade) 100% faithful to reference:
+    - Gently S-curved single-edged pearlescent ivory/smoky-taupe blade sweeping left at tip with jagged upper-left spine notches
+    - Twin sculpted bone-white dragon-wing collars hugging the throat with fine black-ink scale hatching & dotwork
+    - Asymmetrical lush wispy white feather-plume skirt with steep left quills (ink-outlined) & wide sweeping right pinions
+    - Slender ivory handle adorned with curling black-ink filigree tendrils
+    - Organic open-loop hollow teardrop pearl pommel
+    """
+    s = float(res)
+    w_qimg = QImage(res, res, QImage.Format.Format_RGBA8888)
+    w_qimg.fill(QColor(0, 0, 0, 0))
+    m_qimg = QImage(res, res, QImage.Format.Format_RGBA8888)
+    m_qimg.fill(QColor(0, 0, 0, 0))
+
+    cx = 0.475 * s
+    y_tip = 0.038 * s
+    y_throat = 0.562 * s
+
+    def _blade_axis_x(t: float) -> float:
+        # Subtle graceful rightward bow in lower half, sweeping cleanly leftward toward sharp tip
+        if t < 0.44:
+            u = t / 0.44
+            return cx + 0.012 * s * math.sin(u * math.pi * 0.5)
+        u = (t - 0.44) / 0.56
+        return cx + 0.012 * s * (1.0 - u) - 0.078 * s * (u ** 1.52)
+
+    # --- 1. Build Organic Curved Pearl Blade Polygon ---
+    blade_l: List[QPointF] = []
+    blade_r: List[QPointF] = []
+    ridge_pts: List[QPointF] = []
+    n_b = 64
+    for k in range(n_b + 1):
+        t = k / float(n_b)
+        py = y_throat + (y_tip - y_throat) * t
+        ax = _blade_axis_x(t)
+
+        # Smooth blade width profile swelling gently through mid-belly then tapering to needle tip
+        belly = 0.78 + 0.30 * math.sin(min(1.0, t / 0.78) * math.pi * 0.85)
+        tip_taper = 1.0 if t < 0.76 else max(0.0, ((1.0 - t) / 0.24) ** 0.72)
+        base_w = s * 0.0225 * belly * tip_taper
+
+        # Exact upper-left jagged organic notches & subtle hand-forged waviness on left spine
+        spine_notch = (
+            -0.36 * math.exp(-((t - 0.585) ** 2) / 0.00055)
+            - 0.26 * math.exp(-((t - 0.685) ** 2) / 0.00045)
+            - 0.20 * math.exp(-((t - 0.790) ** 2) / 0.00050)
+            + 0.08 * math.sin(t * 26.0) * (1.0 - tip_taper * 0.25)
+        )
+        wl = max(0.0, base_w * (0.94 + spine_notch))
+        # Right cutting edge is crisp, smooth, slightly convex
+        wr = max(0.0, base_w * (1.08 + 0.08 * math.sin(t * math.pi)))
+        if t > 0.985:
+            wl = wr = 0.0
+
+        blade_l.append(QPointF(ax - wl, py))
+        blade_r.append(QPointF(ax + wr, py))
+        ridge_pts.append(QPointF(ax + wr * 0.12, py))
+
+    blade_poly = QPolygonF(blade_l + list(reversed(blade_r)))
+
+    # Paint blade alpha mask for VFX engines
+    mp = QPainter(m_qimg)
+    mp.setRenderHint(QPainter.RenderHint.Antialiasing, True)
+    mp.setPen(Qt.PenStyle.NoPen)
+    mp.setBrush(QColor(255, 255, 255, 255))
+    mp.drawPolygon(blade_poly)
+    mp.end()
+
+    p = QPainter(w_qimg)
+    p.setRenderHint(QPainter.RenderHint.Antialiasing, True)
+
+    # --- 2. Paint Handle Shaft + Black-Ink Filigree + Open Teardrop Loop Pommel (underneath feather skirt) ---
+    hx = cx + 0.005 * s
+    y_h0 = 0.640 * s
+    y_h1 = 0.875 * s
+    shaft_poly = QPolygonF([
+        QPointF(hx - 0.0125 * s, y_h0),
+        QPointF(hx + 0.0125 * s, y_h0),
+        QPointF(hx + 0.0105 * s, 0.810 * s),
+        QPointF(hx + 0.0135 * s, y_h1),
+        QPointF(hx - 0.0135 * s, y_h1),
+        QPointF(hx - 0.0105 * s, 0.810 * s),
+    ])
+    sh_grad = QLinearGradient(QPointF(hx - 0.015 * s, 0), QPointF(hx + 0.015 * s, 0))
+    sh_grad.setColorAt(0.0, QColor(186, 184, 180))
+    sh_grad.setColorAt(0.35, QColor(238, 238, 240))
+    sh_grad.setColorAt(0.75, QColor(252, 252, 254))
+    sh_grad.setColorAt(1.0, QColor(204, 204, 208))
+    p.setPen(QPen(QColor(126, 126, 132, 185), s * 0.0018))
+    p.setBrush(QBrush(sh_grad))
+    p.drawPolygon(shaft_poly)
+
+    # Organic Open-Loop Hollow Teardrop Pommel (y = 0.862 .. 0.958)
+    pom_outer = QPainterPath()
+    pom_outer.moveTo(hx - 0.011 * s, 0.864 * s)
+    pom_outer.cubicTo(hx - 0.014 * s, 0.892 * s, hx - 0.036 * s, 0.916 * s, hx - 0.030 * s, 0.942 * s)
+    pom_outer.cubicTo(hx - 0.024 * s, 0.962 * s, hx + 0.028 * s, 0.962 * s, hx + 0.033 * s, 0.938 * s)
+    pom_outer.cubicTo(hx + 0.038 * s, 0.912 * s, hx + 0.015 * s, 0.890 * s, hx + 0.011 * s, 0.864 * s)
+    pom_outer.closeSubpath()
+
+    pom_inner = QPainterPath()
+    pom_inner.moveTo(hx - 0.002 * s, 0.898 * s)
+    pom_inner.cubicTo(hx - 0.016 * s, 0.912 * s, hx - 0.018 * s, 0.936 * s, hx - 0.004 * s, 0.944 * s)
+    pom_inner.cubicTo(hx + 0.014 * s, 0.948 * s, hx + 0.020 * s, 0.922 * s, hx + 0.004 * s, 0.898 * s)
+    pom_inner.closeSubpath()
+
+    pom_ring = pom_outer.subtracted(pom_inner)
+    pom_g = QLinearGradient(QPointF(hx - 0.034 * s, 0.88 * s), QPointF(hx + 0.034 * s, 0.95 * s))
+    pom_g.setColorAt(0.0, QColor(202, 200, 198))
+    pom_g.setColorAt(0.42, QColor(250, 250, 252))
+    pom_g.setColorAt(0.78, QColor(225, 226, 232))
+    pom_g.setColorAt(1.0, QColor(178, 178, 184))
+    p.setPen(QPen(QColor(132, 132, 138, 200), s * 0.0020))
+    p.setBrush(QBrush(pom_g))
+    p.drawPath(pom_ring)
+
+    # Inner highlight crescent along loop pommel
+    p.setBrush(Qt.BrushStyle.NoBrush)
+    p.setPen(QPen(QColor(255, 255, 255, 235), s * 0.0026, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
+    hl_arc = QPainterPath()
+    hl_arc.moveTo(hx - 0.022 * s, 0.922 * s)
+    hl_arc.cubicTo(hx - 0.022 * s, 0.946 * s, hx + 0.018 * s, 0.950 * s, hx + 0.024 * s, 0.924 * s)
+    p.drawPath(hl_arc)
+
+    # Delicate black-ink curling vine/rune markings along visible upper grip (y = 0.742 .. 0.855)
+    p.setPen(QPen(QColor(24, 24, 28, 225), s * 0.0019, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
+    vine = QPainterPath()
+    vine.moveTo(hx - 0.005 * s, 0.744 * s)
+    vine.cubicTo(hx + 0.011 * s, 0.764 * s, hx - 0.012 * s, 0.786 * s, hx + 0.008 * s, 0.808 * s)
+    vine.cubicTo(hx - 0.010 * s, 0.824 * s, hx + 0.007 * s, 0.840 * s, hx - 0.006 * s, 0.852 * s)
+    p.drawPath(vine)
+    for vy_f, side_v in [(0.758, -1.0), (0.775, 1.0), (0.794, -1.0), (0.814, 1.0), (0.834, -1.0)]:
+        vy = vy_f * s
+        curl = QPainterPath()
+        curl.moveTo(hx, vy)
+        curl.quadTo(hx + side_v * 0.012 * s, vy - 0.004 * s, hx + side_v * 0.008 * s, vy + 0.008 * s)
+        p.drawPath(curl)
+
+    # --- 3. Paint Painterly Pearlescent & Smoky-Ivory Blade ---
+    p.save()
+    b_path = QPainterPath()
+    b_path.addPolygon(blade_poly)
+    p.setClipPath(b_path)
+
+    # Cross-blade luminous pearl-white right to warm smoky-taupe left
+    b_grad = QLinearGradient(QPointF(cx - 0.075 * s, 0.25 * s), QPointF(cx + 0.045 * s, 0.25 * s))
+    b_grad.setColorAt(0.0, QColor(126, 122, 116))
+    b_grad.setColorAt(0.32, QColor(178, 174, 168))
+    b_grad.setColorAt(0.66, QColor(238, 236, 234))
+    b_grad.setColorAt(1.0, QColor(255, 255, 255))
+    p.setPen(Qt.PenStyle.NoPen)
+    p.setBrush(QBrush(b_grad))
+    p.drawPolygon(blade_poly)
+
+    # Vertical smoky-taupe watercolor shading concentrated on upper curved spine (t = 0.50 .. 0.96)
+    v_smoke = QLinearGradient(QPointF(cx, y_throat), QPointF(cx - 0.05 * s, y_tip))
+    v_smoke.setColorAt(0.0, QColor(246, 244, 240, 120))
+    v_smoke.setColorAt(0.38, QColor(255, 255, 255, 160))
+    v_smoke.setColorAt(0.68, QColor(148, 140, 128, 130))
+    v_smoke.setColorAt(0.92, QColor(102, 98, 94, 155))
+    v_smoke.setColorAt(1.0, QColor(225, 224, 222, 140))
+    p.setBrush(QBrush(v_smoke))
+    p.drawPolygon(blade_poly)
+
+    # Painterly smoky watercolor cloud mottles inside upper spine + luminous pearl sheen in lower-mid belly
+    mottles = [
+        (0.84, -0.008, 0.018, 0.034, QColor(92, 86, 80, 115)),
+        (0.72, -0.006, 0.022, 0.042, QColor(115, 108, 98, 105)),
+        (0.60, -0.004, 0.020, 0.036, QColor(138, 132, 122, 90)),
+        (0.44, 0.005, 0.024, 0.058, QColor(255, 255, 255, 195)),
+        (0.28, 0.004, 0.022, 0.055, QColor(255, 254, 252, 175)),
+        (0.14, 0.002, 0.018, 0.042, QColor(230, 226, 220, 125)),
+    ]
+    for mt, ox_f, rx_f, ry_f, mc in mottles:
+        mx = _blade_axis_x(mt) + ox_f * s
+        my = y_throat + (y_tip - y_throat) * mt
+        mg = QRadialGradient(QPointF(mx, my), max(rx_f, ry_f) * s)
+        mg.setColorAt(0.0, mc)
+        mg.setColorAt(1.0, QColor(mc.red(), mc.green(), mc.blue(), 0))
+        p.setBrush(QBrush(mg))
+        p.drawEllipse(QPointF(mx, my), rx_f * s, ry_f * s)
+
+    # Glowing alabaster cutting edge highlight along entire right blade face
+    right_strip = QPolygonF(ridge_pts + list(reversed(blade_r)))
+    rg = QLinearGradient(QPointF(cx - 0.01 * s, 0), QPointF(cx + 0.04 * s, 0))
+    rg.setColorAt(0.0, QColor(255, 255, 255, 45))
+    rg.setColorAt(0.55, QColor(255, 255, 255, 175))
+    rg.setColorAt(1.0, QColor(255, 255, 255, 245))
+    p.setBrush(QBrush(rg))
+    p.drawPolygon(right_strip)
+    p.restore()
+
+    # Crisp edge outlines: soft charcoal on jagged left spine, gleaming white on smooth right cutting edge
+    p.setBrush(Qt.BrushStyle.NoBrush)
+    p.setPen(QPen(QColor(110, 108, 104, 185), max(1.4, s * 0.0018)))
+    for i in range(len(blade_l) - 1):
+        p.drawLine(blade_l[i], blade_l[i + 1])
+    p.setPen(QPen(QColor(255, 255, 255, 245), max(1.8, s * 0.0024)))
+    for i in range(len(blade_r) - 1):
+        p.drawLine(blade_r[i], blade_r[i + 1])
+
+    # --- 4. Long Sweeping Outer White Wing-Feathers / Pinions (Back Layer) ---
+    def _draw_feather_quill(
+        p0: Tuple[float, float],
+        p1: Tuple[float, float],
+        p2: Tuple[float, float],
+        w_base: float,
+        w_mid: float,
+        col_top: QColor,
+        col_bot: QColor,
+        ink_edge: bool = False,
+    ) -> None:
+        n_q = 18
+        left_q: List[QPointF] = []
+        right_q: List[QPointF] = []
+        spine_q: List[QPointF] = []
+        for k in range(n_q + 1):
+            u = k / float(n_q)
+            iu = 1.0 - u
+            qx = (iu * iu) * p0[0] + 2 * iu * u * p1[0] + (u * u) * p2[0]
+            qy = (iu * iu) * p0[1] + 2 * iu * u * p1[1] + (u * u) * p2[1]
+            tx = 2 * iu * (p1[0] - p0[0]) + 2 * u * (p2[0] - p1[0])
+            ty = 2 * iu * (p1[1] - p0[1]) + 2 * u * (p2[1] - p1[1])
+            ln = math.hypot(tx, ty) or 1.0
+            nx, ny = -ty / ln, tx / ln
+            hw = (w_base * (1.0 - u) + w_mid * math.sin(u * math.pi)) * ((1.0 - u) ** 0.55)
+            spine_q.append(QPointF(qx, qy))
+            left_q.append(QPointF(qx + nx * hw, qy + ny * hw))
+            right_q.append(QPointF(qx - nx * hw, qy - ny * hw))
+        poly_q = QPolygonF(left_q + list(reversed(right_q)))
+        qg = QLinearGradient(QPointF(p0[0], p0[1]), QPointF(p2[0], p2[1]))
+        qg.setColorAt(0.0, col_top)
+        qg.setColorAt(0.65, col_bot)
+        qg.setColorAt(1.0, QColor(col_bot.red(), col_bot.green(), col_bot.blue(), 195))
+        p.setPen(Qt.PenStyle.NoPen)
+        p.setBrush(QBrush(qg))
+        p.drawPolygon(poly_q)
+        # Bright rachis highlight
+        p.setPen(QPen(QColor(255, 255, 255, 210), max(1.0, s * 0.0014)))
+        for j in range(len(spine_q) - 1):
+            p.drawLine(spine_q[j], spine_q[j + 1])
+        if ink_edge:
+            p.setPen(QPen(QColor(30, 32, 36, 205), max(1.1, s * 0.0015), Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
+            for j in range(len(left_q) - 3):
+                p.drawLine(left_q[j], left_q[j + 1])
+
+    # Right sweeping dramatic long white pinions (matching Image 1's wide asymmetrical right plume!)
+    right_pinions = [
+        ((cx + 0.032 * s, 0.545 * s), (cx + 0.095 * s, 0.585 * s), (cx + 0.145 * s, 0.625 * s), 0.009 * s, 0.006 * s),
+        ((cx + 0.025 * s, 0.625 * s), (cx + 0.175 * s, 0.700 * s), (cx + 0.305 * s, 0.895 * s), 0.015 * s, 0.012 * s),
+        ((cx + 0.022 * s, 0.642 * s), (cx + 0.145 * s, 0.730 * s), (cx + 0.242 * s, 0.890 * s), 0.016 * s, 0.012 * s),
+        ((cx + 0.018 * s, 0.655 * s), (cx + 0.112 * s, 0.742 * s), (cx + 0.185 * s, 0.865 * s), 0.014 * s, 0.010 * s),
+        ((cx + 0.015 * s, 0.665 * s), (cx + 0.075 * s, 0.735 * s), (cx + 0.128 * s, 0.818 * s), 0.013 * s, 0.009 * s),
+    ]
+    for p0, p1, p2, wb, wm in right_pinions:
+        _draw_feather_quill(p0, p1, p2, wb, wm, QColor(246, 246, 248, 242), QColor(218, 220, 226, 232), ink_edge=False)
+
+    # Left steep downward-curving white pinions (with delicate black ink contour lines like Image 1!)
+    left_pinions = [
+        ((cx - 0.036 * s, 0.620 * s), (cx - 0.118 * s, 0.725 * s), (cx - 0.145 * s, 0.845 * s), 0.012 * s, 0.009 * s, False),
+        ((cx - 0.028 * s, 0.635 * s), (cx - 0.095 * s, 0.752 * s), (cx - 0.092 * s, 0.868 * s), 0.014 * s, 0.010 * s, True),
+        ((cx - 0.018 * s, 0.650 * s), (cx - 0.068 * s, 0.745 * s), (cx - 0.060 * s, 0.822 * s), 0.013 * s, 0.009 * s, True),
+    ]
+    for p0, p1, p2, wb, wm, ink_e in left_pinions:
+        _draw_feather_quill(p0, p1, p2, wb, wm, QColor(244, 244, 246, 242), QColor(214, 216, 222, 230), ink_edge=ink_e)
+
+    # --- 5. Lush Dense White Feather Skirt Cascade (3 overlapping tiers of fine wispy feathers!) ---
+    rng_f = np.random.default_rng(717)
+    for tier_idx, (n_tufts, len_mul, col_base) in enumerate([
+        (42, 1.06, QColor(212, 214, 220, 225)),
+        (54, 0.94, QColor(244, 245, 248, 238)),
+        (46, 0.80, QColor(255, 255, 255, 248)),
+    ]):
+        for f_i in range(n_tufts):
+            u = f_i / max(1.0, float(n_tufts - 1))
+            # Fan angles from steep down-left (138 deg) through straight down (90 deg) to wide down-right (34 deg)
+            ang_deg = 136.0 - u * 102.0 + float(rng_f.uniform(-3.2, 3.2))
+            rad = math.radians(ang_deg)
+            ox = cx + (0.5 - u) * -0.065 * s + float(rng_f.uniform(-0.008, 0.008)) * s
+            oy = (0.618 + 0.022 * math.sin(u * math.pi)) * s
+            # Asymmetric skirt length: fuller on left & wide right wings, shorter tucked over center grip
+            side_boost = 1.0 + 0.28 * abs(u - 0.44) + (0.24 if u > 0.62 else 0.0)
+            flen = s * (0.095 + 0.055 * float(rng_f.uniform(0.0, 1.0))) * side_boost * len_mul
+            curve_dir = -1.0 if ang_deg > 92.0 else 1.0
+            mid_x = ox + math.cos(rad) * flen * 0.52 + curve_dir * 0.010 * s
+            mid_y = oy + math.sin(rad) * flen * 0.52
+            tip_x = ox + math.cos(rad) * flen + curve_dir * 0.018 * s
+            tip_y = oy + math.sin(rad) * flen
+            fw = s * (0.0068 if tier_idx == 0 else (0.0052 if tier_idx == 1 else 0.0034))
+            nx, ny = -math.sin(rad), math.cos(rad)
+            f_poly = QPolygonF([
+                QPointF(ox + nx * fw, oy + ny * fw),
+                QPointF(mid_x + nx * fw * 0.72, mid_y + ny * fw * 0.72),
+                QPointF(tip_x, tip_y),
+                QPointF(mid_x - nx * fw * 0.72, mid_y - ny * fw * 0.72),
+                QPointF(ox - nx * fw, oy - ny * fw),
+            ])
+            p.setPen(Qt.PenStyle.NoPen)
+            p.setBrush(col_base)
+            p.drawPolygon(f_poly)
+
+    # --- 6. Sculptural Bone-White Twin Dragon-Wing Guard Collars + Fine Black Ink Linework ---
+    # Left dragon-wing collar (higher crest at y=0.498, sweeping down-left & sending ribbed tail across throat)
+    left_collar = QPainterPath()
+    left_collar.moveTo(cx - 0.018 * s, 0.500 * s)
+    left_collar.cubicTo(cx - 0.032 * s, 0.494 * s, cx - 0.044 * s, 0.514 * s, cx - 0.048 * s, 0.548 * s)
+    left_collar.cubicTo(cx - 0.068 * s, 0.592 * s, cx - 0.092 * s, 0.648 * s, cx - 0.098 * s, 0.692 * s)
+    left_collar.cubicTo(cx - 0.072 * s, 0.668 * s, cx - 0.046 * s, 0.644 * s, cx - 0.022 * s, 0.616 * s)
+    left_collar.cubicTo(cx - 0.006 * s, 0.648 * s, cx + 0.006 * s, 0.678 * s, cx + 0.028 * s, 0.706 * s)
+    left_collar.cubicTo(cx + 0.012 * s, 0.662 * s, cx + 0.004 * s, 0.620 * s, cx - 0.008 * s, 0.578 * s)
+    left_collar.cubicTo(cx - 0.012 * s, 0.546 * s, cx - 0.010 * s, 0.512 * s, cx - 0.018 * s, 0.500 * s)
+    left_collar.closeSubpath()
+
+    # Right dragon-wing collar (slightly lower crest at y=0.522, arching downward-right with slender spur)
+    right_collar = QPainterPath()
+    right_collar.moveTo(cx + 0.024 * s, 0.522 * s)
+    right_collar.cubicTo(cx + 0.042 * s, 0.518 * s, cx + 0.056 * s, 0.546 * s, cx + 0.068 * s, 0.584 * s)
+    right_collar.cubicTo(cx + 0.088 * s, 0.620 * s, cx + 0.106 * s, 0.654 * s, cx + 0.118 * s, 0.678 * s)
+    right_collar.cubicTo(cx + 0.082 * s, 0.658 * s, cx + 0.046 * s, 0.632 * s, cx + 0.012 * s, 0.610 * s)
+    right_collar.cubicTo(cx + 0.006 * s, 0.580 * s, cx + 0.012 * s, 0.542 * s, cx + 0.024 * s, 0.522 * s)
+    right_collar.closeSubpath()
+
+    for col_path, gx0, gx1 in [
+        (right_collar, cx, cx + 0.11 * s),
+        (left_collar, cx - 0.10 * s, cx + 0.03 * s),
+    ]:
+        cg = QLinearGradient(QPointF(gx0, 0.51 * s), QPointF(gx1, 0.68 * s))
+        cg.setColorAt(0.0, QColor(208, 208, 212))
+        cg.setColorAt(0.45, QColor(246, 246, 248))
+        cg.setColorAt(0.85, QColor(224, 225, 230))
+        cg.setColorAt(1.0, QColor(186, 186, 192))
+        p.setPen(QPen(QColor(26, 28, 34, 232), s * 0.0020, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap, Qt.PenJoinStyle.RoundJoin))
+        p.setBrush(QBrush(cg))
+        p.drawPath(col_path)
+
+    # Fine Black Ink Dragon-Scale Rib Hatching, Tendril Contours & Dotwork (Signature Image 1 Detail!)
+    ink_pen = QPen(QColor(20, 22, 26, 235), s * 0.0017, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap)
+    p.setPen(ink_pen)
+    p.setBrush(Qt.BrushStyle.NoBrush)
+
+    # Left dragon neck segmented rib scale bars
+    for r_i in range(9):
+        u = r_i / 8.0
+        ry = (0.522 + u * 0.155) * s
+        rx = cx + (-0.026 + u * 0.034) * s
+        p.drawLine(QPointF(rx - 0.007 * s, ry), QPointF(rx + 0.006 * s, ry - 0.003 * s))
+    # Right dragon neck segmented rib scale bars
+    for r_i in range(7):
+        u = r_i / 6.0
+        ry = (0.538 + u * 0.092) * s
+        rx = cx + (0.032 + u * 0.024) * s
+        p.drawLine(QPointF(rx - 0.006 * s, ry - 0.002 * s), QPointF(rx + 0.007 * s, ry + 0.003 * s))
+
+    # Graceful outer left black ink calligraphy line trailing down left wing feathers
+    left_ink_trail = QPainterPath()
+    left_ink_trail.moveTo(cx - 0.030 * s, 0.528 * s)
+    left_ink_trail.cubicTo(cx - 0.064 * s, 0.610 * s, cx - 0.088 * s, 0.690 * s, cx - 0.104 * s, 0.778 * s)
+    p.drawPath(left_ink_trail)
+
+    # Delicate tiny black ink dots along the sculptural dragon-collar ridges
+    p.setPen(Qt.PenStyle.NoPen)
+    p.setBrush(QColor(22, 24, 28, 235))
+    dot_coords = [
+        (-0.025, 0.508), (-0.032, 0.524), (-0.044, 0.578), (-0.056, 0.608),
+        (-0.068, 0.642), (0.032, 0.532), (0.044, 0.562), (0.058, 0.596),
+    ]
+    for dx_d, dy_d in dot_coords:
+        p.drawEllipse(QPointF(cx + dx_d * s, dy_d * s), s * 0.0023, s * 0.0023)
+
+    p.end()
+
+    w_pil = Image.frombytes("RGBA", (res, res), bytes(w_qimg.constBits())).resize((512, 512), Image.Resampling.LANCZOS)
+    m_pil = Image.frombytes("RGBA", (res, res), bytes(m_qimg.constBits())).split()[3].resize((512, 512), Image.Resampling.LANCZOS)
+    return w_pil, m_pil
+
+
 def render_special_weapon(
     store: Optional[ModAssetStore],
     weapon: SpecialWeaponDef,
@@ -561,6 +938,8 @@ def render_special_weapon(
     if key not in _SPECIAL_CACHE:
         if weapon.id == "tran_ac_inkblade":
             w_512, m_512 = _paint_tran_ac_inkblade(1024)
+        elif weapon.id == "white_dragon_featherblade":
+            w_512, m_512 = _paint_white_dragon_featherblade(1024)
         else:
             w_512, m_512 = _paint_abyssal_skullblade(1024)
         if resolution != 512:

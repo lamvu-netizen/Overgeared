@@ -194,4 +194,103 @@
     <hitFrames><li>3</li><li>6</li><li>9</li><li>13</li></hitFrames>
     <damageMultipliers><li>0.82</li><li>0.92</li><li>1.08</li><li>1.68</li></damageMultipliers>
   </OvergearedCore.SkillFxDef>
+
+  <!-- ===== BACH LONG VU KIEM (WHITE FEATHER DRAGONBLADE) 5 WHITE-BLACK SKILLFX DEFINITIONS ===== -->
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_BachNguyetTramBa</defName>
+    <label>Bạch Nguyệt Trảm Ba</label>
+    <texFolder>OvergearedCore/SkillFx/BachNguyetTramBa</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/BachNguyetTramBaHit</hitFolder>
+    <frameCount>16</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>48</frameDelayMs>
+    <size>(5.0, 2.9)</size>
+    <hitSize>(2.1, 2.1)</hitSize>
+    <anchor>(0.48, 0.54)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.44</screenDarken>
+    <cameraShake>0.38</cameraShake>
+    <hitStopTicks>8</hitStopTicks>
+    <hitFrames><li>9</li></hitFrames>
+    <damageMultipliers><li>1.55</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_TinhCauBungNo</defName>
+    <label>Tinh Cầu Bùng Nổ</label>
+    <texFolder>OvergearedCore/SkillFx/TinhCauBungNo</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/TinhCauBungNoHit</hitFolder>
+    <frameCount>18</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>52</frameDelayMs>
+    <size>(4.8, 3.1)</size>
+    <hitSize>(2.5, 2.5)</hitSize>
+    <anchor>(0.48, 0.54)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.52</screenDarken>
+    <cameraShake>0.52</cameraShake>
+    <hitStopTicks>12</hitStopTicks>
+    <hitFrames><li>4</li><li>11</li></hitFrames>
+    <damageMultipliers><li>0.90</li><li>1.75</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_SongLongHoGiap</defName>
+    <label>Song Long Hộ Giáp</label>
+    <texFolder>OvergearedCore/SkillFx/SongLongHoGiap</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/SongLongHoGiapHit</hitFolder>
+    <frameCount>18</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>52</frameDelayMs>
+    <size>(3.8, 3.05)</size>
+    <hitSize>(1.8, 1.8)</hitSize>
+    <anchor>(0.50, 0.72)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.46</screenDarken>
+    <cameraShake>0.34</cameraShake>
+    <hitStopTicks>7</hitStopTicks>
+    <centeredOnCaster>true</centeredOnCaster>
+    <hitFrames><li>5</li><li>11</li></hitFrames>
+    <damageMultipliers><li>0.88</li><li>1.22</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_BachLongXungKich</defName>
+    <label>Bạch Long Xung Kích</label>
+    <texFolder>OvergearedCore/SkillFx/BachLongXungKich</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/BachLongXungKichHit</hitFolder>
+    <frameCount>16</frameCount>
+    <hitFrameCount>8</hitFrameCount>
+    <frameDelayMs>46</frameDelayMs>
+    <size>(5.0, 2.9)</size>
+    <hitSize>(2.3, 2.1)</hitSize>
+    <anchor>(0.48, 0.52)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.48</screenDarken>
+    <cameraShake>0.42</cameraShake>
+    <hitStopTicks>9</hitStopTicks>
+    <spawnAfterimages>true</spawnAfterimages>
+    <hitFrames><li>4</li><li>9</li></hitFrames>
+    <damageMultipliers><li>0.95</li><li>1.40</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
+
+  <OvergearedCore.SkillFxDef>
+    <defName>OG_Fx_AmDuongDietGioi</defName>
+    <label>Âm Dương Diệt Giới (5x5)</label>
+    <texFolder>OvergearedCore/SkillFx/AmDuongDietGioi</texFolder>
+    <hitFolder>OvergearedCore/SkillFx/AmDuongDietGioiHit</hitFolder>
+    <frameCount>20</frameCount>
+    <hitFrameCount>10</hitFrameCount>
+    <frameDelayMs>54</frameDelayMs>
+    <size>(5.0, 5.0)</size>
+    <hitSize>(2.8, 2.8)</hitSize>
+    <anchor>(0.50, 0.74)</anchor>
+    <additive>false</additive>
+    <screenDarken>0.64</screenDarken>
+    <cameraShake>0.65</cameraShake>
+    <hitStopTicks>14</hitStopTicks>
+    <aoeRadius>2.5</aoeRadius>
+    <hitFrames><li>4</li><li>8</li><li>13</li></hitFrames>
+    <damageMultipliers><li>0.90</li><li>1.15</li><li>1.95</li></damageMultipliers>
+  </OvergearedCore.SkillFxDef>
 </Defs>

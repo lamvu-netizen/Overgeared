@@ -650,4 +650,95 @@
       <Key t="62" sw="10" up="0"/>
     </Post>
   </Routine>
+
+  <!-- ===== BACH LONG VU KIEM (WHITE FEATHER DRAGONBLADE) EXCLUSIVE 5 SKILLS ===== -->
+  <!-- Skill 1: Bach Nguyet Tram Ba — rooted ranged sweeping pearl-white crescent wave -->
+  <Routine id="sk_wdf_crescent_wave" weight="1.0" combo="false" mirror="false" cold="true" kinds="Slash">
+    <Hit sw="98" up="0.02" wx="0.32" push="0.14" lean="12" sy="0.06" sx="-0.04" hop="0.02" head="8">
+      <Strike gap="10" amp="1.45" arc="1" push="1.25" hold="5" pull="0"/>
+    </Hit>
+    <Pre>
+      <Key t="-26" sw="-24" up="0.05" sy="-0.04" lean="-4"/>
+      <Key t="-12" sw="-92" up="0.14" sy="-0.08" sx="0.05" lean="-9" push="-0.04" stop="true"/>
+      <Key t="-4"  sw="-40" up="0.06" sy="-0.03" lean="0"  push="0.05"/>
+      <Key t="0"   sw="10"  up="0.02" sy="0.0"   lean="5"  push="0.13"/>
+    </Pre>
+    <Post>
+      <Key t="28" sw="84" up="-0.02" stop="true"/>
+      <Key t="44" sw="12" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Skill 2: Tinh Cau Bung No — razor horizontal cut across target followed by planetary supernova explosion -->
+  <Routine id="sk_wdf_planetary_cleave" weight="1.0" combo="true" mirror="false" cold="true" kinds="Slash">
+    <Hit sw="106" up="0.00" wx="0.34" push="0.32" lean="16" sy="0.06" sx="-0.05" hop="0.03" head="10">
+      <Strike gap="0"  amp="0.90" arc="1"  push="0.80" hold="3" pull="0"/>
+      <Strike gap="15" amp="1.75" arc="-1" push="1.50" hold="7" pull="0.15"/>
+    </Hit>
+    <Pre>
+      <Key t="-30" sw="-26" up="0.02" sy="-0.04" lean="-5"/>
+      <Key t="-14" sw="-96" up="0.04" sy="-0.09" sx="0.07" lean="-10" push="-0.05" stop="true"/>
+      <Key t="-5"  sw="-50" up="0.02" sy="-0.04" lean="-2"  push="0.10"/>
+      <Key t="0"   sw="12"  up="0.00" sy="0.00"  lean="6"   push="0.24"/>
+    </Pre>
+    <Post>
+      <Key t="36" sw="86" up="-0.02" stop="true"/>
+      <Key t="52" sw="10" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Skill 3: Song Long Ho Giap — caster heroic guard stance summoning Black-White Twin-Dragon Shield -->
+  <Routine id="sk_wdf_twin_dragon_aegis" weight="1.0" combo="true" mirror="false" cold="true" kinds="Slash">
+    <Hit sw="-24" up="0.18" wx="0.08" push="0.06" lean="-4" sy="0.06" sx="-0.04" hop="0.03" head="-4">
+      <Strike gap="5"  amp="0.88" arc="1"  push="0.65" hold="2" pull="0"/>
+      <Strike gap="12" amp="1.22" arc="-1" push="0.95" hold="4" pull="0.25"/>
+    </Hit>
+    <Pre>
+      <Key t="-24" sw="14"  up="-0.04" sy="-0.06" lean="4"/>
+      <Key t="-12" sw="36"  up="-0.10" sy="-0.12" sx="0.08" lean="8" push="-0.02" stop="true"/>
+      <Key t="-4"  sw="4"   up="0.08"  sy="0.0"   lean="0" push="0.03"/>
+      <Key t="0"   sw="-22" up="0.16"  sy="0.05"  lean="-3" push="0.06"/>
+    </Pre>
+    <Post>
+      <Key t="30" sw="-18" up="0.10" stop="true"/>
+      <Key t="46" sw="0" up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Skill 4: Bach Long Xung Kich — explosive high-speed dash with White Dragon projection & afterimages -->
+  <Routine id="sk_wdf_dragon_dash" weight="1.0" combo="true" mirror="false" cold="false" kinds="Slash, Thrust">
+    <Hit sw="92" up="0.06" wx="0.34" push="0.58" lean="22" sy="-0.06" sx="0.10" hop="0.08" head="13" landing="0.12">
+      <Strike gap="0"  amp="0.95" arc="1"  push="1.10" hold="2" pull="0"/>
+      <Strike gap="10" amp="1.40" arc="-1" push="1.35" hold="5" pull="0.22"/>
+    </Hit>
+    <Pre>
+      <Key t="-24" sw="-32" up="-0.06" sy="-0.10" sx="0.08" lean="-8" push="-0.12" stop="true"/>
+      <Key t="-10" sw="-78" up="-0.08" sy="-0.14" sx="0.12" lean="6"  push="0.06"/>
+      <Key t="-4"  sw="-30" up="0.02"  sy="-0.06" sx="0.08" lean="16" push="0.30"/>
+      <Key t="0"   sw="20"  up="0.06"  sy="0.00"  sx="0.04" lean="20" push="0.48"/>
+    </Pre>
+    <Post>
+      <Key t="28" sw="68" up="0.02" lean="8" stop="true"/>
+      <Key t="44" sw="6"  up="0"/>
+    </Post>
+  </Routine>
+
+  <!-- Skill 5: Am Duong Diet Gioi — Ultimate overhead judgment cleave unleashing colossal 5x5 pillar explosion -->
+  <Routine id="sk_wdf_cataclysm_5x5" weight="0.9" combo="true" mirror="false" cold="false" kinds="Slash">
+    <Hit sw="116" up="-0.04" wx="0.32" push="0.36" lean="18" sy="0.10" sx="-0.06" hop="0.18" head="12" landing="0.18">
+      <Strike gap="0"  amp="0.90" arc="1"  push="0.95" hold="2" pull="0"/>
+      <Strike gap="9"  amp="1.15" arc="-1" push="1.15" hold="3" pull="0.25"/>
+      <Strike gap="12" amp="1.95" arc="1"  push="1.55" hold="8" pull="0.50"/>
+    </Hit>
+    <Pre>
+      <Key t="-34" sw="-34" up="0.10" sy="-0.05" lean="-6"/>
+      <Key t="-15" sw="-102" up="0.24" sy="-0.14" sx="0.10" lean="-12" push="-0.08" hop="0.14" stop="true"/>
+      <Key t="-6"  sw="-72" up="0.18" sy="-0.06" lean="-2" push="0.10" hop="0.18"/>
+      <Key t="0"   sw="8"   up="0.04" sy="0.02"  lean="8"  push="0.26" hop="0.08"/>
+    </Pre>
+    <Post>
+      <Key t="46" sw="78" up="-0.06" sy="-0.04" stop="true"/>
+      <Key t="62" sw="12" up="0"/>
+    </Post>
+  </Routine>
 </Routines>

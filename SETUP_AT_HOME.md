@@ -7,13 +7,14 @@ Máy hiện tại chưa cài sẵn game RimWorld, nên toàn bộ cấu trúc mo
    - Chứa `Defs/SkillFxDefs.xml`:
      - Bộ 5 skill **Hắc Sọ Tử Viêm Kiếm**: `OG_Fx_PhongLongTram`, `OG_Fx_BaoTocAnhBo`, `OG_Fx_LongQuyenTanAnh`, `OG_Fx_LongPhongPhaKich`, `OG_Fx_NguMangTinhTran`.
      - Bộ 5 skill **Trấn Ác · Thái Hư Hắc Kiếm**: `OG_Fx_HacNhatTram`, `OG_Fx_ThaiHuTramBa`, `OG_Fx_HacGiapHoThe`, `OG_Fx_LeAnhPhaToai`, `OG_Fx_HuyetNguyetVoAnh`.
-   - Chứa **256 texture PNG hoạt ảnh nhiều frame** tại `Textures/OvergearedCore/SkillFx/` (16–20 frame hiệu ứng chính `512x384` + 8–10 frame `HitFx` nổ va chạm `256x256` cho từng skill), tạo bằng `ForgeStudio/skillfx_baker.py`.
-   - Chứa source C# RimWorld 1.7 + Harmony tại `Source/OvergearedCore/` (`SkillFxDef.cs`, `MapComponent_OvergearedFx.cs`, `CompOvergearedWeaponSkills.cs`, `HarmonyPatches.cs`, `OvergearedCoreMod.cs`) để làm tối nền đấu trường, rung camera, tạo tàn ảnh Pawn (afterimages), và gắn gizmo kích hoạt / tự proc skill cho vũ khí đặc biệt.
-   - Chứa `Patches/Skullblade_CorePatch.xml` (`PF_Special_AbyssalSkullblade`) & `Patches/TranAc_CorePatch.xml` (`PF_Special_TranAcInkblade`).
+     - Bộ 5 skill **Bạch Long Vũ Kiếm**: `OG_Fx_BachNguyetTramBa`, `OG_Fx_TinhCauBungNo`, `OG_Fx_SongLongHoGiap`, `OG_Fx_BachLongXungKich`, `OG_Fx_AmDuongDietGioi` (AoE 5×5).
+   - Chứa **386 texture PNG hoạt ảnh nhiều frame** tại `Textures/OvergearedCore/SkillFx/` (16–20 frame hiệu ứng chính `512x384` + 8–10 frame `HitFx` nổ va chạm `256x256` cho từng skill), tạo bằng `ForgeStudio/skillfx_baker.py`.
+   - Chứa source C# RimWorld 1.7 + Harmony tại `Source/OvergearedCore/` (`SkillFxDef.cs`, `MapComponent_OvergearedFx.cs`, `CompOvergearedWeaponSkills.cs`, `HarmonyPatches.cs`, `OvergearedCoreMod.cs`) để làm tối nền đấu trường, rung camera, tạo tàn ảnh Pawn (afterimages), sát thương diện rộng 5×5 (`aoeRadius`), và gắn gizmo kích hoạt / tự proc skill cho vũ khí đặc biệt.
+   - Chứa `Patches/Skullblade_CorePatch.xml` (`PF_Special_AbyssalSkullblade`), `Patches/TranAc_CorePatch.xml` (`PF_Special_TranAcInkblade`) & `Patches/WhiteDragon_CorePatch.xml` (`PF_Special_WhiteDragonFeatherblade`).
 2. **`Overgeared/`** — Bản mod Personal Forge (Workshop `3837231051`) đã bổ sung:
-   - Nguyên tố mới + DamageDef & Keyed XML (`Defs/Enchantments.xml`, `Languages/English/Keyed/EnemyEnchants.xml`), bao gồm `PF_AbyssalMiasmaStrike` & `PF_InkVoidStrike`.
+   - Nguyên tố mới + DamageDef & Keyed XML (`Defs/Enchantments.xml`, `Languages/English/Keyed/EnemyEnchants.xml`), bao gồm `PF_AbyssalMiasmaStrike`, `PF_InkVoidStrike` & `PF_PearlDragonMistStrike`.
    - Patch tương thích `Patches/SquishyMeleeCompat.xml` + thứ tự tải `<loadAfter>` trong `About/About.xml` (`local.overgeared.core`, `local.gunrecoil`, `local.gunrecoil.melee`).
-   - Texture vũ khí đặc biệt nguyên khối: `Textures/PersonalForge/Special/AbyssalSkullblade.png` & `Textures/PersonalForge/Special/TranAcInkblade.png`.
+   - Texture vũ khí đặc biệt nguyên khối: `Textures/PersonalForge/Special/AbyssalSkullblade.png`, `Textures/PersonalForge/Special/TranAcInkblade.png` & `Textures/PersonalForge/Special/WhiteDragonFeatherblade.png`.
    - Khi bấm **"📦 Xuất XML vào Overgeared/Defs"** trong tab *Vũ Khí Đặc Biệt*, tool sẽ tạo `Defs/SpecialWeapons.xml` (đã nhúng sẵn `CompProperties_OvergearedWeaponSkills` ứng với 5 skill riêng của từng kiếm).
 3. **`SquishyRanged/`** — Bản mod gốc **SQUISHY Ranged** (Workshop `3833016652`) đã clone đầy đủ, bao gồm bộ sprite Pawn RimWorld chuẩn (`Textures/HolsterPreview/Bodies/` & `Heads/`).
 4. **`SquishyMelee/`** — Bản mod **SQUISHY Melee** (Workshop `3839642536`) đã clone đầy đủ và bổ sung **6 moveset Combo nhiều hit** (`combo_*`) + **5 moveset độc quyền Hắc Sọ Tử Viêm Kiếm** (`sk_abyssal_dragon_cleave`, `sk_phantom_blink`, `sk_cyclone_vortex`, `sk_soaring_pierce`, `sk_pentagram_cataclysm`) vào `Settings/Routines.xml` & `Languages/English/Keyed/SquishyMelee.xml`.

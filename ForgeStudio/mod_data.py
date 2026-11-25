@@ -151,6 +151,7 @@ BUILTIN_ELEMENTS: List[ElementDef] = [
     # --- SIGNATURE SPECIAL WEAPON VFX ---
     ElementDef(23, "AbyssalMiasma", "Abyssal Miasma (U Minh Tử Khí)", "Đánh trúng: +6 tử khí · Ngọn lửa tím họng kiếm chuyển khói đen hắc ám", "PF_AbyssalMiasmaStrike", 6, "Bioferrite 18 · Obsidian 10 · Gold 8", [["Bioferrite", 18], ["Silver", 10], ["Gold", 8]], (32, 14, 52), (225, 65, 255), "abyssal_miasma"),
     ElementDef(24, "InkVoid", "Thái Hư Mặc Khí (Void Ink Mist)", "Đánh trúng: +7 mặc khí · Hắc hỏa & sương bạc trắng quấn quanh kiếm", "PF_InkVoidStrike", 7, "Plasteel 16 · Bioferrite 12 · Gold 8", [["Plasteel", 16], ["Bioferrite", 12], ["Gold", 8]], (16, 16, 22), (228, 234, 248), "ink_void"),
+    ElementDef(25, "PearlDragonMist", "Bạch Long Âm Dương Khí (Pearl Yin-Yang Mist)", "Đánh trúng: +8 âm dương · Lông vũ trắng & long khí trắng đen quấn lưỡi kiếm", "PF_PearlDragonMistStrike", 8, "Silver 24 · Plasteel 18 · Gold 10", [["Silver", 24], ["Plasteel", 18], ["Gold", 10]], (214, 224, 238), (252, 254, 255), "pearl_dragon_mist"),
 ]
 
 
@@ -225,6 +226,31 @@ SPECIAL_WEAPONS: List[SpecialWeaponDef] = [
             "sk_ink_void_aegis",
             "sk_ink_shadow_spikes",
             "sk_ink_blood_eclipse",
+        ],
+    ),
+    SpecialWeaponDef(
+        id="white_dragon_featherblade",
+        def_name="PF_Special_WhiteDragonFeatherblade",
+        name="Bạch Long Vũ Kiếm (White Feather Dragonblade)",
+        subtitle="Vũ Khí Đặc Biệt · Nguyên Khối Hoàn Chỉnh · 5 Skill Bạch Hắc Long",
+        kind=0,
+        description="Bạch kiếm nguyên khối lưỡi cong uốn lượn ánh xà cừ pha sương khói, chắn tay song long cổ bạch cốt khắc nét mực đen tỏa chùm lông vũ trắng rủ bất đối xứng và chuôi vòng giọt lệ rỗng.",
+        lore="Thần binh Bạch Long kết tinh từ lông vũ thiên long và mặc khí âm dương. Mỗi đường kiếm phóng ra kiếm khí bán nguyệt, chẻ đôi tinh cầu, triệu hồi song long hộ thể và giáng xuống cột trụ hủy diệt 5x5.",
+        damage=36.0,
+        armor_pen=0.52,
+        cooldown=2.05,
+        mass=1.95,
+        work=16500.0,
+        req_skill=16,
+        default_element_id=25,
+        ingredients=[["Silver", 50], ["Plasteel", 55], ["Bioferrite", 24], ["Gold", 16]],
+        texture_rel_path="Special/WhiteDragonFeatherblade.png",
+        exclusive_skills=[
+            "sk_wdf_crescent_wave",
+            "sk_wdf_planetary_cleave",
+            "sk_wdf_twin_dragon_aegis",
+            "sk_wdf_dragon_dash",
+            "sk_wdf_cataclysm_5x5",
         ],
     ),
 ]

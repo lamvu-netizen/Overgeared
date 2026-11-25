@@ -227,4 +227,9 @@
   <SM_Routine_sk_ink_void_aegis>[Inkblade III] Cosmic Void Armor Dome (Aegis)</SM_Routine_sk_ink_void_aegis>
   <SM_Routine_sk_ink_shadow_spikes>[Inkblade IV] Obsidian Shadow Spike Surge (3-Hit)</SM_Routine_sk_ink_shadow_spikes>
   <SM_Routine_sk_ink_blood_eclipse>[Inkblade V] Blood-Eclipse Ink Domain (4-Hit Ult)</SM_Routine_sk_ink_blood_eclipse>
+  <SM_Routine_sk_wdf_crescent_wave>[WhiteDragon I] Pale Moon Crescent Wave (Ranged)</SM_Routine_sk_wdf_crescent_wave>
+  <SM_Routine_sk_wdf_planetary_cleave>[WhiteDragon II] Planetary Horizon Supernova</SM_Routine_sk_wdf_planetary_cleave>
+  <SM_Routine_sk_wdf_twin_dragon_aegis>[WhiteDragon III] Twin-Dragon Yin-Yang Shield</SM_Routine_sk_wdf_twin_dragon_aegis>
+  <SM_Routine_sk_wdf_dragon_dash>[WhiteDragon IV] White Dragon Flash Dash (2-Hit)</SM_Routine_sk_wdf_dragon_dash>
+  <SM_Routine_sk_wdf_cataclysm_5x5>[WhiteDragon V] Yin-Yang Pillar Cataclysm 5x5 (Ult)</SM_Routine_sk_wdf_cataclysm_5x5>
 </LanguageData>

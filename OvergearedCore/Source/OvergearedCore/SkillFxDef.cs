@@ -23,6 +23,7 @@ namespace OvergearedCore
         public int hitStopTicks = 8;
         public bool spawnAfterimages = false;
         public bool centeredOnCaster = false;
+        public float aoeRadius = 0f;
         public List<int> hitFrames = new List<int>();
         public List<float> damageMultipliers = new List<float>();
         public SoundDef castSound;

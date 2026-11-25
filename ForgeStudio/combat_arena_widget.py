@@ -83,6 +83,11 @@ ROUTINE_DISPLAY_NAMES: Dict[str, str] = {
     "sk_ink_void_aegis": "🛡️ [Hắc Ảnh III] Hắc Giáp Hộ Thể (Giáp Hư Không Quanh Thân)",
     "sk_ink_shadow_spikes": "🖤 [Hắc Ảnh IV] Lệ Ảnh Phá Toái (Shadow Spikes & 5-Wave · 3-Hit)",
     "sk_ink_blood_eclipse": "🌘 [Hắc Ảnh V] Huyết Nguyệt Vô Ảnh (Abyssal Eclipse Ult · 4-Hit)",
+    "sk_wdf_crescent_wave": "🌙 [Bạch Long I] Bạch Nguyệt Trảm Ba (Bán Nguyệt Tầm Xa)",
+    "sk_wdf_planetary_cleave": "🪐 [Bạch Long II] Tinh Cầu Bùng Nổ (Chém Ngang Nổ Hành Tinh)",
+    "sk_wdf_twin_dragon_aegis": "☯️ [Bạch Long III] Song Long Hộ Giáp (Khiên Trắng Đen 2 Rồng)",
+    "sk_wdf_dragon_dash": "🐉 [Bạch Long IV] Bạch Long Xung Kích (Lướt Rồng · 2-Hit)",
+    "sk_wdf_cataclysm_5x5": "💥 [Bạch Long V] Âm Dương Diệt Giới (Vụ Nổ Lớn 5x5 · Ult)",
     "combo_cross_slash": "🔥 [Combo 2x] Song Trảm Chữ X (Cross Double Slash)",
     "combo_whirl_flurry": "🔥 [Combo 3x] Liên Hoàn Tam Trảm (Triple Flurry)",
     "combo_rising_tempest": "🔥 [Combo 3x] Thăng Long Phá (Rising Tempest)",
@@ -319,6 +324,11 @@ SKILLFX_SEQUENCE_MAP: Dict[str, Tuple[str, str, int, int, Tuple[float, float], T
     "sk_ink_void_aegis": ("HacGiapHoThe", "HacGiapHoTheHit", 18, 8, (3.6, 2.95), (0.50, 0.74), 1.65, 0.48, False),
     "sk_ink_shadow_spikes": ("LeAnhPhaToai", "LeAnhPhaToaiHit", 16, 8, (4.4, 3.0), (0.46, 0.70), 1.85, 0.46, False),
     "sk_ink_blood_eclipse": ("HuyetNguyetVoAnh", "HuyetNguyetVoAnhHit", 20, 10, (3.7, 2.9), (0.50, 0.62), 1.45, 0.60, False),
+    "sk_wdf_crescent_wave": ("BachNguyetTramBa", "BachNguyetTramBaHit", 16, 8, (5.0, 2.9), (0.48, 0.54), 1.95, 0.44, False),
+    "sk_wdf_planetary_cleave": ("TinhCauBungNo", "TinhCauBungNoHit", 18, 8, (4.8, 3.1), (0.48, 0.54), 2.05, 0.52, False),
+    "sk_wdf_twin_dragon_aegis": ("SongLongHoGiap", "SongLongHoGiapHit", 18, 8, (3.8, 3.05), (0.50, 0.72), 1.70, 0.46, False),
+    "sk_wdf_dragon_dash": ("BachLongXungKich", "BachLongXungKichHit", 16, 8, (5.0, 2.9), (0.48, 0.52), 1.95, 0.48, True),
+    "sk_wdf_cataclysm_5x5": ("AmDuongDietGioi", "AmDuongDietGioiHit", 20, 10, (4.4, 3.5), (0.50, 0.74), 2.25, 0.64, False),
 }
 
 SKILL_SHORT_LABELS: Dict[str, str] = {
@@ -332,6 +342,11 @@ SKILL_SHORT_LABELS: Dict[str, str] = {
     "sk_ink_void_aegis": "③ Hắc Giáp Hộ Thể",
     "sk_ink_shadow_spikes": "④ Lệ Ảnh Phá Toái",
     "sk_ink_blood_eclipse": "⑤ Huyết Nguyệt Vô Ảnh",
+    "sk_wdf_crescent_wave": "① Bạch Nguyệt Trảm Ba",
+    "sk_wdf_planetary_cleave": "② Tinh Cầu Bùng Nổ",
+    "sk_wdf_twin_dragon_aegis": "③ Song Long Hộ Giáp",
+    "sk_wdf_dragon_dash": "④ Bạch Long Xung Kích",
+    "sk_wdf_cataclysm_5x5": "⑤ Âm Dương Diệt Giới 5x5",
 }
 
 
@@ -992,12 +1007,18 @@ class RimWorldCombatArenaCanvas(QWidget):
             fade = math.sin(min(1.0, u_all / 0.12) * math.pi * 0.5) * math.sin(min(1.0, (1.0 - u_all) / 0.20) * math.pi * 0.5)
             fade = max(0.0, min(1.0, fade))
 
-            # Spectral pawn afterimage trails spaced behind high-speed dash (violet for Skullblade, ink-black for Trấn Ác)
+            # Spectral pawn afterimage trails spaced behind high-speed dash (violet for Skullblade, ink-black for Trấn Ác, pearl-white+ink for Bạch Long)
             if has_afterimages and (a_body is not None or a_head is not None):
                 spr_px = cell_px * 1.40
                 ghost_offsets = [(-1.62, 0.28), (-1.08, 0.44), (-0.54, 0.62)]
                 is_ink_ghost = rid.startswith("sk_ink_")
-                ghost_fill = QColor(14, 16, 24, 230) if is_ink_ghost else QColor(148, 62, 245, 195)
+                is_wdf_ghost = rid.startswith("sk_wdf_")
+                if is_wdf_ghost:
+                    ghost_fill = QColor(242, 246, 255, 225)
+                elif is_ink_ghost:
+                    ghost_fill = QColor(14, 16, 24, 230)
+                else:
+                    ghost_fill = QColor(148, 62, 245, 195)
                 for dx_mul, al_a in ghost_offsets:
                     gx = atk_x + dx_mul * cell_px
                     ghost_img = QPixmap(int(spr_px), int(spr_px * 1.25))
@@ -1011,7 +1032,7 @@ class RimWorldCombatArenaCanvas(QWidget):
                     gp.fillRect(ghost_img.rect(), ghost_fill)
                     gp.end()
 
-                    if is_ink_ghost:
+                    if is_ink_ghost or is_wdf_ghost:
                         rim_img = QPixmap(int(spr_px), int(spr_px * 1.25))
                         rim_img.fill(Qt.GlobalColor.transparent)
                         rp = QPainter(rim_img)
@@ -1020,19 +1041,22 @@ class RimWorldCombatArenaCanvas(QWidget):
                         if a_head is not None:
                             rp.drawPixmap(QRectF(0, spr_px * 0.07, spr_px, spr_px).toRect(), a_head)
                         rp.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceAtop)
-                        rp.fillRect(rim_img.rect(), QColor(215, 226, 248, 225))
+                        rp.fillRect(rim_img.rect(), QColor(14, 16, 22, 235) if is_wdf_ghost else QColor(215, 226, 248, 225))
                         rp.end()
                         p.save()
                         p.setOpacity(min(0.95, al_a * 1.15) * fade)
-                        p.setCompositionMode(QPainter.CompositionMode.CompositionMode_Plus)
+                        p.setCompositionMode(
+                            QPainter.CompositionMode.CompositionMode_SourceOver if is_wdf_ghost
+                            else QPainter.CompositionMode.CompositionMode_Plus
+                        )
                         for ox_r, oy_r in ((-2.0, 0.0), (2.0, 0.0), (0.0, -2.0), (0.0, 2.0)):
                             p.drawPixmap(QPointF(gx - spr_px * 0.5 + ox_r, ground_y - spr_px * 1.25 + oy_r), rim_img)
                         p.restore()
 
                     p.save()
-                    p.setOpacity((min(0.95, al_a + 0.25) if is_ink_ghost else al_a) * fade)
+                    p.setOpacity((min(0.95, al_a + 0.25) if (is_ink_ghost or is_wdf_ghost) else al_a) * fade)
                     p.setCompositionMode(
-                        QPainter.CompositionMode.CompositionMode_SourceOver if is_ink_ghost
+                        QPainter.CompositionMode.CompositionMode_SourceOver if (is_ink_ghost or is_wdf_ghost)
                         else QPainter.CompositionMode.CompositionMode_Plus
                     )
                     p.drawPixmap(QPointF(gx - spr_px * 0.5, ground_y - spr_px * 1.25), ghost_img)
@@ -1045,9 +1069,9 @@ class RimWorldCombatArenaCanvas(QWidget):
                 fx_pix = frames[idx]
                 fx_w = w_cells * cell_px
                 fx_h = h_cells * cell_px
-                if rid in ("sk_pentagram_cataclysm", "sk_ink_blood_eclipse"):
+                if rid in ("sk_pentagram_cataclysm", "sk_ink_blood_eclipse", "sk_wdf_cataclysm_5x5"):
                     anchor_center_x = dummy_x
-                elif rid == "sk_ink_void_aegis":
+                elif rid in ("sk_ink_void_aegis", "sk_wdf_twin_dragon_aegis"):
                     anchor_center_x = atk_x
                 else:
                     anchor_center_x = (atk_x + dummy_x) * 0.52

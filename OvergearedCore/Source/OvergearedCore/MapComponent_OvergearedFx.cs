@@ -180,16 +180,36 @@ namespace OvergearedCore
         private void ApplyStrikeHit(ActiveSkillInstance inst, int hitIdx, float now)
         {
             float mult = (hitIdx < inst.fx.damageMultipliers.Count) ? inst.fx.damageMultipliers[hitIdx] : 1.0f;
-            Thing t = inst.target.Thing;
-            if (t != null && t.Spawned && !t.Destroyed)
+            Thing primaryTarget = inst.target.Thing;
+            Vector3 impactPos = inst.target.IsValid ? inst.target.CenterVector3 : inst.targetPos;
+
+            if (inst.fx.aoeRadius > 0.1f)
             {
-                var dinfo = new DamageInfo(inst.damageDef, inst.baseDamage * mult, 0.45f, inst.caster.DrawPos.AngleToFlat(t.DrawPos), inst.caster);
-                t.TakeDamage(dinfo);
+                // True square/grid AoE blast (e.g. aoeRadius 2.5 => 5x5 tile explosion centered on target!)
+                IntVec3 centerCell = impactPos.ToIntVec3();
+                int halfSpan = Mathf.Max(1, Mathf.FloorToInt(inst.fx.aoeRadius));
+                var pawns = map.mapPawns.AllPawnsSpawned;
+                for (int pi = pawns.Count - 1; pi >= 0; pi--)
+                {
+                    Pawn p = pawns[pi];
+                    if (p == null || !p.Spawned || p.Dead || p == inst.caster) continue;
+                    if (p != primaryTarget && p.Faction == inst.caster.Faction) continue;
+                    if (Mathf.Abs(p.Position.x - centerCell.x) <= halfSpan && Mathf.Abs(p.Position.z - centerCell.z) <= halfSpan)
+                    {
+                        var dinfo = new DamageInfo(inst.damageDef, inst.baseDamage * mult, 0.50f, inst.caster.DrawPos.AngleToFlat(p.DrawPos), inst.caster);
+                        p.TakeDamage(dinfo);
+                    }
+                }
+            }
+            else if (primaryTarget != null && primaryTarget.Spawned && !primaryTarget.Destroyed)
+            {
+                var dinfo = new DamageInfo(inst.damageDef, inst.baseDamage * mult, 0.45f, inst.caster.DrawPos.AngleToFlat(primaryTarget.DrawPos), inst.caster);
+                primaryTarget.TakeDamage(dinfo);
             }
             _hits.Add(new ActiveHitBurst
             {
                 fx = inst.fx,
-                pos = inst.target.IsValid ? inst.target.CenterVector3 : inst.targetPos,
+                pos = impactPos,
                 startRealTime = now,
                 scale = Mathf.Max(0.85f, mult),
             });

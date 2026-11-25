@@ -664,10 +664,22 @@ def bake_hit_fx(out_dir: Path, n_frames: int, seed: int, fbm_x: np.ndarray, fbm_
 
         # Jagged diagonal impact slash cross (controlled brightness so pentagram center stays sharp!)
         c_alpha = int((185 if heavy else 235) * fade)
-        g_col = (190, 200, 224, c_alpha) if seed >= 920 else (200, 58, 255, c_alpha)
-        c_col = (248, 250, 255, c_alpha) if seed >= 920 else (248, 220, 255, c_alpha)
-        ring_dark = (12, 12, 16, int(230 * fade)) if seed >= 920 else (32, 10, 62, int(215 * fade))
-        ring_glow = (210, 220, 240, int(225 * fade)) if seed >= 920 else (215, 72, 255, int(235 * fade))
+        if seed >= 930:
+            # High-contrast White-Black Yin-Yang Pearl Dragon impact burst
+            g_col = (232, 238, 248, c_alpha)
+            c_col = (255, 255, 255, min(255, int(c_alpha * 1.08)))
+            ring_dark = (10, 10, 14, int(240 * fade))
+            ring_glow = (244, 248, 255, int(242 * fade))
+        elif seed >= 920:
+            g_col = (190, 200, 224, c_alpha)
+            c_col = (248, 250, 255, c_alpha)
+            ring_dark = (12, 12, 16, int(230 * fade))
+            ring_glow = (210, 220, 240, int(225 * fade))
+        else:
+            g_col = (200, 58, 255, c_alpha)
+            c_col = (248, 220, 255, c_alpha)
+            ring_dark = (32, 10, 62, int(215 * fade))
+            ring_glow = (215, 72, 255, int(235 * fade))
         dd.ellipse([cx - rr, cy - rr, cx + rr, cy + rr], outline=ring_dark, width=8)
         dg.ellipse([cx - rr, cy - rr, cx + rr, cy + rr], outline=ring_glow, width=4)
         for ang_c in (-0.65, 0.82):
@@ -1069,8 +1081,724 @@ def bake_huyet_nguyet_vo_anh(out_dir: Path, fbm_x: np.ndarray, fbm_y: np.ndarray
         frame_img.save(out_dir / f"{fi:02d}.png")
 
 
-def bake_all_skillfx(skillfx_root: Path = DEFAULT_SKILLFX_ROOT, only_ink: bool = False) -> dict[str, int]:
-    """Bakes all Skullblade + Trấn Ác Inkblade SkillFx & HitFx PNG sequences. Returns frame count map."""
+# ==============================================================================
+# BẠCH LONG VŨ KIẾM (WHITE FEATHER DRAGONBLADE) — 5 WHITE-BLACK YIN-YANG SKILLS
+# ==============================================================================
+
+def _draw_feather_particle(
+    dd: ImageDraw.ImageDraw,
+    dg: ImageDraw.ImageDraw,
+    dc: ImageDraw.ImageDraw,
+    fx: float,
+    fy: float,
+    angle_rad: float,
+    length: float,
+    width: float,
+    fade: float,
+    dark_ink: bool = False,
+) -> None:
+    """Draws a crisp drifting pearl-white (or ink-black) dragon feather particle."""
+    ca, sa = math.cos(angle_rad), math.sin(angle_rad)
+    px, py = -sa * width, ca * width
+    p_tail = (fx - ca * length * 0.45, fy - sa * length * 0.45)
+    p_mid_l = (fx - ca * length * 0.05 + px, fy - sa * length * 0.05 + py)
+    p_tip = (fx + ca * length * 0.55, fy + sa * length * 0.55)
+    p_mid_r = (fx - ca * length * 0.05 - px, fy - sa * length * 0.05 - py)
+    poly = [p_tail, p_mid_l, p_tip, p_mid_r]
+    if dark_ink:
+        dd.polygon(poly, fill=(12, 12, 16, int(235 * fade)))
+        dc.line([p_tail, p_tip], fill=(235, 240, 250, int(190 * fade)), width=1)
+    else:
+        dd.polygon(poly, fill=(18, 20, 26, int(185 * fade)))
+        dg.polygon(poly, fill=(232, 238, 248, int(225 * fade)))
+        dc.polygon(poly, fill=(252, 254, 255, int(240 * fade)))
+
+
+def _paint_mono_dragon_head(
+    draw_dark: ImageDraw.ImageDraw,
+    draw_glow: ImageDraw.ImageDraw,
+    draw_core: ImageDraw.ImageDraw,
+    cx: float,
+    cy: float,
+    angle_deg: float,
+    scale: float,
+    jaw_open: float,
+    fade: float,
+    white_dragon: bool = True,
+) -> None:
+    """Paints an anime Celestial Eastern Dragon head in monochrome Pearl-White (Bạch Long) or Jet-Black Ink (Hắc Long)."""
+    rad = math.radians(angle_deg)
+    ca, sa = math.cos(rad), math.sin(rad)
+
+    def xform(lx: float, ly: float) -> Tuple[float, float]:
+        rx = (lx * ca - ly * sa) * scale + cx
+        ry = (lx * sa + ly * ca) * scale + cy
+        return (rx, ry)
+
+    a_hi = int(248 * fade)
+    a_mid = int(228 * fade)
+
+    if white_dragon:
+        body_outline = (16, 18, 24, a_hi)
+        body_mid = (218, 224, 236, a_mid)
+        body_core = (252, 254, 255, a_hi)
+        mane_back = (24, 26, 34, int(185 * fade))
+        mane_front = (244, 248, 255, int(235 * fade))
+        eye_col = (255, 255, 255, 255)
+        eye_rim = (14, 16, 22, a_hi)
+    else:
+        body_outline = (10, 10, 14, a_hi)
+        body_mid = (36, 40, 50, a_mid)
+        body_core = (236, 242, 255, int(232 * fade))
+        mane_back = (8, 8, 12, int(238 * fade))
+        mane_front = (212, 220, 238, int(175 * fade))
+        eye_col = (255, 255, 255, 255)
+        eye_rim = (240, 246, 255, a_hi)
+
+    # Flowing dragon mane plumes / feather tufts flaring behind skull
+    mane_paths = [
+        [(-0.20, -0.30), (-0.80, -0.60), (-1.52, -0.78), (-2.18, -0.60)],
+        [(-0.14, -0.08), (-0.85, -0.30), (-1.66, -0.38), (-2.35, -0.18)],
+        [(-0.18, 0.16), (-0.80, 0.36), (-1.45, 0.44), (-2.00, 0.30)],
+    ]
+    for mpts in mane_paths:
+        wpts = [xform(x, y) for x, y in mpts]
+        ws = [0.22 * scale, 0.16 * scale, 0.09 * scale, 0.02 * scale]
+        _draw_tapered_ribbon(draw_dark, wpts, [w * 1.18 for w in ws], mane_back)
+        _draw_tapered_ribbon(draw_glow, wpts[:3], [w * (0.82 if white_dragon else 0.34) for w in ws[:3]], mane_front)
+        if white_dragon:
+            _draw_tapered_ribbon(draw_core, wpts[:3], [w * 0.48 for w in ws[:3]], body_core)
+
+    # Swept-back branched celestial dragon antlers / horns
+    horn_upper = [(-0.08, -0.24), (-0.54, -0.58), (-1.10, -0.82), (-1.48, -0.88), (-0.90, -0.50), (-0.28, -0.16)]
+    horn_branch = [(-0.48, -0.48), (-0.72, -0.82), (-0.86, -0.96), (-0.64, -0.58)]
+    horn_rim = [xform(x, y) for x, y in [(-0.14, -0.25), (-0.62, -0.58), (-1.36, -0.84)]]
+    draw_dark.polygon([xform(x, y) for x, y in horn_upper], fill=body_outline)
+    draw_dark.polygon([xform(x, y) for x, y in horn_branch], fill=body_outline)
+    if white_dragon:
+        draw_glow.polygon([xform(x * 0.96, y * 0.96) for x, y in horn_upper], fill=body_mid)
+        draw_core.polygon([xform(x * 0.92, y * 0.92) for x, y in horn_branch], fill=body_core)
+    _draw_tapered_ribbon(draw_core, horn_rim, [0.055 * scale, 0.038 * scale, 0.014 * scale], body_core)
+
+    # Upper skull & fierce hooked Eastern dragon snout
+    snout_pts = [
+        (-0.36, -0.28), (0.04, -0.36), (0.54, -0.24), (1.02, -0.10),
+        (1.10, -0.02), (0.90, 0.09), (0.74, 0.00), (0.56, 0.08),
+        (0.36, 0.02), (0.06, 0.06), (-0.28, -0.04),
+    ]
+    draw_dark.polygon([xform(x, y) for x, y in snout_pts], fill=body_outline)
+    if white_dragon:
+        inner_snout = [(x * 0.91, y * 0.88 - 0.01) for x, y in snout_pts]
+        draw_glow.polygon([xform(x, y) for x, y in inner_snout], fill=body_mid)
+        ridge_pts = [(-0.16, -0.26), (0.28, -0.26), (0.78, -0.12), (0.98, -0.04), (0.52, -0.03), (0.08, -0.08)]
+        draw_core.polygon([xform(x, y) for x, y in ridge_pts], fill=body_core)
+    else:
+        # Stark silver-white rim ridge on Black Dragon skull for high-contrast readability
+        rim_top = [xform(x, y) for x, y in [(-0.30, -0.26), (0.04, -0.34), (0.54, -0.23), (1.04, -0.08)]]
+        _draw_tapered_ribbon(draw_core, rim_top, [0.04 * scale, 0.055 * scale, 0.045 * scale, 0.02 * scale], body_core)
+
+    # Roaring lower jaw
+    jo = 0.16 + jaw_open * 0.28
+    jaw_pts = [
+        (-0.22, 0.04), (0.14, 0.08 + jo * 0.4), (0.66, 0.14 + jo * 0.9),
+        (0.86, 0.08 + jo * 0.8), (0.64, 0.25 + jo), (0.12, 0.25 + jo * 0.65), (-0.28, 0.14),
+    ]
+    draw_dark.polygon([xform(x, y) for x, y in jaw_pts], fill=body_outline)
+    if white_dragon:
+        draw_glow.polygon([xform(x * 0.90, y - 0.02) for x, y in jaw_pts[1:6]], fill=body_mid)
+        draw_core.polygon([xform(x * 0.84, y - 0.02) for x, y in jaw_pts[1:5]], fill=body_core)
+    else:
+        jaw_rim = [xform(x, y) for x, y in [(-0.18, 0.14), (0.14, 0.23 + jo * 0.65), (0.64, 0.23 + jo), (0.84, 0.10 + jo * 0.8)]]
+        _draw_tapered_ribbon(draw_core, jaw_rim, [0.025 * scale, 0.035 * scale, 0.03 * scale, 0.015 * scale], body_core)
+
+    # Flowing Eastern dragon whiskers trailing from snout
+    for w_sign in (-1.0, 1.0):
+        w_pts = [xform(0.82, -0.02 + w_sign * 0.04), xform(0.45, w_sign * 0.34), xform(-0.15, w_sign * 0.56), xform(-0.78, w_sign * 0.48)]
+        _draw_tapered_ribbon(draw_dark, w_pts, [0.032 * scale, 0.026 * scale, 0.018 * scale, 0.008 * scale], body_outline)
+        _draw_tapered_ribbon(draw_core, w_pts, [0.018 * scale, 0.015 * scale, 0.010 * scale, 0.004 * scale], body_core)
+
+    # Sharp upper & lower fangs
+    for fx_f, fy_f, dy_f in [(0.80, 0.03, 0.13), (0.55, 0.04, 0.10), (0.34, 0.03, 0.08)]:
+        draw_core.polygon([xform(fx_f - 0.045, fy_f), xform(fx_f + 0.045, fy_f), xform(fx_f + 0.01, fy_f + dy_f)], fill=(255, 255, 255, a_hi))
+    for fx_f, fy_f, dy_f in [(0.70, 0.11 + jo * 0.85, -0.10), (0.44, 0.13 + jo * 0.72, -0.09)]:
+        draw_core.polygon([xform(fx_f - 0.038, fy_f), xform(fx_f + 0.038, fy_f), xform(fx_f + 0.02, fy_f + dy_f)], fill=(248, 252, 255, a_hi))
+
+    # Fierce glowing eye + ink eye-socket + trailing eye-streak
+    eye_c = xform(0.22, -0.13)
+    draw_dark.polygon([xform(0.05, -0.11), xform(0.24, -0.19), xform(0.42, -0.11), xform(0.22, -0.05)], fill=eye_rim)
+    draw_core.polygon([xform(0.10, -0.11), xform(0.24, -0.16), xform(0.36, -0.11), xform(0.22, -0.08)], fill=eye_col)
+    _draw_tapered_ribbon(
+        draw_core,
+        [eye_c, xform(-0.20, -0.23), xform(-0.75, -0.35)],
+        [0.048 * scale, 0.028 * scale, 0.005 * scale],
+        (252, 254, 255, int(235 * fade)),
+    )
+
+
+def _draw_rune_ring_3d(
+    dd: ImageDraw.ImageDraw,
+    dg: ImageDraw.ImageDraw,
+    dc: ImageDraw.ImageDraw,
+    cx: float,
+    cy: float,
+    rx: float,
+    ry: float,
+    rot_phase: float,
+    fade: float,
+    n_glyphs: int = 18,
+) -> None:
+    """Draws a glowing perspective-tilted monochrome white-black Magic Rune Ring (Image 3 style)."""
+    # Outer dark halo + twin crisp white concentric bands
+    for r_mul, w_d, w_g, w_c in [(1.0, 10, 5, 3), (0.82, 7, 3, 2)]:
+        erx, ery = rx * r_mul, ry * r_mul
+        bbox = [cx - erx, cy - ery, cx + erx, cy + ery]
+        dd.ellipse(bbox, outline=(10, 10, 14, int(230 * fade)), width=w_d)
+        dg.ellipse(bbox, outline=(228, 236, 250, int(230 * fade)), width=w_g)
+        dc.ellipse(bbox, outline=(255, 255, 255, int(248 * fade)), width=w_c)
+
+    # Dark translucent ring band between outer and inner circles so white glyphs pop sharply!
+    band_pts_o, band_pts_i = [], []
+    for k in range(48):
+        th = (k / 48.0) * math.tau
+        band_pts_o.append((cx + math.cos(th) * rx * 0.99, cy + math.sin(th) * ry * 0.99))
+        band_pts_i.append((cx + math.cos(th) * rx * 0.83, cy + math.sin(th) * ry * 0.83))
+    # Draw dark ink ticks & glowing mystical rune glyphs along mid-radius (0.91)
+    mid_rx, mid_ry = rx * 0.91, ry * 0.91
+    for gi in range(n_glyphs):
+        th = rot_phase + (gi / float(n_glyphs)) * math.tau
+        gx = cx + math.cos(th) * mid_rx
+        gy = cy + math.sin(th) * mid_ry
+        # Radial tick divider
+        ix0, iy0 = cx + math.cos(th) * rx * 0.84, cy + math.sin(th) * ry * 0.84
+        ix1, iy1 = cx + math.cos(th) * rx * 0.98, cy + math.sin(th) * ry * 0.98
+        if gi % 2 == 0:
+            # Tiny concentric celestial eye-circle glyph
+            gr_x = max(2.2, rx * 0.032)
+            gr_y = max(1.6, ry * 0.095)
+            dd.ellipse([gx - gr_x - 1.5, gy - gr_y - 1.5, gx + gr_x + 1.5, gy + gr_y + 1.5], fill=(10, 10, 14, int(220 * fade)))
+            dc.ellipse([gx - gr_x, gy - gr_y, gx + gr_x, gy + gr_y], outline=(252, 254, 255, int(245 * fade)), width=2)
+            dc.ellipse([gx - gr_x * 0.35, gy - gr_y * 0.35, gx + gr_x * 0.35, gy + gr_y * 0.35], fill=(255, 255, 255, int(245 * fade)))
+        else:
+            # Crisp radial rune slash + crossbar
+            dd.line([(ix0, iy0), (ix1, iy1)], fill=(10, 10, 14, int(225 * fade)), width=4)
+            dc.line([(ix0, iy0), (ix1, iy1)], fill=(248, 252, 255, int(240 * fade)), width=2)
+
+
+def bake_bach_nguyet_tram_ba(out_dir: Path, fbm_x: np.ndarray, fbm_y: np.ndarray) -> None:
+    """16 frames: Skill 1 — Ranged Pearl-White & Ink-Black Crescent Moon Slash Wave + drifting feathers."""
+    w, h = 512, 384
+    n_frames = 16
+    rng = np.random.default_rng(701)
+    for fi in range(n_frames):
+        u = fi / (n_frames - 1)
+        im_d, dd = _new_canvas(w, h)
+        im_g, dg = _new_canvas(w, h)
+        im_c, dc = _new_canvas(w, h)
+
+        fade = max(0.05, min(1.0, u / 0.10) * min(1.0, (1.0 - u) / 0.16))
+        cy = h * 0.53
+
+        # Phase A (u = 0.0..0.38): Caster release crescent flash & feather scatter on left
+        if u <= 0.40:
+            lu = min(1.0, u / 0.40)
+            lf = math.sin(lu * math.pi)
+            lx = w * 0.18
+            m_pts = [(lx - 14.0, cy - 82.0 * (0.4 + 0.6 * lu)), (lx + 24.0, cy), (lx - 14.0, cy + 82.0 * (0.4 + 0.6 * lu))]
+            _draw_tapered_ribbon(dd, m_pts, [5.0, 22.0 * lf, 5.0], (14, 14, 20, int(235 * lf)))
+            _draw_tapered_ribbon(dg, m_pts, [3.0, 14.0 * lf, 3.0], (230, 236, 248, int(230 * lf)))
+            _draw_tapered_ribbon(dc, m_pts, [1.5, 6.5 * lf, 1.5], (255, 255, 255, int(252 * lf)))
+
+        # Phase B (u = 0.04..0.82): Sweeping giant Pearl-White & Black-Ink Crescent Moon Wave flying left -> dummy
+        if 0.04 <= u <= 0.84:
+            fly = min(1.0, max(0.0, (u - 0.04) / 0.58))
+            ff = max(0.05, min(1.0, (u - 0.04) / 0.10) * min(1.0, (0.84 - u) / 0.18))
+            lead_x = w * (0.24 + fly * 0.45)
+
+            # Giant vertical-curved Crescent Blade (sharp forward convex edge, swept-back concave ink inner curve)
+            outer_pts, inner_pts, mid_pts = [], [], []
+            cres_h = h * (0.31 + 0.07 * math.sin(fly * math.pi))
+            cres_depth = 62.0 + 18.0 * fly
+            for k in range(30):
+                s = (k / 29.0) * 2.0 - 1.0  # -1 top horn .. 0 nose .. +1 bottom horn
+                py = cy + s * cres_h
+                curve_o = (1.0 - s * s) ** 0.72
+                curve_i = max(0.0, 1.0 - s * s) ** 1.15
+                ox = lead_x + curve_o * cres_depth - 28.0
+                ix = ox - (10.0 + 46.0 * curve_i)
+                outer_pts.append((ox, py))
+                inner_pts.append((ix, py))
+                mid_pts.append(((ox * 0.72 + ix * 0.28), py))
+
+            # Ink-black trailing inner crescent + luminous pearl-white outer crescent edge!
+            cres_poly = outer_pts + list(reversed(inner_pts))
+            dd.polygon(cres_poly, fill=(14, 15, 22, int(238 * ff)))
+            white_front = outer_pts + list(reversed(mid_pts))
+            dg.polygon(white_front, fill=(228, 236, 250, int(238 * ff)))
+            _draw_tapered_ribbon(dc, outer_pts, [1.5 + 11.5 * math.sin((k / 29.0) * math.pi) for k in range(30)], (255, 255, 255, int(255 * ff)))
+            # Crisp ink calligraphy vein running inside the white blade
+            _draw_tapered_ribbon(dd, mid_pts[3:-3], [2.0 + 7.5 * math.sin((k / 23.0) * math.pi) for k in range(len(mid_pts) - 6)], (16, 18, 24, int(210 * ff)))
+
+            # Flowing Yin-Yang white & black wind slipstreams trailing behind crescent
+            for tr_i, oy_tr in enumerate((-62.0, -24.0, 22.0, 60.0)):
+                tail_len = (95.0 + 55.0 * (tr_i % 2)) * (0.5 + 0.5 * fly)
+                t_pts = [
+                    (lead_x - 24.0 - tail_len, cy + oy_tr + math.sin(u * 10.0 + tr_i) * 8.0),
+                    (lead_x - 16.0 - tail_len * 0.45, cy + oy_tr * 0.92),
+                    (lead_x - 6.0, cy + oy_tr * 0.85),
+                ]
+                if tr_i % 2 == 0:
+                    _draw_tapered_ribbon(dd, t_pts, [1.2, 6.5, 9.5], (14, 15, 22, int(215 * ff)))
+                    _draw_tapered_ribbon(dc, t_pts, [0.8, 2.2, 3.2], (244, 248, 255, int(225 * ff)))
+                else:
+                    _draw_tapered_ribbon(dg, t_pts, [1.0, 5.0, 8.0], (235, 242, 255, int(215 * ff)))
+
+            # Scattering white & black dragon feathers riding the crescent wind
+            for f_i in range(9):
+                ft = (f_i / 8.0)
+                fx_p = lead_x - 20.0 - rng.uniform(12.0, 125.0) * (0.4 + 0.6 * fly)
+                fy_p = cy + (ft - 0.5) * cres_h * 1.75 + rng.uniform(-12.0, 12.0)
+                _draw_feather_particle(dd, dg, dc, fx_p, fy_p, rng.uniform(-0.45, 0.45), rng.uniform(14.0, 24.0), 4.2, ff, dark_ink=(f_i % 3 == 0))
+
+        # Phase C (u = 0.48..1.0): Crisp Monochrome Crescent Impact Burst on Dummy (w * 0.655)
+        if u >= 0.48:
+            iu = (u - 0.48) / 0.52
+            ifade = max(0.05, math.sin(min(1.0, iu / 0.18) * math.pi * 0.5) * min(1.0, (1.0 - iu) / 0.32))
+            ix, iy = w * 0.655, cy
+            rr = 26.0 + iu * 66.0
+            dd.ellipse([ix - rr, iy - rr, ix + rr, iy + rr], outline=(12, 12, 18, int(225 * ifade)), width=9)
+            dg.ellipse([ix - rr, iy - rr, ix + rr, iy + rr], outline=(242, 246, 255, int(235 * ifade)), width=4)
+            _draw_four_point_star(dc, ix, iy, 68.0 * (1.0 - 0.2 * iu), 92.0 * (1.0 - 0.15 * iu), 8.0, (255, 255, 255, int(252 * ifade)))
+            for f_i in range(6):
+                fa = math.radians(-150.0 + f_i * 60.0 + iu * 22.0)
+                fd = 28.0 + iu * 58.0
+                _draw_feather_particle(dd, dg, dc, ix + math.cos(fa) * fd, iy + math.sin(fa) * fd, fa, 19.0, 4.0, ifade, dark_ink=(f_i % 2 == 1))
+
+        frame_img = _finalize_frame(im_d, im_g, im_c, fbm_x, fbm_y, u, warp_amp=5.2, glow_radius=4.8)
+        frame_img.save(out_dir / f"{fi:02d}.png")
+
+
+def bake_tinh_cau_bung_no(out_dir: Path, fbm_x: np.ndarray, fbm_y: np.ndarray) -> None:
+    """18 frames: Skill 2 — Horizontal razor slash across enemy -> Monochrome Yin-Yang Planet slices & explodes like a planetary supernova!"""
+    w, h = 512, 384
+    n_frames = 18
+    rng = np.random.default_rng(702)
+    ix, iy = w * 0.635, h * 0.51
+    for fi in range(n_frames):
+        u = fi / (n_frames - 1)
+        im_d, dd = _new_canvas(w, h)
+        im_g, dg = _new_canvas(w, h)
+        im_c, dc = _new_canvas(w, h)
+
+        fade = max(0.05, min(1.0, u / 0.08) * min(1.0, (1.0 - u) / 0.16))
+
+        # Phase A (u = 0.0..0.62): Blinding razor-sharp HORIZONTAL sword slash slicing straight across enemy!
+        if u <= 0.66:
+            su = min(1.0, u / 0.26)
+            sf = max(0.05, min(1.0, u / 0.08) * min(1.0, (0.66 - u) / 0.20))
+            x0 = w * 0.10
+            x1 = x0 + (w * 0.84) * su
+            h_pts = [(x0, iy), ((x0 + x1) * 0.5, iy), (x1, iy)]
+            _draw_tapered_ribbon(dd, h_pts, [3.0, 18.0 * sf, 3.0], (10, 10, 14, int(242 * sf)))
+            _draw_tapered_ribbon(dg, h_pts, [2.0, 10.5 * sf, 2.0], (232, 240, 255, int(242 * sf)))
+            _draw_tapered_ribbon(dc, h_pts, [1.2, 4.8 * sf, 1.2], (255, 255, 255, int(255 * sf)))
+
+        # Phase B (u = 0.14..0.66): Monochrome Celestial Planet + Orbiting Moons & Rings materializing on the cut!
+        if 0.14 <= u <= 0.68:
+            pu = (u - 0.14) / 0.54
+            pf = max(0.05, min(1.0, pu / 0.20) * min(1.0, (1.0 - pu) / 0.18))
+            prad = 42.0 + 18.0 * math.sin(pu * math.pi * 0.85)
+            # Outer white eclipse halo ring + orbiting tilted monochrome planetary ring
+            orx, ory = prad * 2.15, prad * 0.68
+            tilt = math.radians(-18.0 + pu * 14.0)
+            ct, st = math.cos(tilt), math.sin(tilt)
+            ring_pts = []
+            for k in range(44):
+                th = (k / 43.0) * math.tau
+                lx, ly = math.cos(th) * orx, math.sin(th) * ory
+                ring_pts.append((ix + lx * ct - ly * st, iy + lx * st + ly * ct))
+            dd.line(ring_pts, fill=(10, 10, 14, int(225 * pf)), width=8)
+            dg.line(ring_pts, fill=(235, 242, 255, int(228 * pf)), width=3)
+            dc.line(ring_pts, fill=(255, 255, 255, int(235 * pf)), width=2)
+
+            # Secondary outer vertical cosmic orbit circle (like Image 2 top lunar eye!)
+            rr_out = prad * 1.48
+            dd.ellipse([ix - rr_out, iy - rr_out, ix + rr_out, iy + rr_out], outline=(12, 12, 18, int(205 * pf)), width=6)
+            dg.ellipse([ix - rr_out, iy - rr_out, ix + rr_out, iy + rr_out], outline=(238, 244, 255, int(225 * pf)), width=3)
+
+            # Main Monochrome Planet core (obsidian dark eclipse rim + luminous pearlescent inner sphere)
+            dd.ellipse([ix - prad * 1.08, iy - prad * 1.08, ix + prad * 1.08, iy + prad * 1.08], fill=(10, 10, 15, int(245 * pf)))
+            dg.ellipse([ix - prad * 0.96, iy - prad * 0.96, ix + prad * 0.96, iy + prad * 0.96], outline=(245, 250, 255, int(242 * pf)), width=4)
+            # Glowing white inner planetary core + fracture cracks widening before detonation!
+            cr = prad * (0.58 + 0.28 * pu)
+            dg.ellipse([ix - cr, iy - cr, ix + cr, iy + cr], fill=(225, 232, 246, int(215 * pf)))
+            dc.ellipse([ix - cr * 0.72, iy - cr * 0.72, ix + cr * 0.72, iy + cr * 0.72], fill=(255, 255, 255, int(235 * pf)))
+
+            # Horizontal planetary rift splitting the sphere cleanly in half!
+            rift_w = 4.0 + pu * 14.0
+            dd.line([(ix - prad * 1.65, iy), (ix + prad * 1.65, iy)], fill=(8, 8, 12, int(248 * pf)), width=int(rift_w + 5))
+            dc.line([(ix - prad * 1.85, iy), (ix + prad * 1.85, iy)], fill=(255, 255, 255, int(255 * pf)), width=int(max(2, rift_w * 0.52)))
+
+            # 6 orbiting monochrome mini-moons / satellite planets along orbital track (Image 2 homage!)
+            for mi in range(6):
+                mth = (mi / 6.0) * math.tau + pu * 2.6
+                mlx, mly = math.cos(mth) * orx * 0.96, math.sin(mth) * ory * 0.96
+                mx, my = ix + mlx * ct - mly * st, iy + mlx * st + mly * ct
+                mr = 8.0 + (mi % 3) * 3.5
+                if mi % 2 == 0:
+                    dd.ellipse([mx - mr - 2, my - mr - 2, mx + mr + 2, my + mr + 2], fill=(10, 10, 14, int(242 * pf)))
+                    dg.ellipse([mx - mr, my - mr, mx + mr, my + mr], outline=(245, 250, 255, int(235 * pf)), width=2)
+                    dc.ellipse([mx - mr * 0.45, my - mr * 0.45, mx + mr * 0.25, my + mr * 0.25], fill=(248, 252, 255, int(230 * pf)))
+                else:
+                    dd.ellipse([mx - mr - 2, my - mr - 2, mx + mr + 2, my + mr + 2], fill=(14, 16, 22, int(225 * pf)))
+                    dc.ellipse([mx - mr, my - mr, mx + mr, my + mr], fill=(244, 248, 255, int(242 * pf)))
+
+        # Phase C (u = 0.48..1.0): COLOSSAL PLANETARY EXPLOSION (Supernova Shockwave + Shattered Moon Shards + Starburst!)
+        if u >= 0.48:
+            eu = (u - 0.48) / 0.52
+            ef = max(0.05, math.sin(min(1.0, eu / 0.16) * math.pi * 0.5) * min(1.0, (1.0 - eu) / 0.28))
+
+            # Expanding twin planetary blast shockwaves (ink outer wall + dazzling white inner blast wave)
+            for sw_i, (r0, r1, w_sw) in enumerate([(34.0, 152.0, 16), (22.0, 118.0, 10)]):
+                sr_e = r0 + (r1 - r0) * (eu ** 0.72)
+                dd.ellipse([ix - sr_e, iy - sr_e * 0.88, ix + sr_e, iy + sr_e * 0.88], outline=(10, 10, 14, int(238 * ef)), width=w_sw)
+                dg.ellipse([ix - sr_e, iy - sr_e * 0.88, ix + sr_e, iy + sr_e * 0.88], outline=(242, 248, 255, int(242 * ef)), width=max(3, w_sw // 3))
+
+            # Blazing horizontal planetary horizon shockwave beam
+            hr_len = (115.0 + eu * 110.0) * (1.0 - 0.25 * eu)
+            _draw_spark(dc, ix, iy, 0.0, hr_len, 11.0 * ef, (255, 255, 255, int(252 * ef)))
+            _draw_spark(dc, ix, iy, math.pi, hr_len, 11.0 * ef, (255, 255, 255, int(252 * ef)))
+
+            # Colossal 8-point monochrome supernova starburst at core
+            _draw_four_point_star(dc, ix, iy, 108.0 * (0.65 + 0.55 * ef), 96.0 * (0.65 + 0.55 * ef), 14.0 * ef, (255, 255, 255, int(255 * ef)))
+            for diag_a in (0.785, -0.785, 2.356, -2.356):
+                _draw_spark(dg, ix, iy, diag_a, 95.0 * (0.5 + 0.65 * eu), 7.5 * ef, (238, 245, 255, int(235 * ef)))
+
+            # Shattered black-and-white planetary fragments & mini-moon debris blasting radially outward!
+            for sh_i in range(14):
+                sa_f = (sh_i / 14.0) * math.tau + 0.25
+                sdist = 32.0 + eu * (95.0 + (sh_i % 4) * 26.0)
+                sx_f = ix + math.cos(sa_f) * sdist
+                sy_f = iy + math.sin(sa_f) * sdist * 0.86
+                ssz = (11.0 + (sh_i % 3) * 4.5) * (1.0 - 0.35 * eu)
+                shard_poly = [
+                    (sx_f + math.cos(sa_f) * ssz, sy_f + math.sin(sa_f) * ssz),
+                    (sx_f + math.cos(sa_f + 2.1) * ssz * 0.72, sy_f + math.sin(sa_f + 2.1) * ssz * 0.72),
+                    (sx_f + math.cos(sa_f + 4.1) * ssz * 0.85, sy_f + math.sin(sa_f + 4.1) * ssz * 0.85),
+                ]
+                dd.polygon(shard_poly, fill=(10, 10, 15, int(245 * ef)))
+                dg.polygon(shard_poly, outline=(244, 248, 255, int(235 * ef)))
+                if sh_i % 2 == 0:
+                    dc.polygon(shard_poly, fill=(248, 252, 255, int(215 * ef)))
+
+        frame_img = _finalize_frame(im_d, im_g, im_c, fbm_x, fbm_y, u, warp_amp=5.0, glow_radius=5.5)
+        frame_img.save(out_dir / f"{fi:02d}.png")
+
+
+def bake_song_long_ho_giap(out_dir: Path, fbm_x: np.ndarray, fbm_y: np.ndarray) -> None:
+    """18 frames: Skill 3 — Black-and-White Yin-Yang Protective Shield wrapped by Twin Coiling Dragons (Bạch Long & Hắc Long) around caster!"""
+    w, h = 512, 384
+    n_frames = 18
+    rng = np.random.default_rng(703)
+    cx = w * 0.50
+    base_y = h * 0.78
+    shield_cy = h * 0.51
+    rx, ry = w * 0.30, h * 0.39
+
+    for fi in range(n_frames):
+        u = fi / (n_frames - 1)
+        im_d, dd = _new_canvas(w, h)
+        im_g, dg = _new_canvas(w, h)
+        im_c, dc = _new_canvas(w, h)
+
+        fade = max(0.05, min(1.0, u / 0.14) * min(1.0, (1.0 - u) / 0.18))
+        open_env = min(1.0, 0.42 + u * 2.1)
+        crx, cry = rx * open_env, ry * open_env
+
+        # 1) Ground Black-White Yin-Yang Rune Ring beneath caster feet
+        for rk, smul in enumerate((1.0, 1.24)):
+            grx = crx * smul * 1.05
+            gry = h * (0.075 if rk == 0 else 0.095)
+            dd.ellipse([cx - grx, base_y - gry, cx + grx, base_y + gry], outline=(10, 10, 14, int(230 * fade)), width=8)
+            dg.ellipse([cx - grx, base_y - gry, cx + grx, base_y + gry], outline=(244, 248, 255, int((235 if rk == 0 else 160) * fade)), width=3)
+
+        # 2) Translucent Yin-Yang Black-White Spherical Barrier Shell (Pawn stays crystal clear inside!)
+        # Split semi-transparent fill: left half luminous white mist, right half smoky ink-black veil
+        left_hemi, right_hemi = [], []
+        for k in range(25):
+            th = math.radians(90.0 + (k / 24.0) * 180.0)
+            left_hemi.append((cx + math.cos(th) * crx * 0.94, shield_cy + math.sin(th) * cry * 0.94))
+        for k in range(25):
+            th = math.radians(-90.0 + (k / 24.0) * 180.0)
+            right_hemi.append((cx + math.cos(th) * crx * 0.94, shield_cy + math.sin(th) * cry * 0.94))
+        # Subtle Yin-Yang S-curve dividing seam inside shell
+        s_curve = []
+        for k in range(21):
+            t = k / 20.0
+            sy = shield_cy - cry * 0.94 + t * (cry * 1.88)
+            sx = cx + math.sin(t * math.tau) * crx * 0.24
+            s_curve.append((sx, sy))
+
+        dg.polygon(left_hemi + s_curve, fill=(235, 242, 255, int(62 * fade)))
+        dd.polygon(right_hemi + list(reversed(s_curve)), fill=(10, 12, 18, int(92 * fade)))
+
+        # Crisp dual Black-White outer barrier rim + Yin-Yang S-curve energy seam
+        dd.ellipse([cx - crx, shield_cy - cry, cx + crx, shield_cy + cry], outline=(10, 10, 14, int(232 * fade)), width=10)
+        dg.ellipse([cx - crx * 0.98, shield_cy - cry * 0.98, cx + crx * 0.98, shield_cy + cry * 0.98], outline=(246, 250, 255, int(240 * fade)), width=4)
+        _draw_tapered_ribbon(dc, s_curve, [1.5 + 3.0 * math.sin((k / 20.0) * math.pi) for k in range(21)], (245, 250, 255, int(145 * fade)))
+
+        # 3) TWIN COILING DRAGONS (Bạch Long + Hắc Long) ORBITING THE SHIELD IN YIN-YANG HARMONY!
+        rot_deg = u * 165.0
+        for is_white, base_ang in [(True, -138.0 + rot_deg), (False, 42.0 + rot_deg)]:
+            body_pts: List[Tuple[float, float]] = []
+            body_ws: List[float] = []
+            arc_span = 162.0
+            n_seg = 30
+            for k in range(n_seg):
+                s = k / float(n_seg - 1)  # 0 = tail, 1 = neck entering head
+                th_deg = base_ang - arc_span * (1.0 - s)
+                th = math.radians(th_deg)
+                # Subtle organic serpentine undulation around the shield shell
+                wobble = 1.04 + 0.065 * math.sin(s * math.pi * 3.0 - u * 6.0)
+                px = cx + math.cos(th) * crx * wobble
+                py = shield_cy + math.sin(th) * cry * wobble
+                body_pts.append((px, py))
+                body_ws.append((3.0 + 14.5 * (s ** 0.72) * (0.72 + 0.28 * math.sin(s * math.pi))) * open_env)
+
+            if is_white:
+                # Bạch Long (White Pearl Dragon): bold dark ink contour + gleaming white body + inner pure-white spine
+                _draw_tapered_ribbon(dd, body_pts, [w * 1.32 for w in body_ws], (14, 16, 22, int(242 * fade)))
+                _draw_tapered_ribbon(dg, body_pts, [w * 0.96 for w in body_ws], (232, 238, 250, int(242 * fade)))
+                _draw_tapered_ribbon(dc, body_pts, [w * 0.54 for w in body_ws], (255, 255, 255, int(252 * fade)))
+            else:
+                # Hắc Long (Black Ink Dragon): stark pure-white outer rim + pitch-black obsidian body + silver scale edge
+                _draw_tapered_ribbon(dg, body_pts, [w * 1.24 for w in body_ws], (238, 244, 255, int(235 * fade)))
+                _draw_tapered_ribbon(dd, body_pts, [w * 0.96 for w in body_ws], (10, 10, 14, int(248 * fade)))
+                rim_b = [(px, py - max(1.2, body_ws[j] * 0.48)) for j, (px, py) in enumerate(body_pts)]
+                _draw_tapered_ribbon(dc, rim_b, [w * 0.20 for w in body_ws], (244, 248, 255, int(228 * fade)))
+
+            # Compute exact tangent direction at head end so the roaring dragon head leads the coil smoothly!
+            hx, hy = body_pts[-1]
+            px_prev, py_prev = body_pts[-2]
+            head_ang = math.degrees(math.atan2(hy - py_prev, hx - px_prev))
+            _paint_mono_dragon_head(
+                dd, dg, dc, hx, hy, head_ang,
+                scale=34.0 * open_env,
+                jaw_open=0.45 + 0.35 * math.sin(u * math.pi * 2.0),
+                fade=fade,
+                white_dragon=is_white,
+            )
+
+        # 4) Drifting white & black feathers circling the twin-dragon barrier
+        for f_i in range(8):
+            fa = math.radians(f_i * 45.0 + rot_deg * 0.85)
+            fr = 1.12 + 0.08 * math.sin(u * 6.0 + f_i)
+            _draw_feather_particle(
+                dd, dg, dc,
+                cx + math.cos(fa) * crx * fr,
+                shield_cy + math.sin(fa) * cry * fr,
+                fa + math.pi * 0.5,
+                16.0, 3.6, fade * 0.92,
+                dark_ink=(f_i % 2 == 1),
+            )
+
+        frame_img = _finalize_frame(im_d, im_g, im_c, fbm_x, fbm_y, u, warp_amp=4.2, glow_radius=4.8)
+        frame_img.save(out_dir / f"{fi:02d}.png")
+
+
+def bake_bach_long_xung_kich(out_dir: Path, fbm_x: np.ndarray, fbm_y: np.ndarray) -> None:
+    """16 frames: Skill 4 — High-speed forward dash enveloped by a colossal surging White-Black Dragon!"""
+    w, h = 512, 384
+    n_frames = 16
+    rng = np.random.default_rng(704)
+    cy = h * 0.54
+
+    for fi in range(n_frames):
+        u = fi / (n_frames - 1)
+        im_d, dd = _new_canvas(w, h)
+        im_g, dg = _new_canvas(w, h)
+        im_c, dc = _new_canvas(w, h)
+
+        fade = max(0.05, min(1.0, u / 0.10) * min(1.0, (1.0 - u) / 0.18))
+        dash = min(1.0, max(0.08, u / 0.64))
+        head_x = w * (0.24 + dash * 0.58)
+        tail_x = max(w * 0.04, head_x - w * 0.64)
+
+        # 1) High-speed horizontal wind-stream speedlines & ink streaks behind dashing Pawn
+        for sl_i in range(10):
+            sy = cy + (sl_i - 4.5) * 26.0 + rng.uniform(-6.0, 6.0)
+            sx0 = max(10.0, head_x - rng.uniform(135.0, 290.0))
+            sx1 = min(w - 14.0, head_x + rng.uniform(-20.0, 35.0))
+            if sl_i % 2 == 0:
+                _draw_tapered_ribbon(dd, [(sx0, sy), ((sx0 + sx1) * 0.5, sy), (sx1, sy)], [1.0, 4.5, 1.0], (12, 14, 20, int(195 * fade)))
+                _draw_tapered_ribbon(dc, [(sx0 + 18.0, sy), (sx1, sy)], [1.2, 2.2], (246, 250, 255, int(220 * fade)))
+            else:
+                _draw_tapered_ribbon(dg, [(sx0, sy), (sx1, sy)], [1.0, 3.2], (232, 240, 255, int(195 * fade)))
+
+        # 2) Aerodynamic wind-cone shockwave rings encircling the charging dragon
+        for wr_i, frac in enumerate((0.68, 0.88)):
+            wx = tail_x + (head_x - tail_x) * frac
+            wy = cy + math.sin(frac * 5.0 - u * 8.0) * 16.0
+            rx_w = 18.0 + wr_i * 6.0
+            ry_w = 52.0 + wr_i * 18.0
+            dd.ellipse([wx - rx_w, wy - ry_w, wx + rx_w, wy + ry_w], outline=(12, 12, 18, int(205 * fade)), width=7)
+            dg.ellipse([wx - rx_w, wy - ry_w, wx + rx_w, wy + ry_w], outline=(245, 250, 255, int(235 * fade)), width=3)
+
+        # 3) Colossal S-curved Serpentine Pearl-White & Ink-Black Dragon Body surging left -> right!
+        body_pts: List[Tuple[float, float]] = []
+        body_ws: List[float] = []
+        ink_spine_pts: List[Tuple[float, float]] = []
+        n_b = 34
+        for k in range(n_b):
+            s = k / float(n_b - 1)  # 0 = tail, 1 = dragon neck
+            px = tail_x + (head_x - tail_x) * s
+            py = cy + math.sin(s * math.pi * 2.2 - u * 7.5) * (34.0 * (1.0 - 0.35 * s))
+            body_pts.append((px, py))
+            bw = 4.5 + 24.0 * (s ** 0.65) * (0.76 + 0.24 * math.sin(s * math.pi))
+            body_ws.append(bw)
+            ink_spine_pts.append((px, py - bw * 0.28))
+
+        # Bold jet-black ink outer contour -> luminous pearl-white body -> ink calligraphy accent stripe -> pure white core!
+        _draw_tapered_ribbon(dd, body_pts, [bw * 1.28 for bw in body_ws], (12, 14, 20, int(244 * fade)))
+        _draw_tapered_ribbon(dg, body_pts, [bw * 0.96 for bw in body_ws], (232, 238, 250, int(242 * fade)))
+        _draw_tapered_ribbon(dc, body_pts, [bw * 0.56 for bw in body_ws], (255, 255, 255, int(252 * fade)))
+        _draw_tapered_ribbon(dd, ink_spine_pts[4:-2], [bw * 0.24 for bw in body_ws[4:-2]], (14, 16, 22, int(218 * fade)))
+
+        # 4) Fierce Roaring Pearl-White & Ink-Black Dragon Head leading the high-speed lunge!
+        hx, hy = body_pts[-1]
+        px_p, py_p = body_pts[-3]
+        h_ang = math.degrees(math.atan2(hy - py_p, hx - px_p)) * 0.45
+        _paint_mono_dragon_head(
+            dd, dg, dc, hx + 8.0, hy, h_ang,
+            scale=46.0,
+            jaw_open=0.55 + 0.35 * math.sin(u * math.pi),
+            fade=fade,
+            white_dragon=True,
+        )
+
+        # 5) Scattering white & black dragon feathers streaming off the dash wake
+        for f_i in range(11):
+            ft = rng.uniform(0.10, 0.95)
+            fx = tail_x + (head_x - tail_x) * ft
+            fy = cy + rng.uniform(-72.0, 72.0)
+            _draw_feather_particle(dd, dg, dc, fx, fy, rng.uniform(-0.32, 0.32), rng.uniform(16.0, 26.0), 4.2, fade, dark_ink=(f_i % 3 == 0))
+
+        frame_img = _finalize_frame(im_d, im_g, im_c, fbm_x, fbm_y, u, warp_amp=5.8, glow_radius=5.0)
+        frame_img.save(out_dir / f"{fi:02d}.png")
+
+
+def bake_am_duong_diet_gioi(out_dir: Path, fbm_x: np.ndarray, fbm_y: np.ndarray) -> None:
+    """20 frames: Skill 5 — Colossal 5x5 Monochrome White-Black Pillar Detonation + 3 Stacked Rune Rings (Image 3 style)."""
+    w, h = 512, 384
+    n_frames = 20
+    rng = np.random.default_rng(705)
+    cx = w * 0.50
+    base_y = h * 0.84
+
+    for fi in range(n_frames):
+        u = fi / (n_frames - 1)
+        im_d, dd = _new_canvas(w, h)
+        im_g, dg = _new_canvas(w, h)
+        im_c, dc = _new_canvas(w, h)
+
+        fade = max(0.05, min(1.0, u / 0.10) * min(1.0, (1.0 - u) / 0.18))
+        # Detonation envelope: fast ignition (u=0..0.22), towering full-power pillar (0.22..0.78), dramatic disperse (0.78..1.0)
+        if u < 0.20:
+            power = 0.25 + 0.75 * (u / 0.20)
+        elif u <= 0.78:
+            power = 1.0 + 0.08 * math.sin((u - 0.20) * 18.0)
+        else:
+            power = max(0.15, 1.0 - (u - 0.78) / 0.22)
+
+        # 1) Expanding 5x5 Ground Crater Magic Circle & Dark Blast Shadow
+        grx = w * (0.34 + 0.11 * min(1.0, u * 1.6))
+        gry = h * 0.105
+        dd.ellipse([cx - grx * 1.08, base_y - gry * 1.15, cx + grx * 1.08, base_y + gry * 1.15], fill=(10, 10, 14, int(185 * fade)))
+        _draw_rune_ring_3d(dd, dg, dc, cx, base_y, grx, gry, u * 2.2, fade * 0.92, n_glyphs=20)
+
+        # 2) Upper Sky Swirling Monochrome Storm Vortex (Image 3 top clouds!)
+        vrx = w * 0.38 * min(1.0, power * 1.05)
+        vry = h * 0.09
+        dd.ellipse([cx - vrx, h * 0.02 - vry * 0.5, cx + vrx, h * 0.02 + vry * 1.4], fill=(14, 15, 22, int(195 * fade)))
+        dg.ellipse([cx - vrx * 0.78, h * 0.03, cx + vrx * 0.78, h * 0.12], outline=(232, 238, 250, int(185 * fade)), width=4)
+
+        # 3) COLOSSAL VERTICAL PILLAR: Jet-Black Ink Core encased in Blinding Pure-White Energy & Lightning!
+        beam_half_w = 54.0 * power
+        core_half_w = 27.0 * power
+
+        # Outer dazzling white beam sheath (left & right blazing walls)
+        dd.rectangle([cx - beam_half_w * 1.24, 0.0, cx + beam_half_w * 1.24, base_y], fill=(14, 16, 22, int(155 * fade)))
+        dg.rectangle([cx - beam_half_w, 0.0, cx + beam_half_w, base_y], fill=(238, 244, 255, int(235 * fade)))
+        dc.rectangle([cx - beam_half_w * 0.92, 0.0, cx + beam_half_w * 0.92, base_y], fill=(255, 255, 255, int(235 * fade)))
+
+        # Jet-black inner void core pillar running right down the center (exact Image 3 look!)
+        core_pts_l, core_pts_r = [], []
+        for k in range(20):
+            ky = (k / 19.0) * base_y
+            wob = math.sin(k * 0.85 + u * 14.0) * 5.5
+            cw = core_half_w * (0.92 + 0.14 * math.sin(k * 0.55 - u * 10.0))
+            core_pts_l.append((cx - cw + wob, ky))
+            core_pts_r.append((cx + cw + wob, ky))
+        dd.polygon(core_pts_l + list(reversed(core_pts_r)), fill=(8, 8, 12, int(248 * fade)))
+        # Also punch dark core visually over glow layer by drawing dark core tendrils on glow/core borders
+        # Vertical crackling pure-white lightning veins crawling inside & along flanks of the black core!
+        for l_i in range(6):
+            lx_base = cx + (l_i - 2.5) * (beam_half_w * 0.42)
+            l_pts = []
+            for k in range(14):
+                ky = (k / 13.0) * base_y
+                jx = rng.uniform(-11.0, 11.0) * power
+                l_pts.append((lx_base + jx, ky))
+            dc.line(l_pts, fill=(255, 255, 255, int(248 * fade)), width=(4 if l_i in (0, 5) else 2))
+
+        # 4) 3 STACKED FLOATING CONCENTRIC PERSPECTIVE RUNE RINGS (Image 3 Signature Feature!)
+        ring_specs = [
+            (h * 0.18, 152.0 * (0.85 + 0.18 * power), 30.0, u * 2.5),
+            (h * 0.44, 138.0 * (0.85 + 0.18 * power), 28.0, -u * 3.0 + 0.7),
+            (h * 0.68, 186.0 * (0.85 + 0.18 * power), 36.0, u * 2.1 + 1.4),
+        ]
+        for ry_pos, rrx, rry, rph in ring_specs:
+            _draw_rune_ring_3d(dd, dg, dc, cx, ry_pos, rrx, rry, rph, fade, n_glyphs=18)
+
+        # 5) Ground Impact White Energy Splash Spikes + Flying Obsidian Debris Chunks (5x5 Explosion!)
+        n_spikes = 14
+        for sp_i in range(n_spikes):
+            ang_sp = math.radians(-172.0 + (sp_i / float(n_spikes - 1)) * 164.0)
+            sp_len = (55.0 + 68.0 * ((sp_i % 3) / 2.0 + 0.3)) * power
+            sp_x0 = cx + math.cos(ang_sp) * (beam_half_w * 0.55)
+            sp_y0 = base_y + 4.0
+            sp_tip = (sp_x0 + math.cos(ang_sp) * sp_len, sp_y0 + math.sin(ang_sp) * sp_len * 0.68)
+            _draw_tapered_ribbon(dd, [(sp_x0, sp_y0), sp_tip], [14.0 * power, 2.0], (14, 16, 22, int(225 * fade)))
+            _draw_tapered_ribbon(dc, [(sp_x0, sp_y0), sp_tip], [9.5 * power, 1.5], (255, 255, 255, int(252 * fade)))
+
+        # Flying dark shattered crater rocks & pure-white sparks
+        for d_i in range(16):
+            da = math.radians(-168.0 + (d_i / 15.0) * 156.0)
+            ddist = (45.0 + u * 145.0) * (0.55 + 0.45 * (d_i % 3) / 2.0)
+            dx_r = cx + math.cos(da) * ddist
+            dy_r = base_y + math.sin(da) * ddist * 0.62
+            rsz = 5.0 + (d_i % 4) * 2.4
+            dd.polygon([(dx_r - rsz, dy_r), (dx_r, dy_r - rsz * 0.8), (dx_r + rsz, dy_r + rsz * 0.4), (dx_r - rsz * 0.4, dy_r + rsz)], fill=(12, 12, 16, int(242 * fade)))
+            dc.ellipse([dx_r - 2.0, dy_r - 2.0, dx_r + 2.0, dy_r + 2.0], fill=(248, 252, 255, int(225 * fade)))
+
+        # Composite cleanly while preserving jet-black center pillar contrast inside white bloom!
+        phase = u * 2.0 * math.pi
+        dx = fbm_x * 4.2 * math.cos(phase) - fbm_y * 2.1 * math.sin(phase)
+        dy = fbm_y * 4.2 * math.sin(phase) + fbm_x * 2.1 * math.cos(phase)
+        dark_arr = warp_layer(np.asarray(im_d, dtype=np.float32), dx * 0.9, dy * 0.9)
+        glow_arr = warp_layer(np.asarray(im_g, dtype=np.float32), dx * 0.55, dy * 0.55)
+        core_arr = warp_layer(np.asarray(im_c, dtype=np.float32), dx * 0.25, dy * 0.25)
+
+        # Keep jet-black core column punched over soft white glow so the iconic Black-Center/White-Edge pillar pops!
+        bloom = _blur_arr(glow_arr, 6.2)
+        out = alpha_over(bloom, glow_arr)
+        out = alpha_over(out, dark_arr)
+        out = additive_glow(out, core_arr, 0.98)
+        frame_img = Image.fromarray(np.clip(out, 0, 255).astype(np.uint8), mode="RGBA")
+        frame_img.save(out_dir / f"{fi:02d}.png")
+
+
+def bake_all_skillfx(skillfx_root: Path = DEFAULT_SKILLFX_ROOT, only_ink: bool = False, only_white: bool = False) -> dict[str, int]:
+    """Bakes all Skullblade + Trấn Ác Inkblade + Bạch Long Vũ Kiếm SkillFx & HitFx PNG sequences. Returns frame count map."""
     fbm_x, fbm_y = build_fbm_pair(384, 512, seed=777)
     hit_x, hit_y = build_fbm_pair(256, 256, seed=888)
 
@@ -1088,7 +1816,19 @@ def bake_all_skillfx(skillfx_root: Path = DEFAULT_SKILLFX_ROOT, only_ink: bool =
         ("LeAnhPhaToai", 16, bake_le_anh_pha_toai),
         ("HuyetNguyetVoAnh", 20, bake_huyet_nguyet_vo_anh),
     ]
-    specs = ink_specs if only_ink else (skull_specs + ink_specs)
+    white_specs = [
+        ("BachNguyetTramBa", 16, bake_bach_nguyet_tram_ba),
+        ("TinhCauBungNo", 18, bake_tinh_cau_bung_no),
+        ("SongLongHoGiap", 18, bake_song_long_ho_giap),
+        ("BachLongXungKich", 16, bake_bach_long_xung_kich),
+        ("AmDuongDietGioi", 20, bake_am_duong_diet_gioi),
+    ]
+    if only_white:
+        specs = white_specs
+    elif only_ink:
+        specs = ink_specs
+    else:
+        specs = skull_specs + ink_specs + white_specs
 
     counts: dict[str, int] = {}
     for folder, n_f, fn in specs:
@@ -1111,7 +1851,19 @@ def bake_all_skillfx(skillfx_root: Path = DEFAULT_SKILLFX_ROOT, only_ink: bool =
         ("LeAnhPhaToaiHit", 8, 924, True),
         ("HuyetNguyetVoAnhHit", 10, 925, True),
     ]
-    hit_specs = ink_hits if only_ink else (skull_hits + ink_hits)
+    white_hits = [
+        ("BachNguyetTramBaHit", 8, 931, False),
+        ("TinhCauBungNoHit", 8, 932, True),
+        ("SongLongHoGiapHit", 8, 933, False),
+        ("BachLongXungKichHit", 8, 934, False),
+        ("AmDuongDietGioiHit", 10, 935, True),
+    ]
+    if only_white:
+        hit_specs = white_hits
+    elif only_ink:
+        hit_specs = ink_hits
+    else:
+        hit_specs = skull_hits + ink_hits + white_hits
 
     for folder, n_f, seed, heavy in hit_specs:
         target = skillfx_root / folder
@@ -1125,6 +1877,7 @@ def bake_all_skillfx(skillfx_root: Path = DEFAULT_SKILLFX_ROOT, only_ink: bool =
 if __name__ == "__main__":
     import sys
     only_ink_flag = "--ink" in sys.argv
-    res = bake_all_skillfx(only_ink=only_ink_flag)
+    only_white_flag = "--white" in sys.argv
+    res = bake_all_skillfx(only_ink=only_ink_flag, only_white=only_white_flag)
     total = sum(res.values())
     print(f"Baked {total} painterly SkillFx/HitFx frames across {len(res)} folders: {res}")
